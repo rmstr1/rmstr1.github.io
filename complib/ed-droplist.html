@@ -1,0 +1,139 @@
+<template id="ed-droplist-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :host {
+            display: block;
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+
+            gap: var(--ed-droplist-gap);
+        }
+    </style>
+    <slot></slot>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-droplist",
+        class EdDroplist extends HTMLElement {
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-droplist-template").content.cloneNode(true);
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+
+            connectedCallback() {
+                // TODO: item inserted/removed callbacks - need to call updateIndices
+                this.addEventListener('item-drag-start', this.onItemDragStart);
+                this.addEventListener('item-drag-end', this.onItemDragEnd);
+                this.addEventListener('dragover', this.onDragOver);
+                this.addEventListener('drop', this.onDrop);
+                this.addEventListener('connection-changed', this.onConnectionChanged);
+                this.addEventListener('node-removed', this.onNodeRemoved);
+            }
+
+            disconnectedCallback() {
+                this.removeEventListener('item-drag-start', this.onItemDragStart);
+                this.removeEventListener('item-drag-end', this.onItemDragEnd);
+                this.removeEventListener('dragover', this.onDragOver);
+                this.removeEventListener('drop', this.onDrop);
+                this.removeEventListener('connection-changed', this.onConnectionChanged);
+                this.removeEventListener('node-removed', this.onNodeRemoved);
+            }
+
+            onItemDragStart(event) {
+                this.updateIndices();
+                this.draggedItem = event.detail.item;
+            }
+
+            onItemDragEnd(event) {
+                this.draggedItem = null;
+            }
+
+            onDragOver(event) {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = 'move';
+
+                const draggedIndex = parseInt(this.draggedItem.index, 10);
+                const dropTarget = event.target.closest('ed-droplist-item');
+
+                if (dropTarget !== null) {
+                    const dropIndex = parseInt(dropTarget.index, 10);
+                    if (draggedIndex != dropIndex) {
+                        const dragRect = this.draggedItem.getBoundingClientRect();
+                        const dropRect = dropTarget.getBoundingClientRect();
+
+                        // TODO: deadzone?
+                        // TODO: vertical variant
+                        if (draggedIndex > dropIndex && (event.clientY - dropRect.top) < dragRect.height) {
+                            // drop before
+                            this.insertBefore(this.draggedItem, dropTarget);
+                            this.updateIndices();
+                        } else if (draggedIndex < dropIndex && (dropRect.bottom - event.clientY) < dragRect.height) {
+                            // drop after
+                            this.insertBefore(this.draggedItem, dropTarget.nextSibling);
+                            this.updateIndices();
+                        }
+
+                        // TODO: move this somewhere else...?, e.g. nodes container, and fire reordered event that bubbles to parent
+                        document.querySelectorAll('ed-node-cable').forEach((item) => {
+                            item.updatePosition();
+                        });
+                    }
+                }
+            }
+
+            onDrop(event) {
+                event.preventDefault();
+                // TODO: keep list with names?
+                // TODO: fire list changed event
+                this.updateIndices();
+            }
+
+            onNodeRemoved(event) {
+                let removed_node = event.detail;
+                this.updateIndices();
+
+                // TODO: move this somewhere else...?, e.g. nodes container
+                this.querySelectorAll('ed-node-cable').forEach((cable) => {
+                    if (cable.startNode === removed_node || cable.endNode === removed_node) {
+                        cable.remove();
+                    } else {
+                        cable.updatePosition();
+                    }
+                });
+
+                document.querySelector('ed-tab-content[value="' + removed_node.getAttribute("name") + '"]').remove(); // TODO: move this to tab button?
+
+                const connections = Array.from(this.querySelectorAll('ed-node-cable'), node => node.serialize());
+                this.dispatchEvent(new CustomEvent("node-deleted", { detail: removed_node.getAttribute("name") }))
+                this.dispatchEvent(new CustomEvent("connections-changed", { detail: connections }))
+                event.stopPropagation()
+            }
+
+            onConnectionChanged(event) {
+                // TODO: move this somewhere else...?, e.g. nodes container
+                const connections = Array.from(this.querySelectorAll('ed-node-cable'), node => node.serialize());
+                this.dispatchEvent(new CustomEvent("connections-changed", { detail: connections }))
+                event.stopPropagation()
+            }
+
+            updateIndices() {
+                const items = this.querySelectorAll('ed-droplist-item');
+                items.forEach((item, index) => {
+                    item.index = index;
+                });
+            }
+        },
+    );
+</script>

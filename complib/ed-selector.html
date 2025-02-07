@@ -1,0 +1,109 @@
+<template id="ed-selector-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+
+        .container {
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 0 0.5rem;
+            margin: 0 auto;
+
+            width: 100%;
+            height: var(--input-height);
+
+            flex-grow: 1;
+
+            border: none;
+            border-radius: var(--input-border-radius);
+            background: var(--bg-color-dark);
+
+            color: var(--foreground-color);
+
+            font-family: var(--input-font);
+            font-size: var(--input-font-size);
+            font-weight: var(--input-font-weight);
+
+            box-shadow: var(--ed-field-inset-shadow);
+        }
+
+        select:focus-visible {
+            outline: var(--focus-outline);
+            transition: outline 0s;
+        }
+
+        ed-icon {
+            position: absolute;
+            right: calc(var(--input-height) / 2.0 - 0.5rem);
+            top: calc(var(--input-height) / 2.0 - 0.5rem);
+            transition: all 0.2s linear;
+            pointer-events: none;
+        }
+
+        option {
+            appearance: none;
+        }
+
+        ed-icon {
+            font-size: 1.0rem;
+        }
+    </style>
+    <div class="container">
+        <select>
+            <!-- Childeren will be attached here on slot change -->
+        </select>
+        <ed-icon icon="angle-down-solid"></ed-icon>
+        <slot></slot>
+    </div>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-selector",
+        class extends HTMLElement {
+            static formAssociated = true;
+
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-selector-template").content.cloneNode(true);
+                this.select = template_clone.querySelector("select");
+                this.name = this.getAttribute("name");
+                this.value = this.getAttribute("value");
+
+                const default_slot = template_clone.querySelector("slot:not([name])");
+                default_slot.addEventListener("slotchange", (event) => {
+                    const slotted_elements = default_slot.assignedElements();
+                    this.select.append(...slotted_elements);
+                });
+
+                this.select.addEventListener("change", (event) => {
+                    this.value = event.target.value;
+                    this.internals_.setFormValue(this.value, this.value);
+                    this.dispatchEvent(new CustomEvent("change", { detail: (this.name, this.value) }))
+                    this.internals_.form?.dispatchEvent(new CustomEvent("change", { detail: (this.name, this.value) }))
+                });
+
+                this.internals_ = this.attachInternals();
+                this.attachShadow({ mode: "open" }).append(template_clone)
+                this.internals_.setFormValue(this.value, this.value);
+            }
+
+            setValue(value) {
+                this.value = value;
+                this.select.value = value;
+            }
+        },
+    );
+</script>

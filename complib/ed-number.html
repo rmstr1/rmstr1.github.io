@@ -1,0 +1,171 @@
+<template id="ed-number-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :host {
+            padding: 0;
+            width: 100%;
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 0;
+            /*height: 1.5rem;*/
+
+            font-family: var(--input-font);
+            font-size: var(--input-font-size);
+            font-weight: var(--input-font-weight);
+        }
+
+        ed-button {
+            display: none;
+        }
+
+        :host(.caret) ed-button {
+            display: block;
+        }
+
+        input[type=textbox] {
+            all: unset;
+            box-sizing: border-box;
+
+            margin: 0;
+            padding: 0 0.5rem;
+            height: var(--input-height);
+            width: 100%;
+
+            border: none;
+            border-radius: var(--input-border-radius);
+            background: var(--bg-color-dark);
+
+            color: var(--input-foreground-color);
+            box-shadow: var(--ed-field-inset-shadow);
+        }
+
+        input[type=textbox]:invalid {
+            background: #6b2723;
+        }
+
+        input[type=textbox]:focus-visible {
+            background-color: var(--focus-color);
+            transition: outline 0s;
+        }
+
+        input[type=textbox]:focus-visible:invalid {
+            background: #833d3a;
+        }
+    </style>
+    <input type="textbox" pattern="(-?[0-9]+(\.[0-9]*)?|\.[0-9]+)">
+    <ed-button class="icon-small round tertiary hover-highlight" id="dec" tabindex="-1"><ed-icon
+            icon="minus"></ed-icon></ed-button>
+    <ed-button class="icon-small round tertiary hover-highlight" id="inc" tabindex="-1"><ed-icon
+            icon="plus"></ed-icon></ed-button>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-number",
+        class extends HTMLElement {
+            static formAssociated = true;
+
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-number-template").content.cloneNode(true);
+
+                this.input = template_clone.querySelector('input');
+                this.inc = template_clone.querySelector("#inc");
+                this.dec = template_clone.querySelector("#dec");
+
+                this.input.setAttribute("value", this.getAttribute("value") ?? "");
+
+                this.name = this.getAttribute("name");
+                this.value = Number(this.getAttribute("value"));
+                this.min = Number(this.getAttribute("min"));
+                this.max = Number(this.getAttribute("max"));
+                this.step = Number(this.getAttribute("step") ?? 1);
+
+                this.internals_ = this.attachInternals();
+                this.attachShadow({ mode: "open" }).append(template_clone);
+
+                this.input.addEventListener("change", (event) => {
+                    let old_value = this.value;
+                    this.value = Number(event.target.value);
+                    if (this.updateValidity() === false) {
+                        this.input.value = old_value;
+                        this.value = old_value;
+                        this.internals_.setValidity({});
+                    } else {
+                        this.updateButtonDisabledState();
+                        this.onChange();
+                    }
+                });
+
+                this.input.addEventListener("invalid", (event) => { this.input.value = this.value });
+
+                this.inc.onclick = (event) => {
+                    if (this.value < this.max) {
+                        this.value += this.step;
+                        this.input.value = this.value;
+                        this.updateButtonDisabledState();
+                        this.onChange();
+                    }
+                };
+
+                this.dec.onclick = (event) => {
+                    if (this.value > this.min) {
+                        this.value -= this.step;
+                        this.input.value = this.value;
+                        this.updateButtonDisabledState();
+                        this.onChange();
+                    }
+                };
+
+                this.internals_.setFormValue(this.value, this.value);
+                this.updateButtonDisabledState();
+            }
+
+            onChange() {
+                this.internals_.setFormValue(this.value, this.value);
+                this.dispatchEvent(new CustomEvent("change", { detail: this.value }))
+                this.internals_.form?.dispatchEvent(new CustomEvent("change", { detail: (this.name, this.value) }))
+            }
+
+            updateValidity() {
+                const number_val = Number(this.value);
+                if (isNaN(number_val)) {
+                    this.internals_.setValidity({ badInput: true }, "not a number");
+                } else if (number_val < this.min) {
+                    this.internals_.setValidity({ rangeUnderflow: true }, "number too low");
+                } else if (number_val > this.max) {
+                    this.internals_.setValidity({ rangeOverflow: true }, "number too high");
+                } else if (this.customValidate(number_val) === false) {
+                    this.internals_.setValidity({ customError: true }, "custom ");
+                } else {
+                    this.internals_.setValidity({});
+                }
+                return this.internals_.reportValidity();
+            }
+
+            updateButtonDisabledState() {
+                if (this.value + this.step > this.max) {
+                    this.inc.setAttribute("disabled", true);
+                } else {
+                    this.inc.removeAttribute("disabled");
+                }
+
+                if (this.value - this.step < this.min) {
+                    this.dec.setAttribute("disabled", true);
+                } else {
+                    this.dec.removeAttribute("disabled");
+                }
+            }
+
+            customValidate = (_new_value) => true;
+        },
+    );
+</script>

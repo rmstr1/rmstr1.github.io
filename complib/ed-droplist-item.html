@@ -1,0 +1,69 @@
+<template id="ed-droplist-item-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :host {
+            display: block;
+        }
+
+        :host(.dragging) {
+            opacity: 0.25;
+        }
+    </style>
+    <slot></slot>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-droplist-item",
+        class EdDroplistItem extends HTMLElement {
+            constructor() {
+                super();
+                this.setAttribute("draggable", "true");
+
+                const template_clone = document.getElementById("ed-droplist-item-template").content.cloneNode(true);
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+
+            connectedCallback() {
+                this.addEventListener('dragstart', this.onDragStart);
+                this.addEventListener('dragend', this.onDragEnd);
+            }
+
+            disconnectedCallback() {
+                this.removeEventListener('dragstart', this.onDragStart);
+                this.removeEventListener('dragend', this.onDragEnd);
+            }
+
+            onDragStart(event) {
+                this.classList.add('dragging');
+                event.dataTransfer.effectAllowed = 'move';
+                event.dataTransfer.setData('text/plain', this.index);
+                this.dispatchEvent(new CustomEvent('item-drag-start', {
+                    bubbles: true,
+                    detail: { item: this }
+                }));
+            }
+
+            onDragEnd(event) {
+                this.classList.remove('dragging');
+                this.dispatchEvent(new CustomEvent('item-drag-end', {
+                    bubbles: true,
+                    detail: { item: this }
+                }));
+            }
+
+            set index(value) {
+                this.setAttribute('index', value);
+            }
+
+            get index() {
+                return this.getAttribute('index');
+            }
+        },
+    );
+</script>

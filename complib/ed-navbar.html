@@ -1,0 +1,137 @@
+<template id="ed-navbar-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            line-height: var(--navbar-height);
+            padding: 0 1.0rem;
+            color: var(--foreground-color);
+            background-color: var(--navbar-bg-color);
+            box-shadow: var(--shadow-card);
+        }
+
+        .nav-spacer-1 {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+
+            flex-grow: 1;
+        }
+
+        .nav-spacer-2 {
+            flex-basis: 15.5rem;
+            flex-grow: 1;
+        }
+
+        /*
+        @media (max-width: 50rem) {
+            .nav-wrapper {
+                justify-content: space-around;
+            }
+        }
+        */
+
+        .nav-logo {
+            flex-basis: 5.5rem;
+            height: var(--navbar-height);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        .nav-action {
+            flex-grow: 1;
+            height: var(--navbar-height);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        .nav-links {
+            font-size: 1rem;
+            font-weight: 400;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0 1rem;
+
+            line-height: 2.5rem;
+            padding: 0.625rem 0.625rem;
+        }
+
+        ::slotted(a) {
+            /* position: relative is needed to create a stacking context for underline */
+            position: relative;
+            padding: 0 1rem;
+            white-space: nowrap;
+            color: var(--foreground-color);
+            text-decoration: none;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0 0.5rem;
+        }
+
+        /* underline (hidden by default with scale(0, 1)) */
+        ::slotted(a)::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: var(--foreground-color);
+            bottom: 0;
+            left: 0;
+            transform: scale(0, 1);
+            transition: all .2s ease-out;
+        }
+
+        /* show underline for hovered link */
+        ::slotted(a:hover)::after {
+            transform: scale(1, 1);
+        }
+    </style>
+    <div class="nav-wrapper">
+        <div class="nav-logo">
+            <slot name="logo"></slot>
+        </div>
+        <div class="nav-links">
+            <slot name="left"></slot>
+        </div>
+        <div class="nav-spacer-1">
+            <div class="nav-spacer-2">
+            </div>
+            <div class="nav-links">
+                <slot name="right"></slot>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-navbar",
+        class extends HTMLElement {
+            constructor() {
+                super();
+                const template_clone = document.getElementById("ed-navbar-template").content.cloneNode(true);
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+        },
+    );
+</script>

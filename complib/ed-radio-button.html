@@ -1,0 +1,125 @@
+<template id="ed-radio-button-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+
+        button {
+            all: unset;
+            box-sizing: border-box;
+
+            margin: 0;
+            padding: 0;
+            width: 8rem;
+            height: 2.0rem;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0 0.5rem;
+
+            color: var(--foreground-color);
+            font-size: 1.0rem;
+            text-decoration: none;
+            text-align: center;
+            white-space: nowrap;
+
+            outline: 0.125rem solid transparent;
+
+            border-radius: var(--button-border-radius);
+            background-color: var(--foreground-color-alt-2);
+            box-shadow: var(--shadow-button);
+
+            user-select: none;
+            cursor: pointer;
+
+            transition: all 0.1s ease-out;
+        }
+
+        button:focus-visible {
+            background-color: var(--focus-color);
+            outline: var(--focus-outline);
+            transition: outline 0s;
+        }
+
+        :host(.icon) button {
+            background-color: transparent;
+            box-shadow: none;
+            width: 2.0rem;
+            height: 2.0rem;
+        }
+
+        :host(.icon) button:hover {
+            background-color: var(--foreground-color-alt-2);
+        }
+
+        :host(.icon[checked=true]) button:hover {
+            background-color: var(--accent-color);
+        }
+
+        :host(.color) {
+            border-radius: var(--input-border-radius);
+        }
+
+        :host(.color) button {
+            background-color: transparent;
+            border-radius: var(--input-border-radius);
+            box-shadow: var(--shadow-button);
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        :host(.color) button:hover {
+            outline: 0.125rem solid var(--focus-color);
+        }
+
+        :host(.color[checked=true]) button {
+            background-color: transparent;
+            outline: 0.125rem solid var(--foreground-color);
+            box-shadow: var(--ed-field-inset-shadow);
+        }
+
+        :host(.secondary) button {
+            background-color: var(--bg-color-light);
+            border: var(--button-border-width) solid var(--foreground-color-alt-2);
+            box-shadow: var(--shadow-button);
+        }
+
+        :host(.secondary) button:hover {
+            background-color: var(--focus-color);
+            border: var(--button-border-width) solid transparent;
+        }
+
+        :host([checked=true]) button {
+            /*outline: 0.125rem solid var(--foreground-color);*/
+            background-color: var(--accent-color);
+            /*box-shadow: var(--ed-field-inset-shadow);*/
+        }
+    </style>
+    <button type="button">
+        <slot></slot>
+    </button>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-radio-button",
+        class extends HTMLElement {
+            static formAssociated = true;
+
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-radio-button-template").content.cloneNode(true);
+
+                this.value = this.getAttribute("value");
+
+                this.internals_ = this.attachInternals();
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+        },
+    );
+</script>

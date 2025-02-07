@@ -1,0 +1,175 @@
+<template id="ed-tab-button-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        button {
+            all: unset;
+            box-sizing: border-box;
+
+            position: relative;
+            padding: 0 0;
+            white-space: nowrap;
+
+            color: var(--foreground-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+
+            user-select: none;
+            cursor: pointer;
+
+            &:focus-visible {
+                outline: var(--focus-outline);
+                transition: outline 0s;
+            }
+
+            /* selected underline */
+            &::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 2px;
+                background-color: var(--foreground-color);
+                bottom: 0;
+                left: 0;
+                transform: scale(0, 1);
+                transition: all .2s ease-out;
+            }
+
+            #caret {
+                transform: scale(1, 1);
+                transition: all .1s ease-out;
+            }
+        }
+
+        :host([checked=true]) button {
+            transition: none;
+
+            &::after {
+                transform: scale(1, 1);
+            }
+
+            #caret {
+                transform: scale(1, -1);
+            }
+        }
+
+        :host(.fit) button {
+            position: static;
+            display: block;
+            padding: 0;
+
+            #caret {
+                display: none;
+            }
+
+            &::after {
+                all: unset;
+            }
+        }
+
+        :host(.fit[checked=true]) button {
+            color: var(--foreground-color-high-contrast);
+            background-color: var(--accent-color);
+        }
+
+        :host(.vertical) button {
+            padding: 0.625rem;
+
+            white-space: normal;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.25rem;
+
+            width: 5rem;
+            height: 5rem;
+
+            font-size: 0.625rem;
+            font-weight: 500;
+            letter-spacing: 0.0625em;
+            text-transform: uppercase;
+            line-height: normal;
+            text-align: center;
+
+            &:hover {
+                background-color: var(--foreground-color-alt-2);
+            }
+
+            #caret {
+                display: none;
+            }
+
+            &::after {
+                all: unset;
+                box-sizing: border-box;
+
+                --size: 0.625rem;
+                display: none;
+                content: '';
+                position: absolute;
+                z-index: 1;
+                width: var(--size);
+                height: var(--size);
+                background-color: var(--accent-color);
+                bottom: calc(50% - var(--size) * 0.5);
+                right: calc(var(--size) * -0.5);
+                transform: rotate(45deg);
+            }
+        }
+
+        :host(.vertical[checked=true]) button {
+            color: var(--foreground-color-high-contrast);
+            background-color: var(--accent-color);
+
+            &::after {
+                display: block;
+            }
+        }
+
+        ed-icon {
+            font-size: 1.0rem;
+        }
+
+        ::slotted(*[slot="icon"]) {
+            font-size: 1.0rem;
+        }
+    </style>
+    <button>
+        <slot name="icon"></slot>
+        <slot></slot>
+        <ed-icon id="caret" icon="angle-down-solid"></ed-icon>
+    </button>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-tab-button",
+        class extends HTMLElement {
+            static formAssociated = true;
+
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-tab-button-template").content.cloneNode(true);
+                const button = template_clone.querySelector("button");
+
+                this.value = this.getAttribute("value");
+
+                this.onclick = (event) => {
+                    this.dispatchEvent(new CustomEvent("tab-button-clicked", { bubbles: true, detail: this.value }))
+                };
+
+                this.internals_ = this.attachInternals();
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+        },
+    );
+</script>

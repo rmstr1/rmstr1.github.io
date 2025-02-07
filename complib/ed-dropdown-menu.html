@@ -1,0 +1,52 @@
+<template id="ed-dropdown-menu-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :host {
+            /* display: contents; to set this as the child of the parent container of the custom element. */
+            position: relative;
+        }
+
+        .content-container {
+            display: none;
+            position: absolute;
+
+            align-self: flex-end;
+
+            margin: 0;
+            padding: 0;
+            width: auto;
+            height: fit-content;
+
+            background-color: var(--bg-color-light);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+
+            z-index: 10;
+        }
+
+        :host(:hover) .content-container {
+            display: block;
+        }
+    </style>
+    <slot name="header"></slot>
+    <div class="content-container" tabindex="-1">
+        <slot></slot>
+    </div>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-dropdown-menu",
+        class extends HTMLElement {
+            constructor() {
+                super();
+                const template_clone = document.getElementById("ed-dropdown-menu-template").content.cloneNode(true);
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+        },
+    );
+</script>

@@ -1,0 +1,80 @@
+<style>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    ed-variant-content {
+        display: block;
+        padding-top: 0.5rem;
+        width: 100%;
+
+        &[disabled] {
+            display: none;
+        }
+
+        fieldset {
+            all: unset;
+            box-sizing: border-box;
+
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        &:has(> fieldset:empty) {
+            padding: 0;
+            height: 0;
+        }
+    }
+</style>
+
+<template id="ed-variant-content-template">
+    <fieldset><!-- DON'T ADD A LINE BREAK HERE OTHERWISE THE :empty SELECTOR WILL NOT MATCH THIS!!!--></fieldset>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-variant-content",
+        class extends HTMLElement {
+            constructor() {
+                super();
+                this.value = this.getAttribute("value");
+                //this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+
+            connectedCallback() {
+                setTimeout(() => {
+                    const template_clone = document.getElementById("ed-variant-content-template").content.cloneNode(true);
+                    this.fieldset = template_clone.querySelector("fieldset");
+                    this.fieldset.append(...this.children);
+
+                    this.append(template_clone);
+
+                    const parent = this.parentElement;
+                    const disabled = this.value !== parent.value;
+                    if (disabled === true) {
+                        this.setAttribute('disabled', disabled);
+                        this.fieldset.setAttribute('disabled', disabled);
+                    } else {
+                        this.removeAttribute('disabled')
+                        this.fieldset.removeAttribute('disabled')
+                    }
+                    parent.addEventListener("change", (event) => {
+                        const disabled = this.value !== event.target.value;
+                        if (disabled === true) {
+                            this.setAttribute('disabled', disabled);
+                            this.fieldset.setAttribute('disabled', disabled);
+                        } else {
+                            this.removeAttribute('disabled')
+                            this.fieldset.removeAttribute('disabled')
+                        }
+                        // TODO: check if fieldset disabled is enough to reset form values of children!
+                    });
+                });
+            }
+        },
+
+    );
+</script>

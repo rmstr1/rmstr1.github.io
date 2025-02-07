@@ -1,0 +1,101 @@
+<template id="ed-color-swatch-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+
+        .container {
+            margin: 0;
+            padding: 0.25rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: left;
+            align-items: center;
+            gap: 0.375rem 0.375rem;
+        }
+
+        :host(.vertical) .container {
+            flex-flow: column;
+        }
+    </style>
+    <div id="container" class="container">
+        <slot>
+        </slot>
+    </div>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-color-swatch",
+        class extends HTMLElement {
+            static formAssociated = true;
+            buttons_map = new Map([]);
+
+            constructor() {
+                super();
+                const template_clone = document.getElementById("ed-color-swatch-template").content.cloneNode(true);
+
+                const colors = ["#ffffff", "#e6e6e6", "#ff0000", "#00ff00", "#ffff00", "#00ffff", "#ff0010", "#00ff10", "#fff120", "#00f22f", "#111111", "#222222", "#333333", "#444444"];
+                this.buttons_map = new Map(colors.map((color) => {
+                    const button = document.createElement("ed-radio-button");
+                    button.setAttribute("id", color);
+                    button.setAttribute("class", "color");
+                    button.value = color;
+                    button.style.backgroundColor = color;
+                    button.onclick = (event) => this.handleSlottedClick(event, button);
+                    return [color, button];
+                }));
+
+                this.container = template_clone.querySelector('#container')
+                this.name = this.getAttribute("name");
+                const value = this.getAttribute("value");
+
+                if (this.buttons_map.has(value)) {
+                    this.value = value;
+                } else if (this.buttons_map.size > 0) {
+                    this.value = this.buttons_map.entries().next().value[0]; // use first key in buttons_map as default value
+                }
+
+                this.internals_ = this.attachInternals();
+                this.attachShadow({ mode: "open" }).append(template_clone);
+                this.internals_.setFormValue(this.value, this.value);
+            }
+
+            handleSlottedClick(event, el) {
+                const old_value = this.value;
+                this.value = value;
+                this.updateRadioButtonsCheckedState(old_value, value);
+                this.onChange();
+            }
+
+            updateRadioButtonsCheckedState(old_value, new_value) {
+                if (this.buttons_map.has(old_value)) {
+                    this.buttons_map.get(old_value).setAttribute("checked", false)
+                }
+                if (this.buttons_map.has(new_value)) {
+                    this.buttons_map.get(new_value).setAttribute("checked", true)
+                }
+            }
+
+            connectedCallback() {
+                setTimeout(() => {
+                    this.buttons_map.forEach(
+                        (el, color) => {
+                            this.container.appendChild(el);
+                        }
+                    );
+                    this.updateRadioButtonsCheckedState("", this.value);
+                });
+            }
+
+            onChange() {
+                this.internals_.setFormValue(this.value, this.value);
+                this.dispatchEvent(new CustomEvent("change", { detail: (this.name, this.value) }))
+                this.internals_.form?.dispatchEvent(new CustomEvent("change", { detail: (this.name, this.value) }))
+            }
+        },
+    );
+</script>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* Prevents webcomponent content from being rendered before webcomponent is loaded */
+        *:not(:defined) {
+            display: none
+        }
+
+        :root {
+            color-scheme: dark;
+
+            /*theme*/
+            --navbar-bg-color: #252528;
+
+            --bg-color: #1a1b1c;
+            --bg-color-dark: #1a1b1c;
+            --bg-color-light: #252528;
+            --bg-color-light-2: #2c2c2e;
+
+            --focus-color: #717779;
+            --focus-outline: #f1e259 solid 2px;
+
+            --foreground-color: #e6e6e6;
+            --foreground-color-alt: #d4d4d4;
+            --foreground-color-alt-2: #44484b;
+            --foreground-color-high-contrast: #ffffff;
+            --accent-color: #f34951;
+
+            --helptext-color: #6e7479;
+
+            --label-font: 'Source Sans 3', sans-serif;
+            --label-font-size: 0.875rem;
+
+            --input-font: 'IBM Plex Mono', monospace;
+            --input-font-size: 0.875rem;
+            --input-font-weight: normal;
+
+            --tab-content-width: 26rem;
+            --tab-content-max-width: 100%;
+
+            --input-foreground-color: #d4d4d4;
+            --input-height: 1.5rem;
+            --input-border-radius: 0.25rem;
+
+            --button-border-width: 0.125rem;
+            --button-border-radius: 0;
+            --button-disabled-color: #44484b;
+            --button-icon-size: 2rem;
+            --button-icon-small-size: 1.25rem;
+
+            --shadow-card: 0px 2px 3px -1px rgba(0, 0, 0, 0.1);
+            --shadow-button: 0px 4px 8px -2px rgba(0, 0, 0, 0.33);
+            --ed-field-inset-shadow: inset 0.1875rem 0.1875rem rgba(0, 0, 0, 0.231);
+
+            --ed-droplist-gap: 0.5rem;
+        }
+
+        body {
+            background-color: var(--bg-color);
+        }
+    </style>
+</head>
+
+
+<body>
+    <ed-droplist>
+        <ed-droplist-item>
+            <ed-node name="node_1">
+                <span slot="title">Node Title 1</span>
+                <img slot="view">
+                <ed-node-pin name="in" slot="in"></ed-node-pin>
+                <ed-node-pin name="out" slot="out"></ed-node-pin>
+            </ed-node>
+        </ed-droplist-item>
+        <ed-droplist-item>
+            <ed-node name="node_2">
+                <span slot="title">Node Title 2</span>
+                <img slot="view">
+                <ed-node-pin name="in" slot="in"></ed-node-pin>
+                <ed-node-pin name="out" slot="out"></ed-node-pin>
+            </ed-node>
+        </ed-droplist-item>
+        <ed-droplist-item>
+            <ed-node name="node_2">
+                <span slot="title">Node Title 2</span>
+                <img slot="view">
+                <ed-node-pin name="in" slot="in"></ed-node-pin>
+                <ed-node-pin name="out" slot="out"></ed-node-pin>
+            </ed-node>
+        </ed-droplist-item>
+        <ed-droplist-item>
+            <ed-node name="node_3">
+                <span slot="title">Node Title 3</span>
+                <img slot="view">
+                <ed-node-pin name="in_1" slot="in"></ed-node-pin>
+                <ed-node-pin name="in_2" slot="in"></ed-node-pin>
+                <ed-node-pin name="in_3" slot="in"></ed-node-pin>
+                <ed-node-pin name="out" slot="out"></ed-node-pin>
+            </ed-node></ed-droplist-item>
+        <ed-droplist-item>D</ed-droplist-item>
+    </ed-droplist>
+    <hr>
+    <br>
+    <br>
+    <br>
+    <ed-node-pin></ed-node-pin>
+    <br>
+    <ed-node-pin></ed-node-pin>
+    <br>
+    <ed-node-pin></ed-node-pin>
+
+    <script type="module">
+        const load_html_fragment = async (path) => {
+            const response = await fetch(path)
+            const html = await response.text();
+            const range = new Range();
+            return range.createContextualFragment(html);
+        };
+
+        const [...complib_fragments] = await Promise.all([
+            load_html_fragment("./ed-button.html"),
+            load_html_fragment("./ed-icon.html"),
+            load_html_fragment("./ed-labeled.html"),
+            load_html_fragment("./ed-drawer.html"),
+            load_html_fragment("./ed-color.html"),
+            load_html_fragment("./ed-dropdown-menu.html"),
+            load_html_fragment("./ed-navbar.html"),
+            load_html_fragment("./ed-selector.html"),
+            load_html_fragment("./ed-radio-button.html"),
+            load_html_fragment("./ed-radio-group.html"),
+            load_html_fragment("./ed-tab-button.html"),
+            load_html_fragment("./ed-tab-group.html"),
+            load_html_fragment("./ed-tab-content.html"),
+            load_html_fragment("./ed-textbox.html"),
+            load_html_fragment("./ed-number.html"),
+            load_html_fragment("./ed-checkbox.html"),
+            load_html_fragment("./ed-slider.html"),
+            load_html_fragment("./ed-modal-dialog.html"),
+            load_html_fragment("./ed-mega-menu.html"),
+            load_html_fragment("./ed-color-swatch.html"),
+            load_html_fragment("./ed-form-listener.html"),
+            load_html_fragment("./ed-variant-selector.html"),
+            load_html_fragment("./ed-variant-content.html"),
+            load_html_fragment("./ed-droplist.html"),
+            load_html_fragment("./ed-droplist-item.html"),
+            load_html_fragment("./ed-node.html"),
+            load_html_fragment("./ed-node-pin.html"),
+            load_html_fragment("./ed-node-cable.html"),
+        ]);
+        globalThis.document.body.append(...complib_fragments);
+    </script>
+</body>
+
+</html>

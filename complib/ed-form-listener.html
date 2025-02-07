@@ -1,0 +1,81 @@
+<template id="ed-form-listener-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :host {
+            padding: 0;
+            width: 100%;
+
+            font-family: var(--input-font);
+            font-size: var(--input-font-size);
+            font-weight: var(--input-font-weight);
+        }
+
+        input[type=text] {
+            all: unset;
+            box-sizing: border-box;
+
+            margin: 0;
+            padding: 0 0.5rem;
+            height: var(--input-height);
+            width: 100%;
+
+            border: none;
+            background: none;
+
+            color: var(--input-foreground-color);
+        }
+
+        input[type=text]:focus-visible {
+            transition: outline 0s;
+        }
+    </style>
+    <input type="text" readonly>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-form-listener",
+        class extends HTMLElement {
+            static formAssociated = true;
+
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-form-listener-template").content.cloneNode(true);
+
+                this.input = template_clone.querySelector('input');
+                this.input.setAttribute("value", this.getAttribute("value") ?? "");
+
+                this.name = this.getAttribute("name");
+                this.value = this.getAttribute("value");
+
+                this.internals_ = this.attachInternals();
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+
+            connectedCallback() {
+                setTimeout(() => {
+                    this.internals_.form.addEventListener("change", (event) => {
+                        const formdata = new FormData(event.target);
+                        const props = Object.fromEntries(formdata);
+                        this.value = Number(props.resilience)
+                            + Number(props.resignation)
+                            + Number(props.union)
+                            + Number(props.accounting)
+                            + Number(props.company_values)
+                            + Number(props.sports);
+                        this.input.value = this.value
+                        // TODO: custom code;
+                        // TODO: Select other form than this elements' parent.
+                        // TODO: multi-form listener
+                    });
+                })
+            }
+        },
+    );
+</script>

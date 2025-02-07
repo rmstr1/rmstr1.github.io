@@ -1,0 +1,76 @@
+<template id="ed-textbox-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :host {
+            padding: 0;
+            width: 100%;
+
+            font-family: var(--input-font);
+            font-size: var(--input-font-size);
+            font-weight: var(--input-font-weight);
+        }
+
+        input[type=text] {
+            all: unset;
+            box-sizing: border-box;
+
+            margin: 0;
+            padding: 0 0.5rem;
+            height: var(--input-height);
+            width: 100%;
+
+            border: none;
+            border-radius: var(--input-border-radius);
+            background: var(--bg-color-dark);
+
+            color: var(--input-foreground-color);
+            box-shadow: var(--ed-field-inset-shadow);
+        }
+
+        input[type=text]:focus-visible {
+            transition: outline 0s;
+        }
+    </style>
+    <input type="text">
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-textbox",
+        class extends HTMLElement {
+            static formAssociated = true;
+
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-textbox-template").content.cloneNode(true);
+
+                this.input = template_clone.querySelector("input");
+                this.input.setAttribute("value", this.getAttribute("value") ?? "");
+
+                this.name = this.getAttribute("name");
+                this.value = this.getAttribute("value");
+
+                this.internals_ = this.attachInternals();
+                this.attachShadow({ mode: "open" }).append(template_clone);
+                this.internals_.setFormValue(this.value, this.value);
+
+                this.input.addEventListener("change", (event) => {
+                    this.value = event.target.value;
+                    this.onChange()
+                });
+            }
+
+            onChange() {
+                this.internals_.setFormValue(this.value, this.value);
+                this.dispatchEvent(new CustomEvent("change", { detail: (this.name, this.value) }))
+                this.internals_.form?.dispatchEvent(new CustomEvent("change", { detail: (this.name, this.value) }))
+            }
+        },
+    );
+</script>

@@ -1,0 +1,143 @@
+<template id="ed-node-cable-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        svg {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: visible;
+            pointer-events: none;
+            color: #aaaaaa;
+        }
+    </style>
+    <svg>
+        <path d="M 0 0 Q 0 0, 0 0" stroke="currentColor" fill="transparent" stroke-width="2" />
+    </svg>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-node-cable",
+        class extends HTMLElement {
+            constructor() {
+                super();
+                this.startPin = null;
+                this.startNode = null;
+                this.endPin = null;
+                this.endNode = null;
+
+                const template_clone = document.getElementById("ed-node-cable-template").content.cloneNode(true);
+                this.path = template_clone.querySelector('path');
+
+                const hue = Math.floor(Math.random() * 360);
+                this.path.style.color = `oklch(65.0% 0.25 ${hue})`;
+
+                this.pointermove = (event) => {
+                    if (this.isDragging()) {
+                        this.updatePosition(event);
+                    }
+                };
+
+                this.pointerup = (event) => {
+                    window.removeEventListener('pointermove', this.pointermove);
+                    window.removeEventListener('pointerup', this.pointerup);
+
+                    const dropTarget = document.elementFromPoint(event.clientX, event.clientY)?.closest('ed-node-pin');
+                    if (this.validateConnection(dropTarget)) {
+                        this.endPin = dropTarget;
+                        this.endNode = this.endPin.closest("ed-node")
+
+                        if (this.endPin.getAttribute("type") === "in") {
+                            if (this.endPin.input_cable !== null && this.endPin.input_cable !== undefined) {
+                                this.endPin.input_cable.remove();
+                            }
+                            this.endPin.input_cable = this;
+                        }
+                        this.updatePosition();
+                        this.dispatchEvent(new CustomEvent("connection-changed", { bubbles: true, detail: this }))
+                    } else {
+                        if (this.startPin.getAttribute("type") === "in") {
+                            this.startPin.input_cable = null;
+                        }
+                        this.remove();
+                        this.dispatchEvent(new CustomEvent("connection-changed", { bubbles: true, detail: this }))
+                    }
+                };
+
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+
+            isDragging() {
+                return this.endPin === null;
+            }
+
+            //returns [out node, out pin, in node, in pin]
+            serialize() {
+                if (this.isDragging()) {
+                    return;
+                }
+                const [inputPin, outputPin] = this.startPin.getAttribute("type") === "in" ? [this.startPin, this.endPin] : [this.endPin, this.startPin];
+                const inputNode = inputPin.closest("ed-node");
+                const outputNode = outputPin.closest("ed-node");
+                return [outputNode?.getAttribute("name"), outputPin.getAttribute("name"), inputNode?.getAttribute("name"), inputPin.getAttribute("name")]
+            }
+
+            validateConnection(endPin) {
+                if (endPin && endPin !== this.startPin && (endPin.getAttribute("type") !== this.startPin.getAttribute("type"))) {
+                    const startNode = this.startPin.closest('ed-node');
+                    const endNode = endPin.closest('ed-node');
+                    return !endNode || startNode !== endNode;
+                } else {
+                    return false;
+                }
+            }
+
+            startDragging(event) {
+                this.startNode = this.startPin.closest("ed-node")
+
+                this.endPin = null;
+                this.endNode = null;
+
+                window.addEventListener('pointermove', this.pointermove);
+                window.addEventListener('pointerup', this.pointerup);
+
+                this.setPointerCapture(event.pointerId);
+                this.updatePosition(event);
+            }
+
+            updatePosition(event) {
+                const startRect = this.startPin.getBoundingClientRect();
+                const startX = startRect.width / 2;
+                const startY = startRect.height / 2;
+
+                let endX, endY;
+                if (this.endPin) {
+                    const endRect = this.endPin.getBoundingClientRect();
+                    endX = endRect.left + endRect.width / 2 - startRect.left;
+                    endY = endRect.top + endRect.height / 2 - startRect.top;
+                } else {
+                    if (event === undefined) {
+                        return
+                    }
+                    endX = event.clientX - startRect.left;
+                    endY = event.clientY - startRect.top;
+                }
+
+                const controlX = (startX + endX) / 2 + Math.min(Math.abs(startY - endY) / 2, 75);
+                const controlY1 = startY;
+                const controlY2 = endY;
+
+                const newPathData = `M ${startX} ${startY} C ${controlX} ${controlY1}, ${controlX} ${controlY2}, ${endX} ${endY}`
+                this.path.setAttribute('d', newPathData);
+            }
+        },
+    );
+</script>

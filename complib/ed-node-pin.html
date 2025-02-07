@@ -1,0 +1,50 @@
+<template id="ed-node-pin-template">
+    <div>
+        <ed-icon icon="circle"></ed-icon>
+    </div>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-node-pin",
+        class extends HTMLElement {
+            constructor() {
+                super();
+                const template_clone = document.getElementById("ed-node-pin-template").content.cloneNode(true);
+                this.appendChild(template_clone);
+
+                this.setAttribute("draggable", "true");
+
+                this.addEventListener('pointerdown', (event) => {
+                    var cable = null;
+                    if (this.getAttribute("type") === "in") {
+                        if (this.input_cable === null || this.input_cable === undefined) {
+                            cable = document.createElement('ed-node-cable');
+                            this.input_cable = cable;
+                            cable.startPin = this;
+                        } else {
+                            // if this is a input node, drag the already connected cable
+                            cable = this.input_cable;
+                            this.input_cable = null;
+                            if (cable.startPin === this) {
+                                cable.startPin = cable.endPin;
+                            }
+                        }
+                    } else {
+                        cable = document.createElement('ed-node-cable');
+                        cable.startPin = this;
+                    }
+
+                    cable.startPin.appendChild(cable);
+                    cable.startDragging(event);
+                });
+
+                this.addEventListener('dragstart', (event) => {
+                    // prevent dragging parent element
+                    event.preventDefault();
+                    event.stopPropagation();
+                });
+            }
+        },
+    );
+</script>

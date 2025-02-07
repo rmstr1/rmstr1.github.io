@@ -1,0 +1,135 @@
+<template id="ed-node-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        .content {
+            margin: 0.25rem;
+
+            /* TODO: var */
+            width: var(--ed-node-width);
+            height: fit-content;
+
+            display: grid;
+            grid-template:
+                "h h" auto
+                "v in" 1fr
+                "v out" auto/ auto 1fr;
+            gap: 0;
+
+            align-items: start;
+            justify-content: start;
+
+            /* TODO: rm */
+            border-bottom: solid 1px var(--bg-color);
+            box-shadow: var(--ed-shadow-node);
+            background-color: var(--bg-color-light);
+
+            text-transform: uppercase;
+            font-family: sans-serif;
+            font-size: 0.625rem;
+            font-weight: 600;
+            letter-spacing: 0.025rem;
+
+            .title {
+                grid-area: h;
+
+                padding: 0.125rem;
+                padding-left: 0.375rem;
+                width: 100%;
+
+                /* TODO: var */
+                background-color: var(--foreground-color);
+                color: var(--bg-color);
+
+                text-transform: uppercase;
+                font-family: sans-serif;
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.025rem;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .view {
+                grid-area: v;
+
+                width: 5.5rem;
+                aspect-ratio: 1.0;
+
+                background-color: var(--bg-color);
+            }
+
+            .in {
+                padding: 0.25rem;
+
+                grid-area: in;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                align-items: end;
+            }
+
+            .out {
+                padding: 0.25rem;
+
+                grid-area: out;
+                height: fit-content;
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                align-items: end;
+            }
+
+            &:hover {
+                background-color: var(--foreground-color-alt-2);
+            }
+        }
+    </style>
+    <div class="content">
+        <div class="title">
+            <slot name="title"></slot>
+            <ed-button class="icon-small inverted"><ed-icon icon="xmark-solid"></ed-icon></ed-button>
+        </div>
+        <div class="view">
+            <slot name="view"></slot>
+        </div>
+        <div class="in">
+            <slot name="in"></slot>
+        </div>
+        <div class="out">
+            <slot name="out"></slot>
+        </div>
+    </div>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-node",
+        class extends HTMLElement {
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-node-template").content.cloneNode(true);
+
+                template_clone.querySelector("ed-button").onclick = (event) => {
+                    let parent = this.parentElement;
+                    this.remove();
+                    parent.dispatchEvent(new CustomEvent("node-removed", { bubbles: true, detail: this }));
+                };
+
+                this.slot_in = template_clone.querySelector("slot[name='in']");
+                this.slot_out = template_clone.querySelector("slot[name='out']");
+
+                this.container = template_clone.querySelector(".container");
+                this.attachShadow({ mode: "open" }).append(template_clone)
+            }
+        },
+    );
+</script>

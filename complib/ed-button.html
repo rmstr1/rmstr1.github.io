@@ -1,0 +1,200 @@
+<template id="ed-button-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        button {
+            all: unset;
+            box-sizing: border-box;
+
+            user-select: none;
+
+            margin: 0;
+            padding: 0;
+            width: 8.5rem;
+            height: 2.5rem;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0 0.5rem;
+
+            color: var(--foreground-color);
+
+            font-weight: 400;
+
+            text-decoration: none;
+            text-align: center;
+            white-space: nowrap;
+
+            border-radius: var(--button-border-radius);
+            border: var(--button-border-width) solid transparent;
+            background-color: var(--foreground-color-alt-2);
+            box-shadow: var(--shadow-button);
+
+            cursor: pointer;
+
+            transition: all 0.1s ease-out;
+
+            &:hover {
+                background-color: var(--focus-color);
+            }
+
+            &:focus-visible {
+                background-color: var(--focus-color);
+                outline: var(--focus-outline);
+                transition: outline 0s;
+            }
+
+        }
+
+        :host(.secondary) button {
+            background-color: var(--bg-color-light);
+            border: var(--button-border-width) solid var(--foreground-color-alt-2);
+
+            &:hover {
+                background-color: var(--focus-color);
+                border: var(--button-border-width) solid transparent;
+            }
+        }
+
+        :host(.accent) button {
+            color: var(--foreground-color-high-contrast);
+            background-color: var(--accent-color);
+            border: var(--button-border-width) solid var(--accent-color);
+
+            &:hover {
+                color: var(--accent-color);
+                background: none;
+            }
+        }
+
+        :host(.tertiary) button {
+            width: auto;
+            background-color: transparent;
+            box-shadow: none;
+
+            &:hover {
+                border: var(--button-border-width) solid transparent;
+                /* background-color: var(--focus-color); */
+            }
+        }
+
+        :host(.inverted) button {
+            background-color: transparent;
+            box-shadow: none;
+            color: var(--bg-color);
+
+            &:hover {
+                color: var(--foreground-color);
+                background-color: var(--foreground-color-alt-2);
+            }
+        }
+
+        :host(.hover-highlight) button:hover {
+            background-color: var(--focus-color);
+        }
+
+        :host(.hover-highlight) button:active {
+            background-color: var(--foreground-color-alt-2);
+        }
+
+        :host(.icon) button {
+            background-color: transparent;
+            box-shadow: none;
+            font-size: 1.0rem;
+            width: var(--button-icon-size);
+            height: var(--button-icon-size);
+        }
+
+        :host(.icon) button:hover {
+            background-color: var(--foreground-color-alt-2);
+        }
+
+        :host(.icon-small) button {
+            font-size: 0.75rem;
+            width: var(--button-icon-small-size);
+            height: var(--button-icon-small-size);
+        }
+
+        :host(.round) button {
+            border-radius: var(50%);
+        }
+
+        :host(.stretch) {
+            width: 100%;
+            flex-grow: 1;
+
+            button {
+                width: 100%;
+            }
+        }
+
+        :host(:hover) button:active {
+            transition: none;
+            box-shadow: none;
+        }
+
+        :host(:disabled) button {
+            color: var(--button-disabled-color);
+            cursor: default;
+            pointer-events: none;
+        }
+
+        ::slotted(*) {
+            user-select: none;
+            cursor: pointer;
+        }
+
+        ::slotted(*[slot="icon"]) {
+            font-size: 1.0rem;
+        }
+
+        ::slotted(*[slot="action-icon"]) {
+            font-size: 1.0rem;
+        }
+    </style>
+    <button>
+        <slot name="icon"></slot>
+        <slot></slot>
+        <slot name="action-icon"></slot>
+    </button>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-button",
+        class extends HTMLElement {
+            //https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
+            static formAssociated = true;
+
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-button-template").content.cloneNode(true);
+
+                this.name = this.getAttribute("name");
+                this.value = this.getAttribute("value");
+
+                this.internals_ = this.attachInternals();
+                this.attachShadow({ mode: "open" }).append(template_clone);
+
+                this.addEventListener("click", () => {
+                    for (const el of this.internals_.form?.elements || []) {
+                        if (el.name === this.name) {
+                            // Reset form value of all elements with same name.
+                            // This is needed to know which button submitted the form, since for now we cant pass this to requestSubmit
+                            // and need to set this with setFormValue.see https://github.com/WICG/webcomponents/issues/814
+                            el.internals_.setFormValue(undefined, undefined);
+                        }
+                    }
+                    this.internals_.setFormValue(this.value, this.value);
+                    this.internals_.form?.requestSubmit();
+                });
+            }
+        },
+    );
+</script>

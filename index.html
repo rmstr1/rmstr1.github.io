@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./css/editor.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ed">
+    <title>Editor</title>
+</head>
+
+<body>
+    <div class="single-page-container">
+        <div class="navbar" id="navbar-target">
+            <!-- inner html set by model-->
+            <div class="logo">////</div>
+            <ed-dropdown-menu>
+                <button slot="header">File</button>
+                <div class="submenu">
+                    <button id="new" onclick='document.getElementById("new-model-dialog").showModal()'>New</button>
+                    <button onclick="document.getElementById('load-model').click();">Load Model</button>
+                    <hr>
+                    <button id="save-model">Save Model</button>
+                    <button id="export">Export</button>
+                </div>
+            </ed-dropdown-menu>
+            <ed-dropdown-menu>
+                <button slot="header">Image</button>
+                <div class="submenu">
+                    <button id="resize">Resize Canvas</button>
+                </div>
+            </ed-dropdown-menu>
+            <ed-dropdown-menu>
+                <button slot="header">View</button>
+                <div class="submenu">
+                    <button id="reset-view">Reset View</button>
+                    <button id="reset-zoom">Reset Zoom</button>
+                    <button id="center-view">Center View</button>
+                    <hr>
+                    <button id="zoom-in">Zoom +</button>
+                    <button id="zoom-out">Zoom -</button>
+                </div>
+            </ed-dropdown-menu>
+        </div>
+        <div class="sidebar">
+            <div class="headings">
+                <ed-tab-group id="tab-headings" collapsible="true" value="">
+                    <ed-droplist id="nodes-container">
+                        <!-- inner html set by model-->
+                    </ed-droplist>
+                </ed-tab-group>
+            </div>
+            <div class="footer">
+                <button id="add-node" onclick='document.getElementById("model-select-dialog").showModal()'>
+                    <ed-icon icon="plus" slot="icon"></ed-icon>Add Node
+                </button>
+            </div>
+            <div class="content" id="settings-target">
+                <!-- inner html set by model-->
+            </div>
+        </div>
+        <canvas id="main-view" class="main-view" oncontextmenu="return false;">
+        </canvas>
+        <div class="view-overlay">
+            <div class="toolbar" id="toolbar-target">
+                <!-- inner html set by model-->
+            </div>
+            <div class="top-bar-container">
+                <div class="top-bar" id="top-bar-target">
+                    <!-- inner html set by model-->
+                </div>
+            </div>
+            <div class="top-right">
+                <ed-button class="accent" id="download" slot="left">
+                    Download
+                    <ed-icon icon="download-solid" slot="action-icon"></ed-icon>
+                </ed-button>
+            </div>
+        </div>
+        <footer>
+        </footer>
+    </div>
+    <div id="dialogs-target">
+        <!-- inner html set by model-->
+    </div>
+    <input type="file" id="load-model" style="display: none;" accept="application/json" />
+    <dialog id="model-select-dialog">
+        <form method="dialog" id="model-select-form">
+            <h1>
+                Add Node
+            </h1>
+            <div class="columns-container" id="model-select-target">
+                <!-- inner html set by model-->
+            </div>
+            <div class="close-button-wrapper">
+                <ed-button class="icon tertiary" name="submitter" value="cancel">
+                    <ed-icon icon="xmark-solid" slot="icon"></ed-icon>
+                </ed-button>
+            </div>
+        </form>
+    </dialog>
+    <dialog id="new-model-dialog">
+        <form method="dialog">
+            <h1>
+                New File
+            </h1>
+            <div>
+                Do you want to create a new file?
+            </div>
+            <div class="close-button-wrapper">
+                <ed-button class="icon tertiary" name="submitter" value="cancel">
+                    <ed-icon icon="xmark-solid" slot="icon"></ed-icon>
+                </ed-button>
+            </div>
+        </form>
+    </dialog>
+    <dialog id="processing-overlay">
+        <h2>Processing...</h2>
+    </dialog>
+    <script type="module">
+        const load_html_fragment = async (path) => {
+            const response = await fetch(path)
+            const html = await response.text();
+            const range = new Range();
+            return range.createContextualFragment(html);
+        };
+
+        const [{ default: init_wasm }, ...complib_fragments] = await Promise.all([
+            import('./pkg/web_basic_canvas.js'), // import wasm
+            load_html_fragment("./complib/ed-button.html"),
+            load_html_fragment("./complib/ed-icon.html"),
+            load_html_fragment("./complib/ed-labeled.html"),
+            load_html_fragment("./complib/ed-drawer.html"),
+            load_html_fragment("./complib/ed-color.html"),
+            load_html_fragment("./complib/ed-dropdown-menu.html"),
+            load_html_fragment("./complib/ed-navbar.html"),
+            load_html_fragment("./complib/ed-selector.html"),
+            load_html_fragment("./complib/ed-radio-button.html"),
+            load_html_fragment("./complib/ed-radio-group.html"),
+            load_html_fragment("./complib/ed-tab-button.html"),
+            load_html_fragment("./complib/ed-tab-group.html"),
+            load_html_fragment("./complib/ed-tab-content.html"),
+            load_html_fragment("./complib/ed-textbox.html"),
+            load_html_fragment("./complib/ed-number.html"),
+            load_html_fragment("./complib/ed-checkbox.html"),
+            load_html_fragment("./complib/ed-slider.html"),
+            load_html_fragment("./complib/ed-modal-dialog.html"),
+            load_html_fragment("./complib/ed-mega-menu.html"),
+            load_html_fragment("./complib/ed-color-swatch.html"),
+            load_html_fragment("./complib/ed-form-listener.html"),
+            load_html_fragment("./complib/ed-variant-selector.html"),
+            load_html_fragment("./complib/ed-variant-content.html"),
+            load_html_fragment("./complib/ed-droplist.html"),
+            load_html_fragment("./complib/ed-droplist-item.html"),
+            load_html_fragment("./complib/ed-node.html"),
+            load_html_fragment("./complib/ed-node-pin.html"),
+            load_html_fragment("./complib/ed-node-cable.html"),
+        ]);
+
+        globalThis.document.body.append(...complib_fragments);
+
+        // run wasm
+        await init_wasm();
+
+    </script>
+</body>
+
+</html>

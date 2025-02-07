@@ -1,0 +1,51 @@
+<template id="ed-tab-content-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :host {
+            width: var(--tab-content-width);
+            height: 100%;
+            padding: 0;
+            display: none;
+        }
+
+        :host([checked=true]) {
+            display: block;
+        }
+    </style>
+    <slot></slot>
+</template>
+
+<script type="module">
+    customElements.define(
+        "ed-tab-content",
+        class extends HTMLElement {
+            constructor() {
+                super();
+
+                const template_clone = document.getElementById("ed-tab-content-template").content.cloneNode(true);
+
+                this.value = this.getAttribute("value");
+                this.tab_group_id = this.getAttribute("tab-group-id");
+
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+
+            connectedCallback() {
+                setTimeout(() => {
+                    const tab_group = document.getElementById(this.tab_group_id);
+                    this.setAttribute('checked', this.value === tab_group.value);
+                    tab_group.addEventListener("change", (event) => {
+                        let tab_value = event.detail;
+                        this.setAttribute('checked', this.value === tab_value);
+                    });
+                });
+            }
+        },
+
+    );
+</script>

@@ -1,0 +1,57 @@
+<template id="ed-labeled-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :host {
+            padding: 0;
+            line-height: 1.25;
+        }
+
+        ::slotted(*) {
+            user-select: none;
+        }
+
+        .helptext {
+            color: var(--helptext-color);
+            font-size: 0.875rem;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
+        }
+
+        :host(.horizontal) .container {
+            flex-direction: row-reverse;
+            justify-content: start;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+    <div class="container">
+        <slot name="label"></slot>
+        <slot></slot>
+    </div>
+    <div class="helptext">
+        <slot name="helptext"></slot>
+    </div>
+</template>
+
+<script type="module">
+    globalThis.customElements.define(
+        "ed-labeled",
+        class extends HTMLElement {
+            constructor() {
+                super();
+                const template_clone = document.getElementById("ed-labeled-template").content.cloneNode(true);
+                this.attachShadow({ mode: "open" }).append(template_clone);
+            }
+        },
+    );
+</script>
