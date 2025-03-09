@@ -52,8 +52,8 @@
     </div>
     <script type="module">
         const clientId = '11deeddd5fbf4c27b4c13accac2906a6';
-        //const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
-        const auth_redirect_uri = "https://rmstr1.github.io/shitster";
+        const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
+        //const auth_redirect_uri = "https://rmstr1.github.io/shitster";
 
         //
         async function redirectToAuthCodeFlow(clientId) {
@@ -166,7 +166,7 @@
         async function wakeUp(deviceId, token) {
             const data = JSON.stringify({
                 "device_ids": [deviceId],
-                "play": true
+                "play": false
             })
 
             const response = await fetch('https://api.spotify.com/v1/me/player', {
@@ -177,6 +177,8 @@
                 },
                 body: data
             });
+
+            return response
         }
 
         async function playSong(playlistId, position, token) {
@@ -196,6 +198,8 @@
                 },
                 body: data
             });
+
+            return response;
         }
 
         async function setRepeat(token) {
@@ -203,7 +207,7 @@
                 method: 'PUT', headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            return await response;
+            return response;
         }
 
 
@@ -252,7 +256,6 @@
             const start = async () => {
                 const device = await getDevice(accessToken);
                 // TODO: no device found error
-                console.log(device);
                 if (device === null) {
                     noDeviceDialog.showModal();
                     return;
@@ -278,16 +281,31 @@
                 shuffleArray(offsets);
 
                 // TODO: cleanup
-                await wakeUp(device.id, accessToken);
-                await new Promise(r => setTimeout(r, 250));
-                await playSong(playlistId, offsets[position], accessToken);
+                let success = false;
+                while (success === false) {
+                    await wakeUp(device.id, accessToken);
+                    let response = await playSong(playlistId, offsets[position], accessToken);
+                    if (response.status === 404) {
+                        console.log("retry playSong");
+                        await new Promise(r => setTimeout(r, 100));
+                        const device = await getDevice(accessToken);
+                        // device lost
+                        if (device === null) {
+                            console.log("lost device");
+                            noDeviceDialog.showModal();
+                            return;
+                        }
+                    } else {
+                        success = true;
+                    }
+                }
                 //----
 
                 const showCard = async () => {
                     card.removeEventListener("click", showCard);
                     const response = await getCurrentSong(accessToken);
                     const track = response.item;
-                    console.log(track);
+
                     artist.innerHTML = track.artists.map((artist) => artist.name).join(', ');
                     title.innerHTML = track.name;
                     release_date.innerHTML = track.album.release_date;
@@ -303,7 +321,7 @@
                     nextBtn.disabled = true;
                     card.setAttribute("flipped", false)
                     //await wakeUp(device.id, accessToken);
-                    await playSong(playlistId, offsets[position], accessToken);
+                    let response = await playSong(playlistId, offsets[position], accessToken);
                     card.addEventListener("click", showCard)
                 };
 
