@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'Source Sans 3';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/SourceSans3-Regular.ttf.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Source Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../fonts/SourceSans3-Semibold.ttf.woff2') format('woff2');
+}
+
+
 *,
 *::before,
 *::after {
@@ -18,6 +33,8 @@ body {
 
     overflow-x: hidden;
     overscroll-behavior: none;
+
+    font-family: 'Source Sans 3', sans-serif;
 
     background-color: #efefef;
     color: #222222;
@@ -45,7 +62,6 @@ body {
     aspect-ratio: 1.0;
 
     text-align: center;
-    font-family: sans-serif;
     letter-spacing: 0.05em;
 
     &[flipped="true"] .back {
@@ -78,7 +94,7 @@ body {
         justify-content: center;
         gap: 3%;
 
-        font-size: 8cqw;
+        font-size: 7cqw;
         font-weight: 400;
 
         box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
@@ -142,6 +158,10 @@ body {
     }
 }
 
+.emoji {
+    font-family: sans-serif;
+}
+
 button {
     all: unset;
     box-sizing: border-box;
@@ -152,7 +172,6 @@ button {
     background-color: #222222;
     color: #ffffff;
 
-    font-family: sans-serif;
     letter-spacing: 0.126em;
     font-size: 1.5rem;
     font-weight: 400;
@@ -195,7 +214,6 @@ dialog {
         gap: 1.5rem;
 
         text-align: center;
-        font-family: sans-serif;
         letter-spacing: 0.05em;
         font-size: 2.0rem;
 

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="./shitster.css">
+    <link rel="stylesheet" href="./css/shitster.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="shitster">
@@ -13,7 +13,7 @@
     <div class="container">
         <div class="card" id="card">
             <div class="front" id="front">
-                💩 click to solve 🎵
+                <span class="emoji">💩</span> click to solve <span class="emoji">🎵</span>
             </div>
             <div class="back" id="back">
                 <div class="artist">
@@ -39,13 +39,21 @@
         </dialog>
         <dialog id="no-device-dialog">
             <form method="dialog">
-                <div>💩 No device found 💩</div>
+                <div>No device found.</div>
+                <div>Please make sure that Spotify is open and running on one of your devices.</div>
                 <div><button id="no-device-button">Retry</button></div>
             </form>
         </dialog>
         <button id="next-button" disabled>Next 🡆</button>
     </div>
     <script type="module">
+        const clientId = '11deeddd5fbf4c27b4c13accac2906a6';
+        //const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
+        const auth_redirect_uri = "https://rmstr1.github.io/shitster";
+        const shareLink = "https://open.spotify.com/playlist/2WQxrq5bmHMlVuzvtwwywV?si=0a15f640c66545e5";
+        const playlistId = "2WQxrq5bmHMlVuzvtwwywV";
+
+        //
         async function redirectToAuthCodeFlow(clientId) {
             const verifier = generateCodeVerifier(128);
             const challenge = await generateCodeChallenge(verifier);
@@ -151,7 +159,8 @@
 
         async function wakeUp(deviceId, token) {
             const data = JSON.stringify({
-                "device_ids": [deviceId]
+                "device_ids": [deviceId],
+                "play": true
             })
 
             const response = await fetch('https://api.spotify.com/v1/me/player', {
@@ -208,14 +217,10 @@
             }
         }
 
-        const clientId = '11deeddd5fbf4c27b4c13accac2906a6';
-        //const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
-        const auth_redirect_uri = "https://rmstr1.github.io/shitster";
+        //
+
         const params = new URLSearchParams(window.location.search);
         const code = params.get("code");
-
-        const shareLink = "https://open.spotify.com/playlist/2WQxrq5bmHMlVuzvtwwywV?si=0a15f640c66545e5";
-        const playlistId = "2WQxrq5bmHMlVuzvtwwywV";
 
         if (!code) {
             redirectToAuthCodeFlow(clientId);
@@ -258,9 +263,11 @@
                 let offsets = Array.from({ length: trackCount }, (_, index) => index + 1);
                 shuffleArray(offsets);
 
+                // TODO: cleanup
                 await wakeUp(device.id, accessToken);
+                await new Promise(r => setTimeout(r, 500));
                 await playSong(playlistId, offsets[position], accessToken);
-                await setRepeat(accessToken);
+                //----
 
                 const showCard = async () => {
                     card.removeEventListener("click", showCard);
@@ -281,9 +288,8 @@
                     position += 1;
                     nextBtn.disabled = true;
                     card.setAttribute("flipped", false)
-                    await wakeUp(device.id, accessToken);
+                    //await wakeUp(device.id, accessToken);
                     await playSong(playlistId, offsets[position], accessToken);
-                    await setRepeat(accessToken);
                     card.addEventListener("click", showCard)
                 };
 
