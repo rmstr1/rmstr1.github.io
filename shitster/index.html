@@ -52,8 +52,8 @@
     </div>
     <script type="module">
         const clientId = '11deeddd5fbf4c27b4c13accac2906a6';
-        //const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
-        const auth_redirect_uri = "https://rmstr1.github.io/shitster";
+        const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
+        //const auth_redirect_uri = "https://rmstr1.github.io/shitster";
 
         //
         async function redirectToAuthCodeFlow(clientId) {
@@ -234,11 +234,18 @@
         if (!code) {
             redirectToAuthCodeFlow(clientId);
         } else {
+            // we are in a callback
             const accessToken = await getAccessToken(clientId, code);
-
             if (!accessToken) {
                 redirectToAuthCodeFlow(clientId);
             }
+            // TODO: save accessToken, refreshToken in localstorage
+
+            // Remove code from URL
+            const url = new URL(window.location.href);
+            url.searchParams.delete("code");
+            const updatedUrl = url.search ? url.href : url.href.replace('?', '');
+            window.history.replaceState({}, document.title, updatedUrl);
 
             const card = document.querySelector('#card');
             const nextBtn = document.querySelector('#next-button');
