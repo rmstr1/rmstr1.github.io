@@ -39,12 +39,12 @@
         </dialog>
         <dialog id="no-device-dialog">
             <form method="dialog">
-                <div>No device found.</div>
-                <div>Please make sure that Spotify is open and running on one of your devices.</div>
+                <h2>No device found</h2>
+                <div>Please make sure that Spotify is open and running on one of your devices</div>
                 <div><button id="no-device-button">Retry</button></div>
             </form>
         </dialog>
-        <button id="next-button" disabled>Next 🡆</button>
+        <button id="next-button" disabled>Next →</button>
     </div>
     <script type="module">
         const clientId = '11deeddd5fbf4c27b4c13accac2906a6';
@@ -265,7 +265,7 @@
 
                 // TODO: cleanup
                 await wakeUp(device.id, accessToken);
-                await new Promise(r => setTimeout(r, 500));
+                await new Promise(r => setTimeout(r, 250));
                 await playSong(playlistId, offsets[position], accessToken);
                 //----
 
