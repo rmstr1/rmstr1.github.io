@@ -154,7 +154,7 @@ button {
 
     font-family: sans-serif;
     letter-spacing: 0.126em;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 400;
 
     box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
@@ -170,5 +170,37 @@ button {
 
     &:disabled {
         opacity: 0.0;
+    }
+}
+
+dialog {
+    padding: 5rem;
+    height: fit-content;
+    border: none;
+    box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
+
+    &::backdrop {
+        background-color: #111111aa;
+    }
+
+    &:not([open]) {
+        display: none;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+
+        text-align: center;
+        font-family: sans-serif;
+        letter-spacing: 0.05em;
+        font-size: 2.0rem;
+
+        input {
+            font-size: 1.5rem;
+        }
     }
 }

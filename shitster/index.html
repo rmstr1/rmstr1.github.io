@@ -18,26 +18,31 @@
             <div class="back" id="back">
                 <div class="artist">
                     <h2>Artist</h2>
-                    <span id="artist">At</span>
+                    <span id="artist">-</span>
                 </div>
                 <div class="title">
                     <h2>Title</h2>
-                    <span id="title">asdasdw qqwe qwe 12 </span>
+                    <span id="title">-</span>
                 </div>
                 <div class="release-date">
                     <h2>Release Date</h2>
-                    <span id="release-date">12-12-2999</span>
+                    <span id="release-date">-</span>
                 </div>
             </div>
         </div>
-        <!--
-        <dialog open>
+        <dialog id="start-dialog">
             <form method="dialog">
-                Paste a playlist link here
-                <input type=text></input>
-                <button id="start">Start</button>
+                <!--<div>Paste a playlist link here</div>-->
+                <!--<div><input type=text></input></div>-->
+                <div><button id="start">Start</button></div>
             </form>
-        </dialog>-->
+        </dialog>
+        <dialog id="no-device-dialog">
+            <form method="dialog">
+                <div>💩 No device found 💩</div>
+                <div><button id="no-device-button">Retry</button></div>
+            </form>
+        </dialog>
         <button id="next-button" disabled>Next 🡆</button>
     </div>
     <script type="module">
@@ -129,14 +134,16 @@
             });
             const result = await response.json();
             console.log(result)
-            const active = result.devices.filter((device) => device.is_active == true);
-            if (active.length > 0) {
-                return active[0];
-            } else if (result.devices.length > 0) {
-                return result.devices[0];
-            } else {
+
+            if (result.devices === undefined || result.devices === null || result.devices.length === 0) {
                 return null;
             }
+
+            const active = result.devices.filter((device) => device.is_active === true);
+            if (active.length > 0) {
+                return active[0];
+            } else
+                return result.devices[0];
         }
 
         async function getTrack(playlistId, position, token) {
@@ -202,8 +209,8 @@
         }
 
         const clientId = '11deeddd5fbf4c27b4c13accac2906a6';
-        //const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
-        const auth_redirect_uri = "https://rmstr1.github.io/shitster";
+        const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
+        //const auth_redirect_uri = "https://rmstr1.github.io/shitster";
         const params = new URLSearchParams(window.location.search);
         const code = params.get("code");
 
@@ -215,52 +222,77 @@
         } else {
             const accessToken = await getAccessToken(clientId, code);
 
-            const device = await getDevice(accessToken);
-            // TODO: no device found error
-            console.log(device);
-
-            const playlist = await getPlaylist(playlistId, accessToken);
-            const trackCount = Number(playlist.tracks.total);
-
-            let offsets = Array.from({ length: trackCount }, (_, index) => index + 1);
-            shuffleArray(offsets);
+            if (!accessToken) {
+                redirectToAuthCodeFlow(clientId);
+            }
 
             const card = document.querySelector('#card');
             const nextBtn = document.querySelector('#next-button');
             const artist = document.querySelector('#artist');
             const title = document.querySelector('#title');
             const release_date = document.querySelector('#release-date');
+            const startDialog = document.querySelector('#start-dialog');
+            const startBtn = document.querySelector('#start');
+            const noDeviceDialog = document.querySelector('#no-device-dialog');
+            const noDeviceBtn = document.querySelector('#no-device-button');
 
-            let position = 0;
-            await wakeUp(device.id, accessToken);
-            await playSong(playlistId, offsets[position], accessToken);
-            await setRepeat(accessToken);
+            startDialog.showModal();
 
-            const showCard = async () => {
-                const response = await getCurrentSong(accessToken);
-                const track = response.item;
-                console.log(track);
-                artist.innerHTML = track.artists.map((artist) => artist.name).join(', ');
-                title.innerHTML = track.name;
-                release_date.innerHTML = track.album.release_date;
-
-                card.setAttribute("flipped", true)
-                if (position < offsets.length - 1) {
-                    nextBtn.disabled = false;
+            const start = async () => {
+                const device = await getDevice(accessToken);
+                // TODO: no device found error
+                console.log(device);
+                if (device === null) {
+                    noDeviceDialog.showModal();
+                    return;
                 }
-            };
 
-            const nextSong = async () => {
-                position += 1;
-                nextBtn.disabled = true;
-                card.setAttribute("flipped", false)
+                start_with_device(device);
+            }
+
+            const start_with_device = async (device) => {
+                const playlist = await getPlaylist(playlistId, accessToken);
+                const trackCount = Number(playlist.tracks.total);
+
+                let position = 0;
+                let offsets = Array.from({ length: trackCount }, (_, index) => index + 1);
+                shuffleArray(offsets);
+
                 await wakeUp(device.id, accessToken);
                 await playSong(playlistId, offsets[position], accessToken);
                 await setRepeat(accessToken);
-            };
 
-            card.addEventListener("click", showCard)
-            nextBtn.addEventListener("click", nextSong)
+                const showCard = async () => {
+                    card.removeEventListener("click", showCard);
+                    const response = await getCurrentSong(accessToken);
+                    const track = response.item;
+                    console.log(track);
+                    artist.innerHTML = track.artists.map((artist) => artist.name).join(', ');
+                    title.innerHTML = track.name;
+                    release_date.innerHTML = track.album.release_date;
+
+                    card.setAttribute("flipped", true)
+                    if (position < offsets.length - 1) {
+                        nextBtn.disabled = false;
+                    }
+                };
+
+                const nextSong = async () => {
+                    position += 1;
+                    nextBtn.disabled = true;
+                    card.setAttribute("flipped", false)
+                    await wakeUp(device.id, accessToken);
+                    await playSong(playlistId, offsets[position], accessToken);
+                    await setRepeat(accessToken);
+                    card.addEventListener("click", showCard)
+                };
+
+                card.addEventListener("click", showCard)
+                nextBtn.addEventListener("click", nextSong)
+            }
+
+            startBtn.addEventListener("click", start)
+            noDeviceBtn.addEventListener("click", start)
         }
     </script>
 </body>
