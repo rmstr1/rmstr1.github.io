@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="./css/shitster.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="shitster">
-    <title>shitster</title>
+    <meta name="description" content="Shitster">
+    <title>Shitster</title>
 </head>
 
 <body>
@@ -32,8 +32,12 @@
         </div>
         <dialog id="start-dialog">
             <form method="dialog">
-                <!--<div>Paste a playlist link here</div>-->
-                <!--<div><input type=text></input></div>-->
+                <h2>
+                    <span class="emoji">💩</span> Play Shitster <span class="emoji">💩</span>
+                </h2>
+                <div>Paste a playlist link below</div>
+                <input type="url" value="https://open.spotify.com/playlist/2WQxrq5bmHMlVuzvtwwywV?si=0a15f640c66545e5"
+                    id="playlist-input"></input>
                 <div><button id="start">Start</button></div>
             </form>
         </dialog>
@@ -50,8 +54,6 @@
         const clientId = '11deeddd5fbf4c27b4c13accac2906a6';
         //const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
         const auth_redirect_uri = "https://rmstr1.github.io/shitster";
-        const shareLink = "https://open.spotify.com/playlist/2WQxrq5bmHMlVuzvtwwywV?si=0a15f640c66545e5";
-        const playlistId = "2WQxrq5bmHMlVuzvtwwywV";
 
         //
         async function redirectToAuthCodeFlow(clientId) {
@@ -133,7 +135,11 @@
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            return await response.json();
+            try {
+                return await response.json();
+            } catch (error) {
+                return ({ "error": {} })
+            }
         }
 
         async function getDevice(token) {
@@ -175,7 +181,6 @@
 
         async function playSong(playlistId, position, token) {
             const data = JSON.stringify({
-                //"context_uri": "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr",
                 "context_uri": `spotify:playlist:${playlistId}`,
                 "offset": {
                     "position": position
@@ -237,6 +242,7 @@
             const title = document.querySelector('#title');
             const release_date = document.querySelector('#release-date');
             const startDialog = document.querySelector('#start-dialog');
+            const playlistInput = document.querySelector('#playlist-input');
             const startBtn = document.querySelector('#start');
             const noDeviceDialog = document.querySelector('#no-device-dialog');
             const noDeviceBtn = document.querySelector('#no-device-button');
@@ -256,7 +262,15 @@
             }
 
             const start_with_device = async (device) => {
+                let playlistUrl = new URL(playlistInput.value);
+                const playlistId = playlistUrl.pathname.split('/').at(-1);
                 const playlist = await getPlaylist(playlistId, accessToken);
+
+                if (playlist.tracks == null || playlist.tracks == undefined) {
+                    startDialog.showModal();
+                    return;
+                }
+
                 const trackCount = Number(playlist.tracks.total);
 
                 let position = 0;
