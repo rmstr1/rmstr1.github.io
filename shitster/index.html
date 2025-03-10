@@ -13,7 +13,8 @@
     <div class="container">
         <div class="card" id="card">
             <div class="front" id="front">
-                <span class="emoji">💩</span>click to reveal<span class="emoji">🎵</span>
+                <h2>Playing on <span id="device-label">-</span></h2>
+                <span>Click to reveal the song</span>
             </div>
             <div class="back" id="back">
                 <div class="artist">
@@ -35,9 +36,11 @@
                 <h2>
                     <span class="emoji">💩</span> Play Shitster <span class="emoji">💩</span>
                 </h2>
-                <div>Paste a playlist link below</div>
+                <div>Paste a Spotify playlist link below</div>
                 <input type="url" value="https://open.spotify.com/playlist/26zIHVncgI9HmHlgYWwnDi?si=573f13f8ac454dad"
                     id="playlist-input"></input>
+                <div>Note: Release dates are pulled from the track's album metadata and will be incorrect if the track
+                    is a re-release, e.g. from a compilation album or remaster.</div>
                 <div><button id="start">Start</button></div>
             </form>
         </dialog>
@@ -241,11 +244,12 @@
             }
             // TODO: save accessToken, refreshToken in localstorage
 
-            // Remove code from URL
+            // Remove code from URL search params
             const url = new URL(window.location.href);
             url.searchParams.delete("code");
             const updatedUrl = url.search ? url.href : url.href.replace('?', '');
             window.history.replaceState({}, document.title, updatedUrl);
+            // --
 
             const card = document.querySelector('#card');
             const nextBtn = document.querySelector('#next-button');
@@ -257,21 +261,23 @@
             const startBtn = document.querySelector('#start');
             const noDeviceDialog = document.querySelector('#no-device-dialog');
             const noDeviceBtn = document.querySelector('#no-device-button');
+            const deviceLabel = document.querySelector('#device-label');
 
             startDialog.showModal();
 
             const start = async () => {
                 const device = await getDevice(accessToken);
-                // TODO: no device found error
                 if (device === null) {
                     noDeviceDialog.showModal();
                     return;
                 }
 
-                start_with_device(device);
+                await start_with_device(device);
             }
 
             const start_with_device = async (device) => {
+                deviceLabel.innerHTML = device.name;
+
                 let playlistUrl = new URL(playlistInput.value);
                 const playlistId = playlistUrl.pathname.split('/').at(-1);
                 const playlist = await getPlaylist(playlistId, accessToken);
@@ -287,7 +293,6 @@
                 let offsets = Array.from({ length: trackCount }, (_, index) => index + 1);
                 shuffleArray(offsets);
 
-                // TODO: cleanup
                 let success = false;
                 while (success === false) {
                     await wakeUp(device.id, accessToken);
@@ -296,7 +301,6 @@
                         console.log("retry playSong");
                         await new Promise(r => setTimeout(r, 100));
                         const device = await getDevice(accessToken);
-                        // device lost
                         if (device === null) {
                             console.log("lost device");
                             noDeviceDialog.showModal();
@@ -306,7 +310,6 @@
                         success = true;
                     }
                 }
-                //----
 
                 const showCard = async () => {
                     card.removeEventListener("click", showCard);

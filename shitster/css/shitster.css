@@ -81,7 +81,7 @@ body {
 
         padding: 5%;
 
-        background-color: #91ddcd;
+        background: radial-gradient(circle at 17.05% 91.64%, #fffa78, transparent 81%), radial-gradient(circle at 36.68% 15.97%, #9ffc95, transparent 71%), radial-gradient(circle at 40.23% 80.38%, #ff47a9, transparent 81%);
 
         transform-style: preserve-3d;
 
@@ -95,7 +95,7 @@ body {
         justify-content: center;
         gap: 3%;
 
-        font-size: 7cqw;
+        font-size: 6cqw;
         font-weight: 400;
 
         box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
@@ -128,7 +128,7 @@ body {
         justify-content: center;
         gap: 3%;
 
-        background-color: #91ddcd;
+        background: #ffffff;
 
         transition: transform 0.6s;
         transform-style: preserve-3d;
