@@ -11,9 +11,10 @@
 
 <body>
     <div class="container">
+        <h2>Track <span id="track-counter">- / -</span>,
+            playing on <span id="device-label">-</span></h2>
         <div class="card" id="card">
             <div class="front" id="front">
-                <h2>Playing on <span id="device-label">-</span></h2>
                 <span>Click to reveal the song</span>
             </div>
             <div class="back" id="back">
@@ -55,10 +56,13 @@
     </div>
     <script type="module">
         const clientId = '11deeddd5fbf4c27b4c13accac2906a6';
-        //const auth_redirect_uri = "http://127.0.0.1:8080/shitster";
-        const auth_redirect_uri = "https://rmstr1.github.io/shitster";
+        let auth_redirect_uri;
+        if (location.hostname === "127.0.0.1") {
+            auth_redirect_uri = "http://127.0.0.1:8080/shitster";
+        } else {
+            auth_redirect_uri = "https://rmstr1.github.io/shitster";
+        }
 
-        //
         async function redirectToAuthCodeFlow(clientId) {
             const verifier = generateCodeVerifier(128);
             const challenge = await generateCodeChallenge(verifier);
@@ -261,6 +265,7 @@
             const startBtn = document.querySelector('#start');
             const noDeviceDialog = document.querySelector('#no-device-dialog');
             const noDeviceBtn = document.querySelector('#no-device-button');
+            const trackCounter = document.querySelector('#track-counter');
             const deviceLabel = document.querySelector('#device-label');
 
             startDialog.showModal();
@@ -288,6 +293,7 @@
                 }
 
                 const trackCount = Number(playlist.tracks.total);
+                trackCounter.innerHTML = `1 / ${trackCount}`;
 
                 let position = 0;
                 let offsets = Array.from({ length: trackCount }, (_, index) => index + 1);
@@ -328,6 +334,7 @@
 
                 const nextSong = async () => {
                     position += 1;
+                    trackCounter.innerHTML = `${position + 1} / ${offsets.length}`;
                     nextBtn.disabled = true;
                     card.setAttribute("flipped", false)
                     //await wakeUp(device.id, accessToken);

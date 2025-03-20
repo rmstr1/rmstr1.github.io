@@ -52,6 +52,13 @@ body {
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
+
+    h2 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        letter-spacing: 0.125em;
+    }
 }
 
 .card {
@@ -102,12 +109,6 @@ body {
 
         user-select: none;
         cursor: pointer;
-
-        h2 {
-            font-size: 4cqw;
-            font-weight: 400;
-            letter-spacing: 0.125em;
-        }
     }
 
     .back {
@@ -137,7 +138,8 @@ body {
         box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
 
         h2 {
-            font-size: 4cqw;
+            margin: 0.75em 0;
+            font-size: 3.5cqw;
             font-weight: 400;
             letter-spacing: 0.125em;
         }
