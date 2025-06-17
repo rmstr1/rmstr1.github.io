@@ -13,21 +13,25 @@
             --section-bg-skew: -4.5deg;
 
             --accent-color: #eb135e;
-            --accent-color-2: #2c2c2c;
             --hover-color: #ff9380;
 
             --bg-color-1: #120075;
             --bg-color-2: #f03730;
-            --bg-color-3: #181818;
+            --bg-color-3: #f0eae4;
             --bg-color-4: #181818;
-            --bg-color: #009191;
+            --bg-color-5: #009191;
+
+            --bg-color-header: #222222;
+            --bg-color-footer: #444444;
+
+            --bg: linear-gradient(to bottom, var(--bg-color-header) 50%, #009191 50%, #009191 99%, var(--bg-color-footer) 99%);
+
             --header-text-color: #ff9380;
             --text-color: #ffffff;
             --text-color-2: #222222;
             --bg-color-v2: #f72e27;
             --supp-color-v2: #231a67;
 
-            --bg-color-header: #222222;
             --nav-text-color: #ffffff;
             --footer-text-color: #ffffff;
             /*--bg-color-1: #f0eae4;
@@ -59,7 +63,7 @@
 
         body {
             font-family: 'Source Sans 3', sans-serif;
-            background-color: var(--bg-color);
+            background: var(--bg);
             color: var(--text-color);
             line-height: 1.4;
             overflow-x: hidden;
@@ -132,7 +136,7 @@
             height: 100lvh;
             /*background: url('../res/hero_img.png') no-repeat center center/cover;*/
             /*background: linear-gradient(to left top, #f0eae4, #ebe5d2, #dde2c4, #c5e2bd, #a5e1bf);*/
-            /*background-image: radial-gradient(circle at 50% 50%, var(--accent-color-2) 20rem, var(--bg-color-2) 20rem);*/
+            /*background-image: radial-gradient(circle at 50% 50%, var(--bg-color-footer) 20rem, var(--bg-color-2) 20rem);*/
 
             display: flex;
             flex-direction: column;
@@ -240,19 +244,30 @@
                     height: var(--divider-height);
                     bottom: calc(-1 * var(--divider-height) / 2);
                     left: 0;
-                    background: linear-gradient(to bottom, #bd2253 20%, #9d265a 20%, #9d265a 40%, #7c2959 40%, #7c2959 60%, #5b2a52 60%, #5b2a52 80%, #3e2743 80%);
+                    /*background: linear-gradient(to bottom, #bd2253 20%, #9d265a 20%, #9d265a 40%, #7c2959 40%, #7c2959 60%, #5b2a52 60%, #5b2a52 80%, #3e2743 80%);*/
+                    background: linear-gradient(to bottom, #f2754b 20%, #f28c5e 20%, #f28c5e 40%, #f2a173 40%, #f2a173 60%, #f2b48c 60%, #f2b48c 80%, #f1c7a7 80%);
                 }
             }
 
+            background-image: linear-gradient(to bottom, #f2754b, #f28c5e, #f2a173, #f2b48c, #f1c7a7);
+
             &:nth-child(3 of section) {
                 background: var(--bg-color-3);
-                padding-bottom: 0;
+                color: var(--text-color-2);
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    z-index: 1;
+                    width: 100%;
+                    height: var(--divider-height);
+                    bottom: calc(-1 * var(--divider-height) / 2);
+                    left: 0;
+                    background: linear-gradient(to bottom, #b6afad 20%, #999393 20%, #999393 40%, #7c7879 40%, #7c7879 60%, #605e5f 60%, #605e5f 80%, #464546 80%);
+                }
             }
 
             &:nth-child(4 of section) {
-                margin-top: -6rem;
-                z-index: -1;
-
                 background: var(--bg-color-4);
 
                 &::after {
@@ -286,7 +301,7 @@
                 padding: 0 1.5rem;
                 margin-bottom: 2.5rem;
                 font-size: 4.0rem;
-                /*border-bottom: 0.125rem solid var(--accent-color-2);*/
+                /*border-bottom: 0.125rem solid var(--bg-color-footer);*/
                 border-bottom: 0.5 solid var(--text-color);
                 letter-spacing: -0.025em;
             }
@@ -341,7 +356,6 @@
             align-items: center;
 
             transition: transform var(--transition), box-shadow var(--transition);
-            color: var(--text-color);
 
             img {
                 grid-area: "img";
@@ -349,7 +363,7 @@
                 height: 100%;
                 width: 100%;
                 object-fit: cover;
-                border: 1.0rem solid var(--bg-color-header);
+                /*border: 1.0rem solid #ffffff;*/
             }
 
             .card-content {
@@ -425,7 +439,7 @@
 
             text-align: center;
 
-            background-color: var(--accent-color-2);
+            background-color: var(--bg-color-footer);
             color: var(--footer-text-color);
 
             .flex-layout-centered {
@@ -460,7 +474,7 @@
             }
         }
 
-        @media (max-width: 52rem) {
+        @media (max-width: 50rem) {
             section {
                 scroll-margin-top: 2rem;
 
