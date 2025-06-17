@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- link rel="stylesheet" href="../css/x43z.css"! -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="Color Converter">
+    <title>Color Converter</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 2rem;
+            background-color: #f7f7f7;
+            font-family: "Courier New", monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        input[type=text] {
+            padding: 0.25rem 0.5rem;
+            font-family: "Courier New", monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border: 1px solid #464646;
+            border-radius: 0;
+        }
+
+        #preview {
+            width: 6rem;
+            height: 6rem;
+            border: 0.125rem solid #464646;
+            background: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preview"></div>
+    <br>
+    <div>sRGB: </div><input id="input-hex-srgb" type="text" value="#000000" maxlentgh="9" size="9" spellcheck="false"
+        autocomplete="off">
+    =
+    <input id="input-vec-srgb" type="text" value="vec3(0.000, 0.000, 0.000)" size="27" spellcheck="false"
+        autocomplete="off">
+    <br>
+    <br>
+    <div>linear: </div><input id="input-hex-linear" type="text" value="#000000" maxlentgh="9" size="9"
+        spellcheck="false" autocomplete="off">
+    =
+    <input id="input-vec-linear" type="text" value="vec3(0.000, 0.000, 0.000)" size="27" spellcheck="false"
+        autocomplete="off">
+    <br>
+    <br>
+    <br>
+    TODO: oklab/oklch? sliders?
+</body>
+<script>
+    const srgbToLinear = (srgb) => {
+        return srgb.map((x) => {
+            const cutoff = x > 0.04045;
+            const a = x / 12.92;
+            const b = ((x + 0.055) / 1.055) ** 2.4;
+            return cutoff ? b : a;
+        });
+    }
+
+    const linearToSrgb = (linear) => {
+        return linear.map((x) => {
+            const cutoff = x > 0.0031308;
+            const a = x * 12.92;
+            const b = 1.055 * x ** (1.0 / 2.4) - 0.055;
+            return cutoff ? b : a;
+        });
+    }
+
+    const parseHex = (hex) => {
+        const r = parseFloat(parseInt(hex.slice(1, 3), 16)) / 255.0;
+        const g = parseFloat(parseInt(hex.slice(3, 5), 16)) / 255.0;
+        const b = parseFloat(parseInt(hex.slice(5, 7), 16)) / 255.0;
+        return [r, g, b];
+    }
+
+    const writeHex = (rgb) => {
+        const [r, g, b] = rgb;
+        const r_u = Math.floor(r * 255.0);
+        const g_u = Math.floor(g * 255.0);
+        const b_u = Math.floor(b * 255.0);
+        return "#" + (1 << 24 | r_u << 16 | g_u << 8 | b_u).toString(16).slice(1);
+    }
+
+    const writeVec = (rgb) => {
+        const [r, g, b] = rgb;
+        return `vec3(${r.toFixed(3)}, ${g.toFixed(3)}, ${b.toFixed(3)})`;
+    }
+
+    const parseVec = (vec_string) => {
+        vec_string = vec_string.replace('vec3(', '[');
+        vec_string = vec_string.replace(')', ']');
+        return JSON.parse(vec_string) ?? [0, 0, 0];
+    }
+
+    const updateHexText = (e) => {
+        input_hex_srgb.value = writeHex(parseVec(e.target.value));
+    }
+
+    const updateVecText = (e) => {
+        input_vec_srgb.value = writeVec(parseHex(e.target.value));
+    }
+
+    const update_values_from_linear = (linear) => {
+        input_hex_srgb.value = writeHex(linearToSrgb(linear));
+        input_vec_srgb.value = writeVec(linearToSrgb(linear));
+        input_hex_linear.value = writeHex(linear);
+        input_vec_linear.value = writeVec(linear);
+        preview.style.backgroundColor = writeHex(linearToSrgb(linear));
+    }
+
+    const preview = document.querySelector('#preview');
+    const input_hex_srgb = document.querySelector('#input-hex-srgb');
+    const input_vec_srgb = document.querySelector('#input-vec-srgb');
+    const input_hex_linear = document.querySelector('#input-hex-linear');
+    const input_vec_linear = document.querySelector('#input-vec-linear');
+
+    input_hex_srgb.addEventListener('change', (e) => update_values_from_linear(srgbToLinear(parseHex(e.target.value))));
+    input_vec_srgb.addEventListener('change', (e) => update_values_from_linear(srgbToLinear(parseVec(e.target.value))));
+    input_hex_linear.addEventListener('change', (e) => update_values_from_linear(parseHex(e.target.value)));
+    input_vec_linear.addEventListener('change', (e) => update_values_from_linear(parseVec(e.target.value)));
+</script>
+
+</html>
