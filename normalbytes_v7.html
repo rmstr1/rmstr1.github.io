@@ -293,17 +293,16 @@
 
             h2 {
                 text-align: start;
-                font-weight: 600;
+                font-weight: 300;
                 text-transform: uppercase;
                 width: 100%;
                 max-width: var(--base-width);
                 margin: 0 auto;
                 padding: 0 1.5rem;
                 margin-bottom: 2.5rem;
-                font-size: 4.0rem;
+                font-size: 5.0rem;
                 /*border-bottom: 0.125rem solid var(--bg-color-footer);*/
-                border-bottom: 0.5 solid var(--text-color);
-                letter-spacing: -0.025em;
+                letter-spacing: -0.05em;
             }
 
             p {
@@ -313,27 +312,20 @@
             }
         }
 
-        .tools-grid {
-            padding: 1.5rem;
+        .tools-container {
+            display: flex;
+            flex-direction: column;
+            border-left: 0.5rem solid var(--hover-color);
 
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-            gap: 2.5rem;
-            max-width: var(--base-width);
-            margin: 0 auto;
-        }
+            a {
+                font-size: 1.25rem;
+                font-weight: 600;
+                text-decoration: underline;
+                color: var(--base-width);
 
-        .tools-card {
-            text-align: center;
-            background: var(--bg-color-3);
-            padding: 1.875rem;
-            border-radius: 0.5rem;
-
-            h3 {
-                text-align: center;
-                font-weight: 400;
-                margin-bottom: 1rem;
-                font-size: 1.75rem;
+                &:hover {
+                    color: var(--hover-color);
+                }
             }
         }
 
@@ -380,15 +372,17 @@
                     width: fit-content;
                     text-align: start;
                     height: fit-content;
-                    font-size: 2.0rem;
+                    font-size: 2.5rem;
                     font-weight: 600;
                     line-height: 1.4;
-                    letter-spacing: -0.025em;
+                    letter-spacing: -0.05em;
                     border-bottom: 0.25rem solid var(--hover-color);
                 }
 
                 p {
                     padding: 0;
+                    font-weight: 400;
+                    font-style: italic;
                     padding-bottom: 1.5rem;
                     width: 100%;
                     text-align: start;
@@ -479,7 +473,7 @@
                 scroll-margin-top: 2rem;
 
                 h2 {
-                    font-size: 2.5rem;
+                    font-size: 3.5rem;
                 }
             }
 
@@ -503,6 +497,11 @@
                 grid-template:
                     "img" 1fr
                     "content" auto / 1fr;
+
+                .card-content {
+                    padding-left: 0.5rem;
+                    padding-right: 0.5rem;
+                }
             }
 
             p {
@@ -666,8 +665,10 @@
 
         <section id="tools">
             <h2>Tools</h2>
-            <p>
-                Coming Soon...
+            <p class="tools-container">
+                <a href="">Texture Editor</a>
+                <a href="">Color Converter</a>
+                <a href="">CSS Gradient Generator</a>
             </p>
         </section>
 
