@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="./css/fonts.css">
+    <link rel="stylesheet" href="../css/fonts.css">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="description" content="[[Normal Bytes Studio]]">
@@ -293,7 +293,7 @@
 
             h2 {
                 text-align: start;
-                font-weight: 300;
+                font-weight: 400;
                 text-transform: uppercase;
                 width: 100%;
                 max-width: var(--base-width);
@@ -356,13 +356,15 @@
                 width: 100%;
                 object-fit: cover;
                 /*border: 1.0rem solid #ffffff;*/
+                padding: 0.5rem;
+                background-color: var(--bg-color-header);
             }
 
             .card-content {
                 grid-area: "content";
                 text-align: start;
                 width: 100%;
-                height: fit-content;
+                height: 100%;
                 padding: 2.5rem;
 
                 h3 {
@@ -493,14 +495,17 @@
             }
 
             .games-card {
-                width: 100%;
+                width: calc(100% + 3rem);
                 grid-template:
                     "img" 1fr
                     "content" auto / 1fr;
 
+                margin-left: -1.5rem;
+                margin-right: -1.5rem;
+
                 .card-content {
-                    padding-left: 0.5rem;
-                    padding-right: 0.5rem;
+                    padding-left: 1.5rem;
+                    padding-right: 1.5rem;
                 }
             }
 
