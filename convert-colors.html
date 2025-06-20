@@ -63,14 +63,14 @@
 
 <body>
     <div class="container">
-        <div>sRGB: </div><input id="input-hex-srgb" type="text" value="#ffffff" maxlentgh="9" size="9"
+        <div>sRGB: </div><input id="input-hex-srgb" type="text" value="#ffffff" maxlentgh="7" size="9"
             spellcheck="false" autocomplete="off">
         =
         <input id="input-vec-srgb" type="text" value="vec3(1.000, 1.000, 1.000)" size="27" spellcheck="false"
             autocomplete="off">
         <br>
         <br>
-        <div>linear: </div><input id="input-hex-linear" type="text" value="#ffffff" maxlentgh="9" size="9"
+        <div>linear: </div><input id="input-hex-linear" type="text" value="#ffffff" maxlentgh="7" size="9"
             spellcheck="false" autocomplete="off">
         =
         <input id="input-vec-linear" type="text" value="vec3(1.000, 1.000, 1.000)" size="27" spellcheck="false"
@@ -120,14 +120,6 @@
         vec_string = vec_string.replace('vec3(', '[');
         vec_string = vec_string.replace(')', ']');
         return JSON.parse(vec_string) ?? [0, 0, 0];
-    }
-
-    const updateHexText = (e) => {
-        input_hex_srgb.value = writeHex(parseVec(e.target.value));
-    }
-
-    const updateVecText = (e) => {
-        input_vec_srgb.value = writeVec(parseHex(e.target.value));
     }
 
     const update_values_from_linear = (linear) => {
