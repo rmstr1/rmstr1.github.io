@@ -92,12 +92,16 @@
     </div>
 </body>
 <script>
-    const lerp_number = (a, b, t) => a * (1.0 - t) + b * t;
+    const lerp_scalar = (a, b, t) => a * (1.0 - t) + b * t;
 
     const lerp = (a, b, t) => {
         return a.map((x, i) => {
-            return lerp_number(x, b[i], t);
+            return lerp_scalar(x, b[i], t);
         });
+    }
+
+    function clamp(x, lower, upper) {
+        return Math.min(Math.max(x, lower), upper);
     }
 
     const srgbToLinear = (srgb) => {
@@ -167,9 +171,9 @@
 
     const writeHex = (rgb) => {
         const [r, g, b] = rgb;
-        const r_u = Math.round(r * 255.0);
-        const g_u = Math.round(g * 255.0);
-        const b_u = Math.round(b * 255.0);
+        const r_u = clamp(Math.round(r * 255.0), 0, 255);
+        const g_u = clamp(Math.round(g * 255.0), 0, 255);
+        const b_u = clamp(Math.round(b * 255.0), 0, 255);
         return "#" + (1 << 24 | r_u << 16 | g_u << 8 | b_u).toString(16).slice(1);
     }
 
