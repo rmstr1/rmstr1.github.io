@@ -132,8 +132,9 @@
         /* Hero Section */
         .hero {
             margin: 0 auto;
+            margin-bottom: -5lvh;
             padding: 2.5rem;
-            height: 95lvh;
+            height: 100lvh;
             /*background: url('../res/hero_img.png') no-repeat center center/cover;*/
             /*background: linear-gradient(to left top, #f0eae4, #ebe5d2, #dde2c4, #c5e2bd, #a5e1bf);*/
             /*background-image: radial-gradient(circle at 50% 50%, var(--bg-color-footer) 20rem, var(--bg-color-2) 20rem);*/
@@ -227,7 +228,7 @@
                     z-index: 1;
                     width: 100%;
                     height: var(--divider-height);
-                    bottom: calc(-1 * var(--divider-height) / 2);
+                    bottom: calc(-1 * var(--divider-height) / 2 + 5lvh);
                     left: 0;
                     background: linear-gradient(to bottom, #720071 20%, #91006c 20%, #91006c 40%, #ac0064 40%, #ac0064 60%, #c30059 60%, #c30059 80%, #d6004c 80%);
                 }
@@ -518,8 +519,8 @@
             }
 
             .hero {
-                height: 95lvh;
-                padding-top: 15lvh;
+                height: 100lvh;
+                padding-top: 10lvh;
 
                 p {
                     font-size: 1.25rem;
@@ -671,9 +672,9 @@
         <section id="tools">
             <h2>Tools</h2>
             <p class="tools-container">
-                <a href="./texture-editor/index.html">Texture Editor</a>
-                <a href="./convert-colors.html">Color Converter</a>
-                <a href="./gradient-gen.html">CSS Gradient Generator</a>
+                <a href="">Texture Editor</a>
+                <a href="">Color Converter</a>
+                <a href="">CSS Gradient Generator</a>
             </p>
         </section>
 
