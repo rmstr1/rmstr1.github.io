@@ -2,11 +2,10 @@
 <html lang="en">
 
 <head>
-    <!-- link rel="stylesheet" href="../css/x43z.css"! -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Color Converter">
-    <title>Color Converter</title>
+    <meta name="description" content="CSS Gradient Generator">
+    <title>CSS Gradient Generator</title>
     <style>
         *,
         *::before,
@@ -21,9 +20,10 @@
 
         body {
             margin: 0;
-            background-color: #ffffff;
+            background-color: #181818;
+            color: #ffffff;
             font-family: "Courier New", monospace;
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 600;
             width: 100%;
             height: 100%;
@@ -37,39 +37,68 @@
         select {
             padding: 0.25rem 0.5rem;
             font-family: "Courier New", monospace;
-            font-size: 1.25rem;
-            font-weight: 600;
-            border: 1px solid #464646;
-            border-radius: 0;
+            font-size: 1.125rem;
+            font-weight: 400;
+            border: 0.125rem solid #333333;
+            border-radius: 0.5rem;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        input[type=color] {
+            all: unset;
+            box-sizing: border-box;
+
+            margin: 0;
+            height: 2rem;
+            width: 2rem;
+            border: 0.25rem solid #333333;
+            background-color: #000000;
+            border-radius: 0.25rem;
+        }
+
+        input[type=checkbox] {
+            height: 1.25rem;
+            width: 1.25rem;
         }
 
         textarea {
             width: 100%;
         }
 
-        #preview {
-            width: 6rem;
-            height: 6rem;
-            border: 0.125rem solid #464646;
-            background: #000000;
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-moz-color-swatch {
+            border: none;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
         }
 
         .container {
             margin: 0 auto;
             padding: 2rem;
             width: calc(100% - 4rem);
+            border-radius: 2rem;
             max-width: 30rem;
             height: fit-content;
-            background: #f4f4f4;
-            border: 1px solid #464646;
+            background: #181818;
+            box-shadow: 0px 3rem 6rem -1rem rgba(0, 0, 0, 0.123), 0px 2rem 4rem -2rem rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <input id="a" type="text" value="#e66465" maxlentgh="7" size="9" spellcheck="false" autocomplete="off">
-        <input id="b" type="text" value="#9198e5" maxlentgh="7" size="9" spellcheck="false" autocomplete="off">
+        Colors (sRGB):<br>
+        <input id="a_color" type="color" value="#e66465">
+        <input id="a_text" type="text" value="#e66465" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
+        <input id="b_color" type="color" value="#9198e5">
+        <input id="b_text" type="text" value="#9198e5" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
+        <br>
         <br>
         <label>Interpolation:
             <select id="interpolation" autocomplete="off">
@@ -82,8 +111,9 @@
         <label>Discrete:
             <input id="discrete" type="checkbox" autocomplete="off">
         </label>
-        <label>Colors:
-            <input id="n_bands" type="number" min="2" max="32" value="5" autocomplete="off">
+        <br>
+        <label>Steps:
+            <input id="n_bands" type="number" min="2" max="256" value="5" size="3" autocomplete="off">
         </label>
         <br>
         <br>
@@ -180,27 +210,20 @@
     const updateOutput = () => {
         const interpolation = document.querySelector('#interpolation').value;
 
-        const to_ispace = {
-            "linear": srgbToLinear,
-            "srgb": (x) => x,
-            "oklab": srgbToOklab,
+        const [to_ispace, from_ispace] = {
+            "linear": [srgbToLinear, linearToSrgb],
+            "srgb": [(x) => x, (x) => x],
+            "oklab": [srgbToOklab, oklabToSrgb],
         }[interpolation];
 
-        const from_ispace = {
-            "linear": linearToSrgb,
-            "srgb": (x) => x,
-            "oklab": oklabToSrgb,
-        }[interpolation];
-
-        const a_linear = to_ispace(parseHex(a_input.value));
-        const b_linear = to_ispace(parseHex(b_input.value));
+        const a_linear = to_ispace(parseHex(a_text.value));
+        const b_linear = to_ispace(parseHex(b_text.value));
 
         const n_bands = Number(document.querySelector('#n_bands').value);
         const discrete = document.querySelector('#discrete').checked;
 
         const values = [];
         for (let i = 0; i < n_bands; i++) {
-
             const t = i / (n_bands - 1.0);
             const percentage = discrete ? i / n_bands : i / (n_bands - 1.0);
 
@@ -217,13 +240,17 @@
         preview.style.backgroundImage = gradient_str;
     }
 
-    const a_input = document.querySelector('#a');
-    const b_input = document.querySelector('#b');
+    const a_text = document.querySelector('#a_text');
+    const a_color = document.querySelector('#a_color');
+    const b_text = document.querySelector('#b_text');
+    const b_color = document.querySelector('#b_color');
     const output = document.querySelector('#output');
     const preview = document.querySelector('body');
 
-    a_input.addEventListener('change', (e) => updateOutput());
-    b_input.addEventListener('change', (e) => updateOutput());
+    a_text.addEventListener('change', (e) => { a_color.value = e.target.value; updateOutput(); });
+    b_text.addEventListener('change', (e) => { b_color.value = e.target.value; updateOutput(); });
+    a_color.addEventListener('change', (e) => { a_text.value = e.target.value; updateOutput(); });
+    b_color.addEventListener('change', (e) => { b_text.value = e.target.value; updateOutput(); });
     document.querySelector('#n_bands').addEventListener('change', (e) => updateOutput());
     document.querySelector('#discrete').addEventListener('change', (e) => updateOutput());
     document.querySelector('#interpolation').addEventListener('change', (e) => updateOutput());
