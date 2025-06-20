@@ -63,14 +63,25 @@
 
         .container {
             margin: 0 auto;
-            padding: 2rem;
+            padding: 3rem;
             width: calc(100% - 4rem);
-            max-width: fit-content;
             border-radius: 2rem;
+            max-width: 30rem;
             height: fit-content;
             background: #252528;
-            border: 0.125rem solid #333333;
             box-shadow: 0px 3rem 6rem -1rem rgba(0, 0, 0, 0.123), 0px 2rem 4rem -2rem rgba(0, 0, 0, 0.3);
+        }
+
+        hr {
+            all: unset;
+            box-sizing: border-box;
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0;
+            width: 100%;
+            height: 1px;
+            color: #44484b;
+            background-color: #44484b;
         }
     </style>
 </head>
@@ -82,8 +93,7 @@
         =
         <input id="input-vec-srgb" type="text" value="vec3(1.000, 1.000, 1.000)" size="27" spellcheck="false"
             autocomplete="off">
-        <br>
-        <br>
+        <hr>
         <div>linear: </div><input id="input-hex-linear" type="text" value="#ffffff" maxlentgh="7" size="9"
             spellcheck="false" autocomplete="off">
         =
