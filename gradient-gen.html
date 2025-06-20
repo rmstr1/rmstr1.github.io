@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="CSS Gradient Generator">
-    <title>CSS Gradient Generator</title>
+    <meta name="description" content="CSS Discrete Gradient Generator">
+    <title>CSS Discrete Gradient Generator</title>
     <style>
         @font-face {
             font-family: 'Source Code Pro';
@@ -130,28 +130,28 @@
     <div class="container">
         Colors (sRGB):<br>
         <label>
-            <input id="a_color" type="color" value="#e66465">
-            <input id="a_text" type="text" value="#e66465" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
+            <input id="a_color" type="color" value="#5BCEFA">
+            <input id="a_text" type="text" value="#5BCEFA" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
         </label>
         <label>
-            <input id="b_color" type="color" value="#9198e5">
-            <input id="b_text" type="text" value="#9198e5" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
+            <input id="b_color" type="color" value="#F5A9B8">
+            <input id="b_text" type="text" value="#F5A9B8" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
         </label>
         <hr>
         <label>Interpolation:
             <select id="interpolation" autocomplete="off">
-                <option value="oklab">oklab</option>
-                <option value="linear">linear</option>
-                <option value="srgb">srgb</option>
+                <option value="oklab">okLab</option>
+                <option value="linear">linear sRGB</option>
+                <option value="srgb">sRGB</option>
             </select>
         </label>
         <br>
         <label>Discrete:
-            <input id="discrete" type="checkbox" autocomplete="off">
+            <input id="discrete" type="checkbox" autocomplete="off" checked="checked">
         </label>
         <br>
         <label>Steps:
-            <input id="n_bands" type="number" min="2" max="256" value="5" size="3" autocomplete="off">
+            <input id="n_bands" type="number" min="2" max="256" value="6" size="3" autocomplete="off">
         </label>
         <hr>
         CSS Gradient:
