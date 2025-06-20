@@ -22,7 +22,7 @@
             --bg-color-5: #009191;
 
             --bg-color-header: #222222;
-            --bg-color-footer: #444444;
+            --bg-color-footer: #222222;
 
             --bg: linear-gradient(to bottom, var(--bg-color-header) 50%, #009191 50%, #009191 99%, var(--bg-color-footer) 99%);
 
@@ -133,7 +133,7 @@
         .hero {
             margin: 0 auto;
             padding: 2.5rem;
-            height: 100lvh;
+            height: 95lvh;
             /*background: url('../res/hero_img.png') no-repeat center center/cover;*/
             /*background: linear-gradient(to left top, #f0eae4, #ebe5d2, #dde2c4, #c5e2bd, #a5e1bf);*/
             /*background-image: radial-gradient(circle at 50% 50%, var(--bg-color-footer) 20rem, var(--bg-color-2) 20rem);*/
@@ -152,11 +152,11 @@
 
             h1 {
                 color: var(--header-text-color);
-                font-size: calc(min(1rem + 10vw, 10rem));
+                font-size: calc(min(min(1rem + 9vw, 1rem + 12vh), 10rem));
                 letter-spacing: -0.15rem;
                 font-weight: 700;
                 width: 100%;
-                max-width: 48rem;
+                max-width: 40rem;
                 margin: 0 auto;
                 margin-bottom: 1.75rem;
                 line-height: 0.9;
@@ -221,7 +221,7 @@
             &:nth-child(1 of section) {
                 background: var(--bg-color-1);
 
-                &::after {
+                &::before {
                     content: '';
                     position: absolute;
                     z-index: 1;
@@ -236,7 +236,7 @@
             &:nth-child(2 of section) {
                 background: var(--bg-color-2);
 
-                &::after {
+                &::before {
                     content: '';
                     position: absolute;
                     z-index: 1;
@@ -255,7 +255,7 @@
                 background: var(--bg-color-3);
                 color: var(--text-color-2);
 
-                &::after {
+                &::before {
                     content: '';
                     position: absolute;
                     z-index: 1;
@@ -270,7 +270,7 @@
             &:nth-child(4 of section) {
                 background: var(--bg-color-4);
 
-                &::after {
+                &::before {
                     content: '';
                     position: absolute;
                     z-index: 1;
@@ -518,8 +518,8 @@
             }
 
             .hero {
-                height: 100lvh;
-                padding-top: 20lvh;
+                height: 95lvh;
+                padding-top: 15lvh;
 
                 p {
                     font-size: 1.25rem;
@@ -671,9 +671,9 @@
         <section id="tools">
             <h2>Tools</h2>
             <p class="tools-container">
-                <a href="">Texture Editor</a>
-                <a href="">Color Converter</a>
-                <a href="">CSS Gradient Generator</a>
+                <a href="./texture-editor/index.html">Texture Editor</a>
+                <a href="./convert-colors.html">Color Converter</a>
+                <a href="./gradient-gen.html">CSS Gradient Generator</a>
             </p>
         </section>
 
