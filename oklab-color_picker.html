@@ -5,8 +5,8 @@
     <!-- link rel="stylesheet" href="../css/x43z.css"! -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Color Converter">
-    <title>Color Converter</title>
+    <meta name="description" content="OkLab Color Picker">
+    <title>OkLab Color Picker</title>
     <style>
         *,
         *::before,
@@ -99,6 +99,11 @@
             height: 100%;
             background-color: #79dbcf;
             border-radius: 0.25rem;
+            cursor: pointer;
+
+            &:hover {
+                outline: 0.25rem solid #f2f2f2;
+            }
         }
 
         input[type=color] {
@@ -111,6 +116,12 @@
             padding: 0;
             border: 0.25rem solid #1a1b1c;
             border-radius: 0.5rem;
+
+            cursor: pointer;
+
+            &:hover {
+                border: 0.25rem solid #f2f2f2;
+            }
 
             &::-webkit-color-swatch-wrapper {
                 padding: 0;
@@ -144,45 +155,45 @@
         <div>Pick Color: </div>
         <div class="main-grid">
             <div class="color-grid">
-                <div id="h-6" class="color-picker"></div>
-                <div id="h-5" class="color-picker"></div>
-                <div id="h-4" class="color-picker"></div>
-                <div id="h-3" class="color-picker"></div>
-                <div id="h-2" class="color-picker"></div>
-                <div id="h-1" class="color-picker"></div>
                 <div id="l-6" class="color-picker"></div>
                 <div id="l-5" class="color-picker"></div>
                 <div id="l-4" class="color-picker"></div>
                 <div id="l-3" class="color-picker"></div>
                 <div id="l-2" class="color-picker"></div>
                 <div id="l-1" class="color-picker"></div>
-                <div id="s-6" class="color-picker"></div>
-                <div id="s-5" class="color-picker"></div>
-                <div id="s-4" class="color-picker"></div>
-                <div id="s-3" class="color-picker"></div>
-                <div id="s-2" class="color-picker"></div>
-                <div id="s-1" class="color-picker"></div>
+                <div id="a-6" class="color-picker"></div>
+                <div id="a-5" class="color-picker"></div>
+                <div id="a-4" class="color-picker"></div>
+                <div id="a-3" class="color-picker"></div>
+                <div id="a-2" class="color-picker"></div>
+                <div id="a-1" class="color-picker"></div>
+                <div id="b-6" class="color-picker"></div>
+                <div id="b-5" class="color-picker"></div>
+                <div id="b-4" class="color-picker"></div>
+                <div id="b-3" class="color-picker"></div>
+                <div id="b-2" class="color-picker"></div>
+                <div id="b-1" class="color-picker"></div>
             </div>
             <input id="input-color" type="color" autocomplete="off" value="#79dbcf">
             <div class="color-grid">
-                <div id="h+1" class="color-picker"></div>
-                <div id="h+2" class="color-picker"></div>
-                <div id="h+3" class="color-picker"></div>
-                <div id="h+4" class="color-picker"></div>
-                <div id="h+5" class="color-picker"></div>
-                <div id="h+6" class="color-picker"></div>
-                <div id="l+1" class="color-picker"></div>
-                <div id="l+2" class="color-picker"></div>
-                <div id="l+3" class="color-picker"></div>
-                <div id="l+4" class="color-picker"></div>
-                <div id="l+5" class="color-picker"></div>
-                <div id="l+6" class="color-picker"></div>
-                <div id="s+1" class="color-picker"></div>
-                <div id="s+2" class="color-picker"></div>
-                <div id="s+3" class="color-picker"></div>
-                <div id="s+4" class="color-picker"></div>
-                <div id="s+5" class="color-picker"></div>
-                <div id="s+6" class="color-picker"></div>
+                <div id="l--1" class="color-picker"></div>
+                <div id="l--2" class="color-picker"></div>
+                <div id="l--3" class="color-picker"></div>
+                <div id="l--4" class="color-picker"></div>
+                <div id="l--5" class="color-picker"></div>
+                <div id="l--6" class="color-picker"></div>
+                <div id="a--1" class="color-picker"></div>
+                <div id="a--2" class="color-picker"></div>
+                <div id="a--3" class="color-picker"></div>
+                <div id="a--4" class="color-picker"></div>
+                <div id="a--5" class="color-picker"></div>
+                <div id="a--6" class="color-picker"></div>
+                <div id="b--1" class="color-picker"></div>
+                <div id="b--2" class="color-picker"></div>
+                <div id="b--3" class="color-picker"></div>
+                <div id="b--4" class="color-picker"></div>
+                <div id="b--5" class="color-picker"></div>
+                <div id="b--6" class="color-picker"></div>
             </div>
         </div>
         <hr>
@@ -326,32 +337,75 @@
         return `vec3(${r.toFixed(3)}, ${g.toFixed(3)}, ${b.toFixed(3)})`;
     }
 
-    const parseVec = (vec_string) => {
-        vec_string = vec_string.replace('vec3(', '[');
-        vec_string = vec_string.replace(')', ']');
-        return JSON.parse(vec_string) ?? [0, 0, 0];
+    const parseVec = (s) => {
+        s = s.replace('vec3(', '[');
+        s = s.replace(')', ']');
+        return JSON.parse(s) ?? [0, 0, 0];
     }
 
-    const update_values_from_linear = (linear) => {
+    const parseRgb = (s) => {
+        s = s.replace('rgb(', '[');
+        s = s.replace(')', ']');
+        rgb = JSON.parse(s) ?? [0, 0, 0];
+        rgb[0] /= 255.0;
+        rgb[1] /= 255.0;
+        rgb[2] /= 255.0;
+        return rgb;
+    }
+
+    const update = (linear) => {
         input_hex_srgb.value = writeHex(linearToSrgb(linear));
         input_vec_srgb.value = writeVec(linearToSrgb(linear));
         input_hex_linear.value = writeHex(linear);
         input_vec_linear.value = writeVec(linear);
+        input_color.value = writeHex(linearToSrgb(linear));
         preview.style.backgroundColor = writeHex(linearToSrgb(linear));
+
+        const oklab = linearToOklab(linear);
+        for (let i = 1; i <= 6; i++) {
+            let step = 0.02;
+            document.querySelector(`#l-${i}`).style.backgroundColor = writeHex(oklabToSrgb([oklab[0] - i * step, oklab[1], oklab[2]]));
+            document.querySelector(`#l--${i}`).style.backgroundColor = writeHex(oklabToSrgb([oklab[0] + i * 0.01, oklab[1], oklab[2]]));
+        }
+
+        for (let i = 1; i <= 6; i++) {
+            let step = 0.005;
+            document.querySelector(`#a-${i}`).style.backgroundColor = writeHex(oklabToSrgb([oklab[0], oklab[1] - i * step, oklab[2]]));
+            document.querySelector(`#a--${i}`).style.backgroundColor = writeHex(oklabToSrgb([oklab[0], oklab[1] + i * 0.01, oklab[2]]));
+        }
+
+        for (let i = 1; i <= 6; i++) {
+            let step = 0.005;
+            document.querySelector(`#b-${i}`).style.backgroundColor = writeHex(oklabToSrgb([oklab[0], oklab[1], oklab[2] - i * step]));
+            document.querySelector(`#b--${i}`).style.backgroundColor = writeHex(oklabToSrgb([oklab[0], oklab[1], oklab[2] + i * 0.01]));
+        }
     }
 
     const preview = document.querySelector('body');
+    const input_color = document.querySelector('#input-color');
     const input_hex_srgb = document.querySelector('#input-hex-srgb');
     const input_vec_srgb = document.querySelector('#input-vec-srgb');
     const input_hex_linear = document.querySelector('#input-hex-linear');
     const input_vec_linear = document.querySelector('#input-vec-linear');
 
-    input_hex_srgb.addEventListener('change', (e) => update_values_from_linear(srgbToLinear(parseHex(e.target.value))));
-    input_vec_srgb.addEventListener('change', (e) => update_values_from_linear(srgbToLinear(parseVec(e.target.value))));
-    input_hex_linear.addEventListener('change', (e) => update_values_from_linear(parseHex(e.target.value)));
-    input_vec_linear.addEventListener('change', (e) => update_values_from_linear(parseVec(e.target.value)));
+    input_color.addEventListener('change', (e) => update(srgbToLinear(parseHex(e.target.value))));
+    input_hex_srgb.addEventListener('change', (e) => update(srgbToLinear(parseHex(e.target.value))));
+    input_vec_srgb.addEventListener('change', (e) => update(srgbToLinear(parseVec(e.target.value))));
+    input_hex_linear.addEventListener('change', (e) => update(parseHex(e.target.value)));
+    input_vec_linear.addEventListener('change', (e) => update(parseVec(e.target.value)));
 
-    preview.style.backgroundColor = update_values_from_linear(parseHex(input_hex_linear.value));
+    preview.style.backgroundColor = update(parseHex(input_hex_linear.value));
+
+    for (const d of ["l", "a", "b"]) {
+        for (let i = 1; i <= 6; i++) {
+            document.querySelector(`#${d}-${i}`).addEventListener('click', (e) => update(srgbToLinear(parseRgb(e.target.style.backgroundColor))));
+            document.querySelector(`#${d}--${i}`).addEventListener('click', (e) => update(srgbToLinear(parseRgb(e.target.style.backgroundColor))));
+        }
+    }
+
+    // TODO: local/global variable?
+
+
 </script>
 
 </html>
