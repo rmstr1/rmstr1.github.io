@@ -200,13 +200,13 @@
         <div>sRGB: </div><input id="input-hex-srgb" type="text" value="#79dbcf" maxlentgh="7" size="9"
             spellcheck="false" autocomplete="off">
         =
-        <input id="input-vec-srgb" type="text" value="vec3(1.000, 1.000, 1.000)" size="27" spellcheck="false"
+        <input id="input-vec-srgb" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
             autocomplete="off">
         <hr>
         <div>linear: </div><input id="input-hex-linear" type="text" value="#79dbcf" maxlentgh="7" size="9"
             spellcheck="false" autocomplete="off">
         =
-        <input id="input-vec-linear" type="text" value="vec3(1.000, 1.000, 1.000)" size="27" spellcheck="false"
+        <input id="input-vec-linear" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
             autocomplete="off">
     </div>
 </body>
@@ -334,7 +334,7 @@
 
     const writeVec = (rgb) => {
         const [r, g, b] = rgb;
-        return `vec3(${r.toFixed(3)}, ${g.toFixed(3)}, ${b.toFixed(3)})`;
+        return `vec3(${r.toFixed(4)}, ${g.toFixed(4)}, ${b.toFixed(4)})`;
     }
 
     const parseVec = (s) => {
