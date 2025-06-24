@@ -363,7 +363,7 @@
 
         const oklab = linearToOklab(linear);
         for (let i = 1; i <= 6; i++) {
-            let step = 0.02;
+            let step = 0.005;
             document.querySelector(`#l-${i}`).style.backgroundColor = writeHex(oklabToSrgb([oklab[0] - i * step, oklab[1], oklab[2]]));
             document.querySelector(`#l--${i}`).style.backgroundColor = writeHex(oklabToSrgb([oklab[0] + i * 0.01, oklab[1], oklab[2]]));
         }
