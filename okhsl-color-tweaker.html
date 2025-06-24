@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- link rel="stylesheet" href="../css/x43z.css"! -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="OkLab Color Picker">
+    <title>OkLab Color Picker</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'Source Code Pro';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./fonts/SourceCodePro-Regular.ttf.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-family: 'Source Sans 3';
+            font-style: normal;
+            font-weight: 600;
+            src: url('./fonts/SourceSans3-Semibold.ttf.woff2') format('woff2');
+        }
+
+        html {
+            margin: 0;
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            background-color: #252528;
+            color: #ffffff;
+            font-family: "Source Sans 3", sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-items: center;
+            line-height: 1.8;
+        }
+
+        textarea,
+        input,
+        select {
+            padding: 0.25rem 0.5rem;
+            font-family: "Source Code Pro", monospace;
+            font-size: 1rem;
+            font-weight: 400;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: #1a1b1c;
+            color: #ffffff;
+            box-shadow: inset 0.1875rem 0.1875rem rgba(0, 0, 0, 0.231);
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 3rem;
+            width: calc(100% - 4rem);
+            border-radius: 2rem;
+            max-width: fit-content;
+            height: fit-content;
+            background: #252528;
+            box-shadow: 0px 3rem 6rem -1rem rgba(0, 0, 0, 0.123), 0px 2rem 4rem -2rem rgba(0, 0, 0, 0.3);
+        }
+
+        .main-grid {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 0.25rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .color-grid {
+            height: 6.0rem;
+            aspect-ratio: 6 / 3;
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            grid-template-rows: repeat(3, minmax(0, 1fr));
+            gap: 0.25rem;
+            padding: 0.25rem;
+            background-color: #1a1b1c;
+            box-shadow: inset 0.1875rem 0.1875rem rgba(0, 0, 0, 0.231);
+            border-radius: 0.25rem;
+        }
+
+        .color-picker {
+            width: 100%;
+            height: 100%;
+            background-color: #79dbcf;
+            border-radius: 0.25rem;
+            cursor: pointer;
+
+            &:hover {
+                outline: 0.25rem solid #f2f2f2;
+            }
+        }
+
+        input[type=color] {
+            all: unset;
+            box-sizing: border-box;
+            display: block;
+            width: 6.0rem;
+            height: 6.0rem;
+            margin: 0;
+            padding: 0;
+            border: 0.25rem solid #1a1b1c;
+            border-radius: 0.5rem;
+
+            cursor: pointer;
+
+            &:hover {
+                border: 0.25rem solid #f2f2f2;
+            }
+
+            &::-webkit-color-swatch-wrapper {
+                padding: 0;
+            }
+
+            &::-moz-color-swatch {
+                border: none;
+            }
+
+            &::-webkit-color-swatch {
+                border: none;
+            }
+        }
+
+        hr {
+            all: unset;
+            box-sizing: border-box;
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0;
+            width: 100%;
+            height: 1px;
+            color: #44484b;
+            background-color: #44484b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>Pick Color: </div>
+        <div class="main-grid">
+            <div class="color-grid">
+                <div id="l-6" class="color-picker"></div>
+                <div id="l-5" class="color-picker"></div>
+                <div id="l-4" class="color-picker"></div>
+                <div id="l-3" class="color-picker"></div>
+                <div id="l-2" class="color-picker"></div>
+                <div id="l-1" class="color-picker"></div>
+                <div id="a-6" class="color-picker"></div>
+                <div id="a-5" class="color-picker"></div>
+                <div id="a-4" class="color-picker"></div>
+                <div id="a-3" class="color-picker"></div>
+                <div id="a-2" class="color-picker"></div>
+                <div id="a-1" class="color-picker"></div>
+                <div id="b-6" class="color-picker"></div>
+                <div id="b-5" class="color-picker"></div>
+                <div id="b-4" class="color-picker"></div>
+                <div id="b-3" class="color-picker"></div>
+                <div id="b-2" class="color-picker"></div>
+                <div id="b-1" class="color-picker"></div>
+            </div>
+            <input id="input-color" type="color" autocomplete="off" value="#79dbcf">
+            <div class="color-grid">
+                <div id="l--1" class="color-picker"></div>
+                <div id="l--2" class="color-picker"></div>
+                <div id="l--3" class="color-picker"></div>
+                <div id="l--4" class="color-picker"></div>
+                <div id="l--5" class="color-picker"></div>
+                <div id="l--6" class="color-picker"></div>
+                <div id="a--1" class="color-picker"></div>
+                <div id="a--2" class="color-picker"></div>
+                <div id="a--3" class="color-picker"></div>
+                <div id="a--4" class="color-picker"></div>
+                <div id="a--5" class="color-picker"></div>
+                <div id="a--6" class="color-picker"></div>
+                <div id="b--1" class="color-picker"></div>
+                <div id="b--2" class="color-picker"></div>
+                <div id="b--3" class="color-picker"></div>
+                <div id="b--4" class="color-picker"></div>
+                <div id="b--5" class="color-picker"></div>
+                <div id="b--6" class="color-picker"></div>
+            </div>
+        </div>
+        <hr>
+        <div>sRGB: </div><input id="input-hex-srgb" type="text" value="#79dbcf" maxlentgh="7" size="9"
+            spellcheck="false" autocomplete="off">
+        =
+        <input id="input-vec-srgb" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+            autocomplete="off">
+        <hr>
+        <div>linear: </div><input id="input-hex-linear" type="text" value="#79dbcf" maxlentgh="7" size="9"
+            spellcheck="false" autocomplete="off">
+        =
+        <input id="input-vec-linear" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+            autocomplete="off">
+    </div>
+</body>
+<script>
+    const lerp_scalar = (a, b, t) => a * (1.0 - t) + b * t;
+
+    const lerp = (a, b, t) => {
+        return a.map((x, i) => {
+            return lerp_scalar(x, b[i], t);
+        });
+    }
+
+    function clamp(x, lower, upper) {
+        return Math.min(Math.max(x, lower), upper);
+    }
+
+    const srgbToLinear = (srgb) => {
+        return srgb.map((x) => {
+            const cutoff = x > 0.04045;
+            const a = x / 12.92;
+            const b = ((x + 0.055) / 1.055) ** 2.4;
+            return cutoff ? b : a;
+        });
+    }
+
+    const linearToSrgb = (linear) => {
+        return linear.map((x) => {
+            const cutoff = x > 0.0031308;
+            const a = x * 12.92;
+            const b = 1.055 * x ** (1.0 / 2.4) - 0.055;
+            return cutoff ? b : a;
+        });
+    }
+
+    /* OKLab, OkHsl conversion code based on https://github.com/bottosson/bottosson.github.io/tree/master/misc/colorpicker:
+
+    Copyright (c) 2021 Björn Ottosson
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of
+    this software and associated documentation files (the "Software"), to deal in
+    the Software without restriction, including without limitation the rights to
+    use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+    of the Software, and to permit persons to whom the Software is furnished to do
+    so, subject to the following conditions:
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+    */
+
+    const linearToOklab = (c) => {
+        const [r, g, b] = c;
+
+        const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
+        const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
+        const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
+
+        const l_ = l ** (1.0 / 3.0);
+        const m_ = m ** (1.0 / 3.0);
+        const s_ = s ** (1.0 / 3.0);
+
+        return [
+            0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_,
+            1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_,
+            0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_
+        ];
+    }
+
+    const oklabToLinear = (c) => {
+        const [x, y, z] = c;
+
+        const l_ = x + 0.3963377774 * y + 0.2158037573 * z;
+        const m_ = x - 0.1055613458 * y - 0.0638541728 * z;
+        const s_ = x - 0.0894841775 * y - 1.2914855480 * z;
+
+        const l = l_ * l_ * l_;
+        const m = m_ * m_ * m_;
+        const s = s_ * s_ * s_;
+
+        return [
+            +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+            -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+            -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+        ];
+    }
+
+    srgbToOklab = (c) => linearToOklab(srgbToLinear(c));
+
+    oklabToSrgb = (c) => linearToSrgb(oklabToLinear(c));
+
+    srgbToOkhsl = (c) => linearToOkhsl(srgbToLinear(c));
+
+    okhslToSrgb = (c) => linearToSrgb(okhslToLinear(c));
+
+    function toe(x) {
+        const k_1 = 0.206
+        const k_2 = 0.03
+        const k_3 = (1 + k_1) / (1 + k_2)
+
+        return 0.5 * (k_3 * x - k_1 + Math.sqrt((k_3 * x - k_1) * (k_3 * x - k_1) + 4 * k_2 * k_3 * x))
+    }
+
+    function toe_inv(x) {
+        const k_1 = 0.206
+        const k_2 = 0.03
+        const k_3 = (1 + k_1) / (1 + k_2)
+        return (x * x + k_1 * x) / (k_3 * (x + k_2))
+    }
+
+    // Finds the maximum saturation possible for a given hue that fits in sRGB
+    // Saturation here is defined as S = C/L
+    // a and b must be normalized so a^2 + b^2 == 1
+    function compute_max_saturation(a, b) {
+        // Max saturation will be when one of r, g or b goes below zero.
+
+        // Select different coefficients depending on which component goes below zero first
+        let k0, k1, k2, k3, k4, wl, wm, ws;
+
+        if (-1.88170328 * a - 0.80936493 * b > 1) {
+            // Red component
+            k0 = +1.19086277; k1 = +1.76576728; k2 = +0.59662641; k3 = +0.75515197; k4 = +0.56771245;
+            wl = +4.0767416621; wm = -3.3077115913; ws = +0.2309699292;
+        }
+        else if (1.81444104 * a - 1.19445276 * b > 1) {
+            // Green component
+            k0 = +0.73956515; k1 = -0.45954404; k2 = +0.08285427; k3 = +0.12541070; k4 = +0.14503204;
+            wl = -1.2684380046; wm = +2.6097574011; ws = -0.3413193965;
+        }
+        else {
+            // Blue component
+            k0 = +1.35733652; k1 = -0.00915799; k2 = -1.15130210; k3 = -0.50559606; k4 = +0.00692167;
+            wl = -0.0041960863; wm = -0.7034186147; ws = +1.7076147010;
+        }
+
+        // Approximate max saturation using a polynomial:
+        let S = k0 + k1 * a + k2 * b + k3 * a * a + k4 * a * b;
+
+        // Do one step Halley's method to get closer
+        // this gives an error less than 10e6, except for some blue hues where the dS/dh is close to infinite
+        // this should be sufficient for most applications, otherwise do two/three steps 
+
+        let k_l = +0.3963377774 * a + 0.2158037573 * b;
+        let k_m = -0.1055613458 * a - 0.0638541728 * b;
+        let k_s = -0.0894841775 * a - 1.2914855480 * b;
+
+        {
+            let l_ = 1 + S * k_l;
+            let m_ = 1 + S * k_m;
+            let s_ = 1 + S * k_s;
+
+            let l = l_ * l_ * l_;
+            let m = m_ * m_ * m_;
+            let s = s_ * s_ * s_;
+
+            let l_dS = 3 * k_l * l_ * l_;
+            let m_dS = 3 * k_m * m_ * m_;
+            let s_dS = 3 * k_s * s_ * s_;
+
+            let l_dS2 = 6 * k_l * k_l * l_;
+            let m_dS2 = 6 * k_m * k_m * m_;
+            let s_dS2 = 6 * k_s * k_s * s_;
+
+            let f = wl * l + wm * m + ws * s;
+            let f1 = wl * l_dS + wm * m_dS + ws * s_dS;
+            let f2 = wl * l_dS2 + wm * m_dS2 + ws * s_dS2;
+
+            S = S - f * f1 / (f1 * f1 - 0.5 * f * f2);
+        }
+
+        return S;
+    }
+
+    function find_cusp(a, b) {
+        // First, find the maximum saturation (saturation S = C/L)
+        let S_cusp = compute_max_saturation(a, b);
+
+        // Convert to linear sRGB to find the first point where at least one of r,g or b >= 1:
+        let rgb_at_max = oklabToLinear([1, S_cusp * a, S_cusp * b]);
+        let L_cusp = Math.cbrt(1 / Math.max(Math.max(rgb_at_max[0], rgb_at_max[1]), rgb_at_max[2]));
+        let C_cusp = L_cusp * S_cusp;
+
+        return [L_cusp, C_cusp];
+    }
+
+    // Finds intersection of the line defined by 
+    // L = L0 * (1 - t) + t * L1;
+    // C = t * C1;
+    // a and b must be normalized so a^2 + b^2 == 1
+    function find_gamut_intersection(a, b, L1, C1, L0, cusp = null) {
+        if (!cusp) {
+            // Find the cusp of the gamut triangle
+            cusp = find_cusp(a, b);
+        }
+
+        // Find the intersection for upper and lower half seprately
+        let t;
+        if (((L1 - L0) * cusp[1] - (cusp[0] - L0) * C1) <= 0) {
+            // Lower half
+
+            t = cusp[1] * L0 / (C1 * cusp[0] + cusp[1] * (L0 - L1));
+        }
+        else {
+            // Upper half
+
+            // First intersect with triangle
+            t = cusp[1] * (L0 - 1) / (C1 * (cusp[0] - 1) + cusp[1] * (L0 - L1));
+
+            // Then one step Halley's method
+            {
+                let dL = L1 - L0;
+                let dC = C1;
+
+                let k_l = +0.3963377774 * a + 0.2158037573 * b;
+                let k_m = -0.1055613458 * a - 0.0638541728 * b;
+                let k_s = -0.0894841775 * a - 1.2914855480 * b;
+
+                let l_dt = dL + dC * k_l;
+                let m_dt = dL + dC * k_m;
+                let s_dt = dL + dC * k_s;
+
+
+                // If higher accuracy is required, 2 or 3 iterations of the following block can be used:
+                {
+                    let L = L0 * (1 - t) + t * L1;
+                    let C = t * C1;
+
+                    let l_ = L + C * k_l;
+                    let m_ = L + C * k_m;
+                    let s_ = L + C * k_s;
+
+                    let l = l_ * l_ * l_;
+                    let m = m_ * m_ * m_;
+                    let s = s_ * s_ * s_;
+
+                    let ldt = 3 * l_dt * l_ * l_;
+                    let mdt = 3 * m_dt * m_ * m_;
+                    let sdt = 3 * s_dt * s_ * s_;
+
+                    let ldt2 = 6 * l_dt * l_dt * l_;
+                    let mdt2 = 6 * m_dt * m_dt * m_;
+                    let sdt2 = 6 * s_dt * s_dt * s_;
+
+                    let r = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s - 1;
+                    let r1 = 4.0767416621 * ldt - 3.3077115913 * mdt + 0.2309699292 * sdt;
+                    let r2 = 4.0767416621 * ldt2 - 3.3077115913 * mdt2 + 0.2309699292 * sdt2;
+
+                    let u_r = r1 / (r1 * r1 - 0.5 * r * r2);
+                    let t_r = -r * u_r;
+
+                    let g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s - 1;
+                    let g1 = -1.2684380046 * ldt + 2.6097574011 * mdt - 0.3413193965 * sdt;
+                    let g2 = -1.2684380046 * ldt2 + 2.6097574011 * mdt2 - 0.3413193965 * sdt2;
+
+                    let u_g = g1 / (g1 * g1 - 0.5 * g * g2);
+                    let t_g = -g * u_g;
+
+                    let b = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s - 1;
+                    let b1 = -0.0041960863 * ldt - 0.7034186147 * mdt + 1.7076147010 * sdt;
+                    let b2 = -0.0041960863 * ldt2 - 0.7034186147 * mdt2 + 1.7076147010 * sdt2;
+
+                    let u_b = b1 / (b1 * b1 - 0.5 * b * b2);
+                    let t_b = -b * u_b;
+
+                    t_r = u_r >= 0 ? t_r : 10e5;
+                    t_g = u_g >= 0 ? t_g : 10e5;
+                    t_b = u_b >= 0 ? t_b : 10e5;
+
+                    t += Math.min(t_r, Math.min(t_g, t_b));
+                }
+            }
+        }
+
+        return t;
+    }
+
+    function get_ST_max(a_, b_, cusp = null) {
+        if (!cusp) {
+            cusp = find_cusp(a_, b_);
+        }
+
+        let L = cusp[0];
+        let C = cusp[1];
+        return [C / L, C / (1 - L)];
+    }
+
+    function get_ST_mid(a_, b_) {
+        S = 0.11516993 + 1 / (
+            + 7.44778970 + 4.15901240 * b_
+            + a_ * (- 2.19557347 + 1.75198401 * b_
+                + a_ * (- 2.13704948 - 10.02301043 * b_
+                    + a_ * (- 4.24894561 + 5.38770819 * b_ + 4.69891013 * a_
+                    )))
+        );
+
+        T = 0.11239642 + 1 / (
+            + 1.61320320 - 0.68124379 * b_
+            + a_ * (+ 0.40370612 + 0.90148123 * b_
+                + a_ * (- 0.27087943 + 0.61223990 * b_
+                    + a_ * (+ 0.00299215 - 0.45399568 * b_ - 0.14661872 * a_
+                    )))
+        );
+
+        return [S, T];
+    }
+
+    function get_Cs(L, a_, b_) {
+        cusp = find_cusp(a_, b_);
+
+        let C_max = find_gamut_intersection(a_, b_, L, 1, L, cusp);
+        let ST_max = get_ST_max(a_, b_, cusp);
+
+        let S_mid = 0.11516993 + 1 / (
+            + 7.44778970 + 4.15901240 * b_
+            + a_ * (- 2.19557347 + 1.75198401 * b_
+                + a_ * (- 2.13704948 - 10.02301043 * b_
+                    + a_ * (- 4.24894561 + 5.38770819 * b_ + 4.69891013 * a_
+                    )))
+        );
+
+        let T_mid = 0.11239642 + 1 / (
+            + 1.61320320 - 0.68124379 * b_
+            + a_ * (+ 0.40370612 + 0.90148123 * b_
+                + a_ * (- 0.27087943 + 0.61223990 * b_
+                    + a_ * (+ 0.00299215 - 0.45399568 * b_ - 0.14661872 * a_
+                    )))
+        );
+
+        let k = C_max / Math.min((L * ST_max[0]), (1 - L) * ST_max[1]);
+
+        let C_mid;
+        {
+            let C_a = L * S_mid;
+            let C_b = (1 - L) * T_mid;
+
+            C_mid = 0.9 * k * Math.sqrt(Math.sqrt(1 / (1 / (C_a * C_a * C_a * C_a) + 1 / (C_b * C_b * C_b * C_b))));
+        }
+
+        let C_0;
+        {
+            let C_a = L * 0.4;
+            let C_b = (1 - L) * 0.8;
+
+            C_0 = Math.sqrt(1 / (1 / (C_a * C_a) + 1 / (C_b * C_b)));
+        }
+
+        return [C_0, C_mid, C_max];
+    }
+
+    function okhslToLinear(hsl) {
+        const [h, s, l] = hsl;
+        if (l == 1) {
+            return [1.0, 1.0, 1.0];
+        }
+
+        else if (l == 0) {
+            return [0.0, 0.0, 0.0];
+        }
+
+        let a_ = Math.cos(2 * Math.PI * h);
+        let b_ = Math.sin(2 * Math.PI * h);
+        let L = toe_inv(l);
+
+        let Cs = get_Cs(L, a_, b_);
+        let C_0 = Cs[0];
+        let C_mid = Cs[1];
+        let C_max = Cs[2];
+
+        let C, t, k_0, k_1, k_2;
+        if (s < 0.8) {
+            t = 1.25 * s;
+            k_0 = 0;
+            k_1 = 0.8 * C_0;
+            k_2 = (1 - k_1 / C_mid);
+        }
+        else {
+            t = 5 * (s - 0.8);
+            k_0 = C_mid;
+            k_1 = 0.2 * C_mid * C_mid * 1.25 * 1.25 / C_0;
+            k_2 = (1 - (k_1) / (C_max - C_mid));
+        }
+
+        C = k_0 + t * k_1 / (1 - k_2 * t);
+
+        // If we would only use one of the Cs:
+        //C = s*C_0;
+        //C = s*1.25*C_mid;
+        //C = s*C_max;
+
+        return oklabToLinear([L, C * a_, C * b_]);
+    }
+
+    function linearToOkhsl(linear) {
+        let lab = linearToOklab(linear);
+
+        let C = Math.sqrt(lab[1] * lab[1] + lab[2] * lab[2]);
+        let a_ = lab[1] / C;
+        let b_ = lab[2] / C;
+
+        let L = lab[0];
+        let h = 0.5 + 0.5 * Math.atan2(-lab[2], -lab[1]) / Math.PI;
+
+        let Cs = get_Cs(L, a_, b_)
+        let C_0 = Cs[0];
+        let C_mid = Cs[1];
+        let C_max = Cs[2];
+
+        let s;
+        if (C < C_mid) {
+            let k_0 = 0;
+            let k_1 = 0.8 * C_0;
+            let k_2 = (1 - k_1 / C_mid);
+
+            let t = (C - k_0) / (k_1 + k_2 * (C - k_0));
+            s = t * 0.8;
+        }
+        else {
+            let k_0 = C_mid;
+            let k_1 = 0.2 * C_mid * C_mid * 1.25 * 1.25 / C_0;
+            let k_2 = (1 - (k_1) / (C_max - C_mid));
+
+            let t = (C - k_0) / (k_1 + k_2 * (C - k_0));
+            s = 0.8 + 0.2 * t;
+        }
+
+        let l = toe(L);
+        return [h, s, l];
+    }
+
+    const parseHex = (hex) => {
+        const r = parseFloat(parseInt(hex.slice(1, 3), 16)) / 255.0;
+        const g = parseFloat(parseInt(hex.slice(3, 5), 16)) / 255.0;
+        const b = parseFloat(parseInt(hex.slice(5, 7), 16)) / 255.0;
+        return [r, g, b];
+    }
+
+    const writeHex = (rgb) => {
+        const [r, g, b] = rgb;
+        const r_u = clamp(Math.round(r * 255.0), 0, 255);
+        const g_u = clamp(Math.round(g * 255.0), 0, 255);
+        const b_u = clamp(Math.round(b * 255.0), 0, 255);
+        return "#" + (1 << 24 | r_u << 16 | g_u << 8 | b_u).toString(16).slice(1);
+    }
+
+    const updateOutput = () => {
+        const interpolation = document.querySelector('#interpolation').value;
+
+        const [to_ispace, from_ispace] = {
+            "linear": [srgbToLinear, linearToSrgb],
+            "srgb": [(x) => x, (x) => x],
+            "oklab": [srgbToOklab, oklabToSrgb],
+        }[interpolation];
+
+        const a_linear = to_ispace(parseHex(a_text.value));
+        const b_linear = to_ispace(parseHex(b_text.value));
+
+        const n_bands = Number(document.querySelector('#n_bands').value);
+        const discrete = document.querySelector('#discrete').checked;
+
+        const values = [];
+        for (let i = 0; i < n_bands; i++) {
+            const t = i / (n_bands - 1.0);
+            const percentage = discrete ? i / n_bands : i / (n_bands - 1.0);
+
+            const value = lerp(a_linear, b_linear, t)
+
+            if (!(discrete && i == 0)) {
+                values.push(`${writeHex(from_ispace(value))} ${Math.round(percentage * 100.0)}%`);
+            }
+
+            if (discrete && i < n_bands - 1) {
+                values.push(`${writeHex(from_ispace(value))} ${Math.round((i + 1.0) / (n_bands) * 100.0)}%`);
+            }
+        }
+
+        const gradient_str = `linear-gradient(180deg, ${values.join(", ")})`;
+        output.innerHTML = gradient_str;
+        preview.style.backgroundImage = gradient_str;
+    }
+
+    const writeVec = (rgb) => {
+        const [r, g, b] = rgb;
+        return `vec3(${r.toFixed(4)}, ${g.toFixed(4)}, ${b.toFixed(4)})`;
+    }
+
+    const parseVec = (s) => {
+        s = s.replace('vec3(', '[');
+        s = s.replace(')', ']');
+        return JSON.parse(s) ?? [0, 0, 0];
+    }
+
+    const parseRgb = (s) => {
+        s = s.replace('rgb(', '[');
+        s = s.replace(')', ']');
+        rgb = JSON.parse(s) ?? [0, 0, 0];
+        rgb[0] /= 255.0;
+        rgb[1] /= 255.0;
+        rgb[2] /= 255.0;
+        return rgb;
+    }
+
+    const update = (linear) => {
+        input_hex_srgb.value = writeHex(linearToSrgb(linear));
+        input_vec_srgb.value = writeVec(linearToSrgb(linear));
+        input_hex_linear.value = writeHex(linear);
+        input_vec_linear.value = writeVec(linear);
+        input_color.value = writeHex(linearToSrgb(linear));
+        preview.style.backgroundColor = writeHex(linearToSrgb(linear));
+
+        const okhsl = linearToOkhsl(linear);
+        for (let i = 1; i <= 6; i++) {
+            let step = 1.0 / 180.0;
+            document.querySelector(`#l-${i}`).style.backgroundColor = writeHex(okhslToSrgb([okhsl[0] - i * step, okhsl[1], okhsl[2]]));
+            document.querySelector(`#l--${i}`).style.backgroundColor = writeHex(okhslToSrgb([okhsl[0] + i * step, okhsl[1], okhsl[2]]));
+        }
+
+        for (let i = 1; i <= 6; i++) {
+            let step = 1.0 / 100.0;
+            document.querySelector(`#a-${i}`).style.backgroundColor = writeHex(okhslToSrgb([okhsl[0], okhsl[1] - i * step, okhsl[2]]));
+            document.querySelector(`#a--${i}`).style.backgroundColor = writeHex(okhslToSrgb([okhsl[0], okhsl[1] + i * step, okhsl[2]]));
+        }
+
+        for (let i = 1; i <= 6; i++) {
+            let step = 1.0 / 300.0;
+            document.querySelector(`#b-${i}`).style.backgroundColor = writeHex(okhslToSrgb([okhsl[0], okhsl[1], okhsl[2] - i * step]));
+            document.querySelector(`#b--${i}`).style.backgroundColor = writeHex(okhslToSrgb([okhsl[0], okhsl[1], okhsl[2] + i * step]));
+        }
+    }
+
+    const preview = document.querySelector('body');
+    const input_color = document.querySelector('#input-color');
+    const input_hex_srgb = document.querySelector('#input-hex-srgb');
+    const input_vec_srgb = document.querySelector('#input-vec-srgb');
+    const input_hex_linear = document.querySelector('#input-hex-linear');
+    const input_vec_linear = document.querySelector('#input-vec-linear');
+
+    input_color.addEventListener('change', (e) => update(srgbToLinear(parseHex(e.target.value))));
+    input_hex_srgb.addEventListener('change', (e) => update(srgbToLinear(parseHex(e.target.value))));
+    input_vec_srgb.addEventListener('change', (e) => update(srgbToLinear(parseVec(e.target.value))));
+    input_hex_linear.addEventListener('change', (e) => update(parseHex(e.target.value)));
+    input_vec_linear.addEventListener('change', (e) => update(parseVec(e.target.value)));
+
+    preview.style.backgroundColor = update(parseHex(input_hex_linear.value));
+
+    for (const d of ["l", "a", "b"]) {
+        for (let i = 1; i <= 6; i++) {
+            document.querySelector(`#${d}-${i}`).addEventListener('click', (e) => update(srgbToLinear(parseRgb(e.target.style.backgroundColor))));
+            document.querySelector(`#${d}--${i}`).addEventListener('click', (e) => update(srgbToLinear(parseRgb(e.target.style.backgroundColor))));
+        }
+    }
+
+    // TODO: local/global variable?
+
+
+</script>
+
+</html>
