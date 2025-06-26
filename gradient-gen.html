@@ -74,6 +74,9 @@
 
             cursor: pointer;
 
+            &:hover {
+                border: 0.25rem solid #636363;
+            }
 
             &::-webkit-color-swatch-wrapper {
                 padding: 0;
@@ -96,6 +99,12 @@
         textarea {
             width: 100%;
             resize: none;
+        }
+
+        .group {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         label {
@@ -132,14 +141,14 @@
 <body>
     <div class="container">
         Colors (sRGB):<br>
-        <label>
+        <div class="group">
             <input id="a_color" type="color" value="#5BCEFA" autocomplete="off">
             <input id="a_text" type="text" value="#5BCEFA" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
-        </label>
-        <label>
+        </div>
+        <div class="group">
             <input id="b_color" type="color" value="#F5A9B8" autocomplete="off">
             <input id="b_text" type="text" value="#F5A9B8" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
-        </label>
+        </div>
         <hr>
         <label>Interpolation:
             <select id="interpolation" autocomplete="off">
