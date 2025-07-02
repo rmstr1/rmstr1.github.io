@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./css/fonts.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="[[Normal Bytes Studio]]">
+    <title>[[Normal Bytes Studio]]</title>
+    <style>
+        :root {
+            --base-width: 52rem;
+
+            --accent-color: #eb135e;
+            --hover-color: #77ffff;
+
+            --bg-color: #ff6c67;
+            --text-color: #222222;
+            --border-color: #444444;
+
+            --bg-hero: #ff6c67;
+            --c0: #fafafa;
+            --c1: #ff6a8a;
+            --c2: #52ff8b;
+            --c3: #ff674c;
+            --c4: #39b0ff;
+            --c5: #fff56b;
+            --c6: #ffdc90;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        hr {
+            all: unset;
+            box-sizing: border-box;
+
+            display: block;
+
+            margin: 0.25rem 0;
+            width: 100%;
+            height: 1px;
+            color: var(--border-color);
+            background-color: var(--border-color);
+        }
+
+        .lr-aligned {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        section {
+            margin: 6rem auto;
+            scroll-margin-top: 6rem;
+            width: 100%;
+
+            padding: 0 1.5rem;
+            background: none;
+
+            &>* {
+                margin: 0 auto;
+                max-width: var(--base-width);
+            }
+
+            &:nth-child(odd of section) {
+                .card {
+                    border-left: none;
+                    border-right: 1px solid var(--border-color);
+                }
+            }
+
+        }
+
+        .hero {
+            margin: 0 auto;
+            height: 100lvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /*Photo by Marek Piwnicki: https://www.pexels.com/photo/red-green-and-blue-lights-10747682/*/
+            background: linear-gradient(#ff6c6733,
+                    #ff6c67ff), url("../media/pexels-marek-piwnicki-3907296-10747682.jpg");
+            background-size: cover;
+
+        }
+
+        h1 {
+            padding: 1rem;
+            font-size: 3rem;
+            letter-spacing: -0.05rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            letter-spacing: -0.05rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .card {
+            padding: 1.5rem;
+            grid-template: "h" auto "c" 1fr / 1fr;
+            border-bottom: 1px solid var(--border-color);
+            border-left: 1px solid var(--border-color);
+
+            h2 {
+                grid-area: h;
+                margin: 0;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            p {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        .hero-gallery {
+            margin: 4rem;
+            padding: 1.5rem;
+            width: 100%;
+            display: grid;
+            grid-template: "h h h" auto "l c r" auto "f f f" auto / 1fr 1fr 1fr;
+            gap: 0;
+            border-bottom: 1px solid var(--border-color);
+            border-left: 1px solid var(--border-color);
+            outline: 4rem solid var(--bg-hero);
+            background: var(--bg-hero);
+
+            a {
+                text-decoration: underline;
+                color: inherit;
+
+                &:hover {
+                    color: var(--hover-color);
+                }
+            }
+
+            .subgrid {
+                grid-template: "h" auto "c" 1fr / 1fr;
+                border-bottom: 1px solid var(--border-color);
+                border-right: 1px solid var(--border-color);
+
+                h2 {
+                    grid-area: h;
+                    margin: 0;
+                    padding: 0.5rem 1rem;
+                    font-size: 1rem;
+                    font-weight: 400;
+                    border-bottom: 1px solid var(--border-color);
+                    text-align: left;
+                }
+
+                p {
+                    padding: 0.5rem 1rem 1.5rem;
+                    font-size: 0.875rem;
+                }
+            }
+
+            h1 {
+                grid-area: h;
+                padding: 1rem;
+            }
+
+            &>p {
+                grid-area: f;
+                padding: 1rem;
+                font-size: 2rem;
+                letter-spacing: -0.05rem;
+                font-weight: 300;
+                text-align: center;
+            }
+        }
+
+        .logo {
+            padding: 0.25rem 0.5rem;
+            font: 600 1.25rem 'Source Sans 3', sans-serif;
+            letter-spacing: 0;
+            text-transform: lowercase;
+            text-decoration: none;
+            color: inherit;
+            white-space: nowrap;
+
+            &:hover {
+                color: inherit;
+            }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #222222;
+            z-index: 100;
+        }
+
+        /* Header */
+        .header-container {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 90rem;
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 1.0rem 0;
+            align-items: center;
+            color: #ffffff;
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 0 0.5rem;
+
+                a {
+                    padding: 0.5rem;
+                    color: inherit;
+                    text-decoration: none;
+                    transition: all 0.2s ease;
+                    font-weight: 600;
+                    font-size: 1.0rem;
+
+                    &:hover {
+                        color: var(--hover-color);
+                    }
+                }
+            }
+        }
+
+        #contact form {
+            padding: 2rem 0 0;
+
+            display: flex;
+            flex-direction: column;
+
+            input,
+            textarea {
+                padding: 0.5rem;
+                margin-bottom: 1.25rem;
+                border: none;
+                border-bottom: 1px solid var(--border-color);
+                border-radius: 0;
+                font-size: 0.875rem;
+                width: 100%;
+                background-color: var(--bg-color);
+                resize: none;
+
+                &:focus {
+                    outline: 0.125rem solid var(--hover-color);
+                }
+            }
+
+            textarea {
+                resize: none;
+                min-height: 12rem;
+            }
+        }
+
+        .btn {
+            padding: 0.75rem 1.875rem;
+            font-size: 1.0rem;
+            font-weight: 400;
+            border-radius: 0;
+            background-color: var(--bg-color);
+            cursor: pointer;
+            color: var(--text-color);
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--button-shadow);
+            transition: all 0.25s ease;
+
+            &:hover {
+                box-shadow: none;
+                border: 1px solid var(--hover-color);
+                background: none;
+                color: var(--hover-color);
+            }
+        }
+
+        footer {
+            margin: 0 auto;
+            margin-top: 40lvh;
+            padding: 6rem 2rem;
+
+            text-align: center;
+
+            background-color: #222222;
+            color: #ffffff;
+
+            .flex-layout-centered {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+
+                margin: 2rem auto;
+                padding: 0;
+
+                max-width: 50rem;
+                gap: 0.5rem 1rem;
+            }
+
+            h2 {
+                all: unset;
+                box-sizing: border-box;
+
+                display: block;
+                margin: 2rem auto;
+
+                font: 400 1.0rem 'Source Sans 3', sans-serif;
+            }
+
+            a {
+                font: italic 1.0rem 'Source Sans 3', sans-serif;
+                color: inherit;
+            }
+
+            address {
+                font: italic 400 1.0rem 'Source Sans 3', sans-serif;
+            }
+        }
+
+        @media (max-width: 50rem) {
+            .hero {
+                margin-top: 2rem;
+            }
+
+            .header-container {
+                flex-direction: column;
+                margin-bottom: 0.25rem;
+            }
+        }
+
+        @media (max-width: 32rem) {
+            .hero {
+                margin-top: 5rem;
+            }
+
+            .hero-gallery {
+                /*grid-template: "h h h" auto "l c r" auto "f f f" auto / 1fr 1fr 1fr;*/
+                grid-template: "h" auto "l" auto "c" auto "r" auto "f" auto / 1fr;
+                border: none;
+                outline: 0rem solid var(--bg-hero);
+            }
+        }
+
+        .social {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+
+            a {
+                text-decoration: none;
+                font-size: 1.75rem;
+                color: var(--text-color);
+                transition: all .25s ease;
+
+                &:hover {
+                    color: var(--hover-color);
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="header-container">
+            <a class="logo" href="#">[[Normal Bytes Studio]]</a>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#about">About</a>
+                <a href="#games">Games</a>
+                <a href="#tools">Tools</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="hero">
+        <div class="hero-gallery">
+            <h1>Crafting Virtual Worlds</h1>
+            <div class="subgrid">
+                <h2>Games</h2>
+                <p>
+                    <a href="">Cloudvale</a><br>
+                    <a href="">Pushing Crates</a><br>
+                </p>
+            </div>
+            <div class="subgrid">
+                <h2>Tools</h2>
+                <p>
+                    <a href="">Node-based Texture Generator</a><br>
+                    <a href="">CSS Discrete Gradient Generator</a><br>
+                    <a href="">CSS Colorspace Converter</a><br>
+                </p>
+            </div>
+            <div class="subgrid">
+                <h2>Socials</h2>
+                <p>
+                    <a href="">Mastodon</a><br>
+                    <a href="">Bluesky</a><br>
+                    <a href="">Instagram</a><br>
+                    <a href="">TikTok</a><br>
+                    <a href="">Youtube</a><br>
+                    <a href="">Discord</a><br>
+                </p>
+            </div>
+            <p>[[normal bytes studio]]</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="card">
+            <h2>About</h2>
+            <p>
+                [[Normal Bytes Studio]] is a one-person independent game development studio based in Graz, Austria.
+                Specializing
+                in indie pixel art games, I use generative art and pixel aesthetics to create immersive virtual worlds.
+                In
+                addition to game development, I build dedicated tools for asset creation to streamline workflows and
+                expand creative possibilities.
+            </p>
+        </div>
+    </section>
+
+    <section id="games">
+        <div class="card">
+            <h2>Games</h2>
+            <p>
+                [[Normal Bytes Studio]] is a one-person independent game development studio based in Graz, Austria.
+                Specializing
+                in indie pixel art games, I use generative art and pixel aesthetics to create immersive virtual worlds.
+                In
+                addition to game development, I build dedicated tools for asset creation to streamline workflows and
+                expand creative possibilities.
+            </p>
+        </div>
+    </section>
+
+    <section id="tools">
+        <div class="card">
+            <h2>Tools</h2>
+            <p>
+                [[Normal Bytes Studio]] is a one-person independent game development studio based in Graz, Austria.
+                Specializing
+                in indie pixel art games, I use generative art and pixel aesthetics to create immersive virtual worlds.
+                In
+                addition to game development, I build dedicated tools for asset creation to streamline workflows and
+                expand creative possibilities.
+            </p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="card" id="#contact">
+            <h2>Contact</h2>
+            <form action="mailto:normalbytesstudio+mailto@gmail.com" method="post" enctype="text/plain">
+                <input type="text" name="name" placeholder="Your Name" required />
+                <input type="email" name="email" placeholder="Your Email" required />
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn">Send Message 🡒</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo">[[Normal Bytes Studio]]</div>
+        <h2>Email:</h2>
+        <address class="flex-layout-centered">
+            normalbytesstudio+contact@gmail.com
+        </address>
+        <h2>Socials:</h2>
+        <div class="flex-layout-centered">
+            <a href="">Mastodon</a>
+            <a href="">Bluesky</a>
+            <a href="">Instagram</a>
+            <a href="">TikTok</a>
+            <a href="">Youtube</a>
+            <a href="">Discord</a>
+        </div>
+        <h2>Legal:</h2>
+        <div class="flex-layout-centered">
+            <a href="">Privacy Policy</a>
+            <a href="">Impressum</a>
+        </div>
+    </footer>
+</body>
+
+</html>
