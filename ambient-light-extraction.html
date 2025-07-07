@@ -140,43 +140,36 @@
 
 <body>
     <div class="container">
+        Extract ambient light color from lit and shadow colors
         Colors (sRGB):<br>
         <div class="group">
+            lit:
             <input id="a_color" type="color" value="#5BCEFA" autocomplete="off">
             <input id="a_text" type="text" value="#5BCEFA" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
-        </div>
+        </div><br>
         <div class="group">
+            shadow:
             <input id="b_color" type="color" value="#F5A9B8" autocomplete="off">
             <input id="b_text" type="text" value="#F5A9B8" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
         </div>
         <hr>
-        <label>Interpolation Colorspace:
-            <select id="interpolation" autocomplete="off">
-                <option value="oklab">okLab</option>
-                <option value="linear">linear sRGB</option>
-                <option value="srgb">sRGB</option>
-            </select>
-        </label>
-        <br>
-        <label>Discrete:
-            <input id="discrete" type="checkbox" autocomplete="off" checked="checked">
-        </label>
-        <br>
-        <label>Steps:
-            <input id="n_bands" type="number" min="2" max="256" value="6" size="3" autocomplete="off">
-        </label>
+        Ambient Light Color:
+        <div>sRGB: </div>
+        <input id="output-hex-srgb" type="text" value="#79dbcf" maxlentgh="7" size="9" spellcheck="false"
+            autocomplete="off">
+        <input id="output-vec-srgb" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+            autocomplete="off">
         <hr>
-        CSS Gradient:
-        <textarea id="output" rows="5" readonly="true" resize="none" autocomplete="off"></textarea>
+        <div>linear: </div>
+        <input id="output-hex-linear" type="text" value="#79dbcf" maxlentgh="7" size="9" spellcheck="false"
+            autocomplete="off">
+        <input id="output-vec-linear" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+            autocomplete="off">
     </div>
 </body>
 <script>
-    const lerp_scalar = (a, b, t) => a * (1.0 - t) + b * t;
-
-    const lerp = (a, b, t) => {
-        return a.map((x, i) => {
-            return lerp_scalar(x, b[i], t);
-        });
+    function divideColors(a, b) {
+        return a.map((a, i) => a / b[i]);
     }
 
     function clamp(x, lower, upper) {
@@ -201,46 +194,6 @@
         });
     }
 
-    const linearToOklab = (c) => {
-        const [r, g, b] = c;
-
-        const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
-        const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
-        const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
-
-        const l_ = l ** (1.0 / 3.0);
-        const m_ = m ** (1.0 / 3.0);
-        const s_ = s ** (1.0 / 3.0);
-
-        return [
-            0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_,
-            1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_,
-            0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_
-        ];
-    }
-
-    const oklabToLinear = (c) => {
-        const [x, y, z] = c;
-
-        const l_ = x + 0.3963377774 * y + 0.2158037573 * z;
-        const m_ = x - 0.1055613458 * y - 0.0638541728 * z;
-        const s_ = x - 0.0894841775 * y - 1.2914855480 * z;
-
-        const l = l_ * l_ * l_;
-        const m = m_ * m_ * m_;
-        const s = s_ * s_ * s_;
-
-        return [
-            +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
-            -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
-            -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
-        ];
-    }
-
-    srgbToOklab = (c) => linearToOklab(srgbToLinear(c));
-
-    oklabToSrgb = (c) => linearToSrgb(oklabToLinear(c));
-
     const parseHex = (hex) => {
         const r = parseFloat(parseInt(hex.slice(1, 3), 16)) / 255.0;
         const g = parseFloat(parseInt(hex.slice(3, 5), 16)) / 255.0;
@@ -256,56 +209,44 @@
         return "#" + (1 << 24 | r_u << 16 | g_u << 8 | b_u).toString(16).slice(1);
     }
 
+    const parseVec = (vec_string) => {
+        vec_string = vec_string.replace('vec3(', '[');
+        vec_string = vec_string.replace(')', ']');
+        return JSON.parse(vec_string) ?? [0, 0, 0];
+    }
+
+    const writeVec = (rgb) => {
+        const [r, g, b] = rgb;
+        return `vec3(${r.toFixed(4)}, ${g.toFixed(4)}, ${b.toFixed(4)})`;
+    }
+
     const updateOutput = () => {
-        const interpolation = document.querySelector('#interpolation').value;
+        const lit_linear = srgbToLinear(parseHex(a_text.value));
+        const shadow_linear = srgbToLinear(parseHex(b_text.value));
+        const ambient_color_linear = divideColors(shadow_linear, lit_linear)
+        update_values_from_linear(ambient_color_linear)
+    }
 
-        const [to_ispace, from_ispace] = {
-            "linear": [srgbToLinear, linearToSrgb],
-            "srgb": [(x) => x, (x) => x],
-            "oklab": [srgbToOklab, oklabToSrgb],
-        }[interpolation];
-
-        const a_srgb = to_ispace(parseHex(a_text.value));
-        const b_srgb = to_ispace(parseHex(b_text.value));
-
-        const n_bands = Number(document.querySelector('#n_bands').value);
-        const discrete = document.querySelector('#discrete').checked;
-
-        const values = [];
-        for (let i = 0; i < n_bands; i++) {
-            const t = i / (n_bands - 1.0);
-            const percentage = discrete ? i / n_bands : i / (n_bands - 1.0);
-
-            const value = lerp(a_srgb, b_srgb, t)
-
-            if (!(discrete && i == 0)) {
-                values.push(`${writeHex(from_ispace(value))} ${Math.round(percentage * 100.0)}%`);
-            }
-
-            if (discrete && i < n_bands - 1) {
-                values.push(`${writeHex(from_ispace(value))} ${Math.round((i + 1.0) / (n_bands) * 100.0)}%`);
-            }
-        }
-
-        const gradient_str = `linear-gradient(180deg, ${values.join(", ")})`;
-        output.innerHTML = gradient_str;
-        preview.style.backgroundImage = gradient_str;
+    const update_values_from_linear = (linear) => {
+        document.querySelector('#output-hex-srgb').value = writeHex(linearToSrgb(linear));
+        document.querySelector('#output-vec-srgb').value = writeVec(linearToSrgb(linear));
+        document.querySelector('#output-hex-linear').value = writeHex(linear);
+        document.querySelector('#output-vec-linear').value = writeVec(linear);
+        preview.style.backgroundColor = writeHex(linearToSrgb(linear));
     }
 
     const a_text = document.querySelector('#a_text');
     const a_color = document.querySelector('#a_color');
     const b_text = document.querySelector('#b_text');
     const b_color = document.querySelector('#b_color');
-    const output = document.querySelector('#output');
+    const t_slider = document.querySelector('#t_slider');
+    const t_number = document.querySelector('#t_number');
     const preview = document.querySelector('body');
 
     a_text.addEventListener('change', (e) => { a_color.value = e.target.value; updateOutput(); });
     b_text.addEventListener('change', (e) => { b_color.value = e.target.value; updateOutput(); });
     a_color.addEventListener('change', (e) => { a_text.value = e.target.value; updateOutput(); });
     b_color.addEventListener('change', (e) => { b_text.value = e.target.value; updateOutput(); });
-    document.querySelector('#n_bands').addEventListener('change', (e) => updateOutput());
-    document.querySelector('#discrete').addEventListener('change', (e) => updateOutput());
-    document.querySelector('#interpolation').addEventListener('change', (e) => updateOutput());
 
     updateOutput();
 </script>

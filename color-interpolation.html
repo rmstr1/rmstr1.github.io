@@ -158,16 +158,23 @@
             </select>
         </label>
         <br>
-        <label>Discrete:
-            <input id="discrete" type="checkbox" autocomplete="off" checked="checked">
-        </label>
-        <br>
-        <label>Steps:
-            <input id="n_bands" type="number" min="2" max="256" value="6" size="3" autocomplete="off">
+        <label>t:
+            <input id="t_slider" type="range" min="0.0" max="1.0" value="0.5" step=0.01 autocomplete="off">
+            <input id="t_number" type="number" min="0.0" max="1.0" value="0.5" size="5" step=0.01 autocomplete="off">
         </label>
         <hr>
-        CSS Gradient:
-        <textarea id="output" rows="5" readonly="true" resize="none" autocomplete="off"></textarea>
+        Interpolated COlor:
+        <div>sRGB: </div>
+        <input id="output-hex-srgb" type="text" value="#79dbcf" maxlentgh="7" size="9" spellcheck="false"
+            autocomplete="off">
+        <input id="output-vec-srgb" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+            autocomplete="off">
+        <hr>
+        <div>linear: </div>
+        <input id="output-hex-linear" type="text" value="#79dbcf" maxlentgh="7" size="9" spellcheck="false"
+            autocomplete="off">
+        <input id="output-vec-linear" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+            autocomplete="off">
     </div>
 </body>
 <script>
@@ -256,56 +263,59 @@
         return "#" + (1 << 24 | r_u << 16 | g_u << 8 | b_u).toString(16).slice(1);
     }
 
+    const parseVec = (vec_string) => {
+        vec_string = vec_string.replace('vec3(', '[');
+        vec_string = vec_string.replace(')', ']');
+        return JSON.parse(vec_string) ?? [0, 0, 0];
+    }
+
+    const writeVec = (rgb) => {
+        const [r, g, b] = rgb;
+        return `vec3(${r.toFixed(4)}, ${g.toFixed(4)}, ${b.toFixed(4)})`;
+    }
+
     const updateOutput = () => {
         const interpolation = document.querySelector('#interpolation').value;
 
+        t = document.querySelector('#t_number').value;
+
         const [to_ispace, from_ispace] = {
-            "linear": [srgbToLinear, linearToSrgb],
-            "srgb": [(x) => x, (x) => x],
-            "oklab": [srgbToOklab, oklabToSrgb],
+            "linear": [(x) => x, (x) => x],
+            "srgb": [linearToSrgb, srgbToLinear],
+            "oklab": [linearToOklab, oklabToLinear],
         }[interpolation];
 
-        const a_srgb = to_ispace(parseHex(a_text.value));
-        const b_srgb = to_ispace(parseHex(b_text.value));
+        const a_linear = to_ispace(srgbToLinear(parseHex(a_text.value)));
+        const b_linear = to_ispace(srgbToLinear(parseHex(b_text.value)));
 
-        const n_bands = Number(document.querySelector('#n_bands').value);
-        const discrete = document.querySelector('#discrete').checked;
+        const result_linear = from_ispace(lerp(a_linear, b_linear, t));
 
-        const values = [];
-        for (let i = 0; i < n_bands; i++) {
-            const t = i / (n_bands - 1.0);
-            const percentage = discrete ? i / n_bands : i / (n_bands - 1.0);
+        update_values_from_linear(result_linear)
+    }
 
-            const value = lerp(a_srgb, b_srgb, t)
-
-            if (!(discrete && i == 0)) {
-                values.push(`${writeHex(from_ispace(value))} ${Math.round(percentage * 100.0)}%`);
-            }
-
-            if (discrete && i < n_bands - 1) {
-                values.push(`${writeHex(from_ispace(value))} ${Math.round((i + 1.0) / (n_bands) * 100.0)}%`);
-            }
-        }
-
-        const gradient_str = `linear-gradient(180deg, ${values.join(", ")})`;
-        output.innerHTML = gradient_str;
-        preview.style.backgroundImage = gradient_str;
+    const update_values_from_linear = (linear) => {
+        document.querySelector('#output-hex-srgb').value = writeHex(linearToSrgb(linear));
+        document.querySelector('#output-vec-srgb').value = writeVec(linearToSrgb(linear));
+        document.querySelector('#output-hex-linear').value = writeHex(linear);
+        document.querySelector('#output-vec-linear').value = writeVec(linear);
+        preview.style.backgroundColor = writeHex(linearToSrgb(linear));
     }
 
     const a_text = document.querySelector('#a_text');
     const a_color = document.querySelector('#a_color');
     const b_text = document.querySelector('#b_text');
     const b_color = document.querySelector('#b_color');
-    const output = document.querySelector('#output');
+    const t_slider = document.querySelector('#t_slider');
+    const t_number = document.querySelector('#t_number');
     const preview = document.querySelector('body');
 
     a_text.addEventListener('change', (e) => { a_color.value = e.target.value; updateOutput(); });
     b_text.addEventListener('change', (e) => { b_color.value = e.target.value; updateOutput(); });
     a_color.addEventListener('change', (e) => { a_text.value = e.target.value; updateOutput(); });
     b_color.addEventListener('change', (e) => { b_text.value = e.target.value; updateOutput(); });
-    document.querySelector('#n_bands').addEventListener('change', (e) => updateOutput());
-    document.querySelector('#discrete').addEventListener('change', (e) => updateOutput());
     document.querySelector('#interpolation').addEventListener('change', (e) => updateOutput());
+    t_slider.addEventListener('input', (e) => { t_number.value = e.target.value; updateOutput() });
+    t_number.addEventListener('change', (e) => { t_slider.value = e.target.value; updateOutput() });
 
     updateOutput();
 </script>
