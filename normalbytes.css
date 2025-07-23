@@ -1,0 +1,151 @@
+:root {
+    --base-width: 55rem;
+    --accent-color: #eb135e;
+    --bg-color: #ccc9c1;
+    --bg-color-content: #ff6756;
+    --text-color: #222222;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font: 400 1.5rem/1.6 'Source Serif 4', serif;
+    letter-spacing: 0.035rem;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+section {
+    margin: 5.5rem auto;
+    padding: 0 1.5rem;
+    width: 100%;
+    scroll-margin: 2rem;
+
+    &>* {
+        max-width: var(--base-width);
+        margin: 0 auto;
+    }
+}
+
+.content {
+    margin: 0;
+    padding: 4.5rem 0;
+    background-color: var(--bg-color-content);
+}
+
+h1 {
+    font: inherit;
+    font-size: 6.0rem;
+    letter-spacing: -0.05rem;
+
+    @media (width <=40rem) {
+        font-size: 4.5rem;
+    }
+}
+
+h2 {
+    font: inherit;
+    border-bottom: 1px solid var(--text-color);
+    text-transform: uppercase;
+
+    &::before {
+        content: "~ ";
+    }
+}
+
+p {
+    margin: 1rem auto;
+}
+
+a {
+    color: inherit;
+    padding: 0.125rem 0;
+    transition: all .1s ease;
+
+    &:hover {
+        color: var(--accent-color);
+    }
+
+    &::before {
+        content: "→ ";
+    }
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem 2rem;
+}
+
+.backarrow {
+    &::before {
+        content: "← ";
+    }
+}
+
+.standalone {
+    height: fit-content;
+    min-height: 100lvh;
+}
+
+.logo {
+    display: block;
+    padding: 0.25rem 0.5rem;
+    font: 600 1.25rem/1.4 'Source Sans 3', sans-serif;
+    letter-spacing: 0;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        color: inherit;
+    }
+
+    &::before {
+        content: none;
+    }
+}
+
+footer {
+    margin: 0 auto;
+    padding: 6rem 2rem;
+
+    background-color: #222222;
+    color: #ffffff;
+
+    text-align: center;
+
+    font: 400 1.0rem/1.6 'Source Sans 3', sans-serif;
+    letter-spacing: 0.035rem;
+
+    h2 {
+        margin: 2rem auto 1.25rem;
+        border: none;
+        text-transform: none;
+
+        &::before {
+            content: none;
+        }
+    }
+
+    a {
+        font-size: 0.875rem;
+
+        &::before {
+            content: none;
+        }
+    }
+
+    address {
+        display: inline-block;
+        font-size: 0.875rem;
+        font-style: normal;
+    }
+}
