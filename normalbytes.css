@@ -53,10 +53,6 @@ h2 {
     font: inherit;
     border-bottom: 1px solid var(--text-color);
     text-transform: uppercase;
-
-    &::before {
-        content: "~ ";
-    }
 }
 
 p {
@@ -147,5 +143,27 @@ footer {
         display: inline-block;
         font-size: 0.875rem;
         font-style: normal;
+    }
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.875rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--text-color);
+
+    &:hover {
+        border: 1px solid var(--accent-color);
+        color: var(--accent-color);
+    }
+
+    &::before {
+        content: none;
+    }
+
+    &::after {
+        content: " →";
     }
 }
