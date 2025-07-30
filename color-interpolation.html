@@ -108,8 +108,9 @@
         }
 
         label {
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 0.5rem;
         }
 
@@ -140,15 +141,36 @@
 
 <body>
     <div class="container">
-        Colors (sRGB):<br>
-        <div class="group">
-            <input id="a_color" type="color" value="#5BCEFA" autocomplete="off">
-            <input id="a_text" type="text" value="#5BCEFA" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
-        </div>
-        <div class="group">
-            <input id="b_color" type="color" value="#F5A9B8" autocomplete="off">
-            <input id="b_text" type="text" value="#F5A9B8" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
-        </div>
+        Color A<br>
+        <label>
+            sRGB:
+            <div class="group">
+                <input id="a_color" type="color" value="#5BCEFA" autocomplete="off">
+                <input id="a_text" type="text" value="#5BCEFA" maxlentgh="7" size="8" spellcheck="false"
+                    autocomplete="off">
+            </div>
+        </label>
+        <label>
+            linear:
+            <input id="a-vec-linear" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+                autocomplete="off">
+        </label>
+        <hr>
+        Color B<br>
+        <label>
+            sRGB:
+
+            <div class="group">
+                <input id="b_color" type="color" value="#F5A9B8" autocomplete="off">
+                <input id="b_text" type="text" value="#F5A9B8" maxlentgh="7" size="8" spellcheck="false"
+                    autocomplete="off">
+            </div>
+        </label>
+        <label>
+            linear:
+            <input id="b-vec-linear" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+                autocomplete="off">
+        </label>
         <hr>
         <label>Interpolation Colorspace:
             <select id="interpolation" autocomplete="off">
@@ -163,18 +185,20 @@
             <input id="t_number" type="number" min="0.0" max="1.0" value="0.5" size="5" step=0.01 autocomplete="off">
         </label>
         <hr>
-        Interpolated COlor:
-        <div>sRGB: </div>
-        <input id="output-hex-srgb" type="text" value="#79dbcf" maxlentgh="7" size="9" spellcheck="false"
-            autocomplete="off">
-        <input id="output-vec-srgb" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
-            autocomplete="off">
+        Interpolated Color:
+        <label>sRGB:
+            <input id="output-hex-srgb" type="text" value="#79dbcf" maxlentgh="7" size="9" spellcheck="false"
+                autocomplete="off">
+            <input id="output-vec-srgb" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+                autocomplete="off">
+        </label>
         <hr>
-        <div>linear: </div>
-        <input id="output-hex-linear" type="text" value="#79dbcf" maxlentgh="7" size="9" spellcheck="false"
-            autocomplete="off">
-        <input id="output-vec-linear" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
-            autocomplete="off">
+        <label>linear:
+            <input id="output-hex-linear" type="text" value="#79dbcf" maxlentgh="7" size="9" spellcheck="false"
+                autocomplete="off">
+            <input id="output-vec-linear" type="text" value="vec3(1.0000, 1.0000, 1.0000)" size="30" spellcheck="false"
+                autocomplete="off">
+        </label>
     </div>
 </body>
 <script>
@@ -290,10 +314,10 @@
 
         const result_linear = from_ispace(lerp(a_linear, b_linear, t));
 
-        update_values_from_linear(result_linear)
+        update_output_from_linear(result_linear)
     }
 
-    const update_values_from_linear = (linear) => {
+    const update_output_from_linear = (linear) => {
         document.querySelector('#output-hex-srgb').value = writeHex(linearToSrgb(linear));
         document.querySelector('#output-vec-srgb').value = writeVec(linearToSrgb(linear));
         document.querySelector('#output-hex-linear').value = writeHex(linear);
@@ -303,20 +327,38 @@
 
     const a_text = document.querySelector('#a_text');
     const a_color = document.querySelector('#a_color');
+    const a_linear = document.querySelector('#a-vec-linear');
     const b_text = document.querySelector('#b_text');
     const b_color = document.querySelector('#b_color');
+    const b_linear = document.querySelector('#b-vec-linear');
     const t_slider = document.querySelector('#t_slider');
     const t_number = document.querySelector('#t_number');
     const preview = document.querySelector('body');
 
-    a_text.addEventListener('change', (e) => { a_color.value = e.target.value; updateOutput(); });
-    b_text.addEventListener('change', (e) => { b_color.value = e.target.value; updateOutput(); });
-    a_color.addEventListener('change', (e) => { a_text.value = e.target.value; updateOutput(); });
-    b_color.addEventListener('change', (e) => { b_text.value = e.target.value; updateOutput(); });
+    const update_a_from_linear = (linear) => {
+        a_text.value = writeHex(linearToSrgb(linear));
+        a_color.value = writeHex(linearToSrgb(linear));
+        a_linear.value = writeVec(linear);
+    }
+
+    const update_b_from_linear = (linear) => {
+        b_text.value = writeHex(linearToSrgb(linear));
+        b_color.value = writeHex(linearToSrgb(linear));
+        b_linear.value = writeVec(linear);
+    }
+
+    a_text.addEventListener('change', (e) => { update_a_from_linear(srgbToLinear(parseHex(e.target.value))); updateOutput(); });
+    a_color.addEventListener('change', (e) => { update_a_from_linear(srgbToLinear(parseHex(e.target.value))); updateOutput(); });
+    a_linear.addEventListener('change', (e) => { update_a_from_linear(parseVec(e.target.value)); updateOutput(); });
+    b_text.addEventListener('change', (e) => { update_b_from_linear(srgbToLinear(parseHex(e.target.value))); updateOutput(); });
+    b_color.addEventListener('change', (e) => { update_b_from_linear(srgbToLinear(parseHex(e.target.value))); updateOutput(); });
+    b_linear.addEventListener('change', (e) => { update_b_from_linear(parseVec(e.target.value)); updateOutput(); });
     document.querySelector('#interpolation').addEventListener('change', (e) => updateOutput());
     t_slider.addEventListener('input', (e) => { t_number.value = e.target.value; updateOutput() });
     t_number.addEventListener('change', (e) => { t_slider.value = e.target.value; updateOutput() });
 
+    update_a_from_linear(srgbToLinear(parseHex(a_color.value)));
+    update_b_from_linear(srgbToLinear(parseHex(b_color.value)));
     updateOutput();
 </script>
 
