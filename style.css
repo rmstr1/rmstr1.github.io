@@ -172,5 +172,5 @@ footer {
 
 .transition {
     height: 6rem;
-    background: linear-gradient(to top, #720071 20%, #91006c 20%, #91006c 40%, #ac0064 40%, #ac0064 60%, #c30059 60%, #c30059 80%, #d6004c 80%);
+    background: linear-gradient(180deg, #d6004c 20%, #bc0e59 20%, #bc0e59 40%, #a21163 40%, #a21163 60%, #890c6b 60%, #890c6b 80%, #720071 80%);
 }
