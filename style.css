@@ -75,12 +75,42 @@ a {
     }
 }
 
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    align-items: center;
-    gap: 0.5rem 1.5rem;
+
+address {
+    font: inherit;
+}
+
+footer {
+    margin: 0 auto;
+    padding: 6rem 2rem;
+
+    background-color: #222222;
+    color: #ffffff;
+
+    text-align: center;
+
+    font: 400 1.0rem/1.6 'Source Sans 3', sans-serif;
+    letter-spacing: 0.035rem;
+
+    h2 {
+        font-size: 1.0rem;
+        margin: 2rem auto 1.25rem;
+        border: none;
+    }
+
+    a {
+        font-size: 0.875rem;
+
+        &::before {
+            content: none;
+        }
+    }
+
+    address {
+        display: inline-block;
+        font-size: 0.875rem;
+        font-style: normal;
+    }
 }
 
 .backarrow {
@@ -110,67 +140,8 @@ nav {
     }
 }
 
-footer {
-    margin: 0 auto;
-    padding: 6rem 2rem;
-
-    background-color: #222222;
-    color: #ffffff;
-
-    text-align: center;
-
-    font: 400 1.0rem/1.6 'Source Sans 3', sans-serif;
-    letter-spacing: 0.035rem;
-
-    h2 {
-        font-size: 1.0rem;
-        margin: 2rem auto 1.25rem;
-        border: none;
-        text-transform: none;
-
-        &::before {
-            content: none;
-        }
-    }
-
-    a {
-        font-size: 0.875rem;
-
-        &::before {
-            content: none;
-        }
-    }
-
-    address {
-        display: inline-block;
-        font-size: 0.875rem;
-        font-style: normal;
-    }
-}
-
-.btn {
-    display: inline-block;
-    padding: 0.75rem 1.875rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid var(--text-color);
-
-    &:hover {
-        border: 1px solid var(--accent-color);
-        color: var(--accent-color);
-    }
-
-    &::before {
-        content: none;
-    }
-
-    &::after {
-        content: "\00a0→";
-    }
-}
-
 .transition {
     height: 6rem;
     background: linear-gradient(180deg, #d6004c 20%, #bc0e59 20%, #bc0e59 40%, #a21163 40%, #a21163 60%, #890c6b 60%, #890c6b 80%, #720071 80%);
+    user-select: none;
 }
