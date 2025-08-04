@@ -32,6 +32,10 @@ section {
     }
 }
 
+#hero {
+    margin-top: 6rem;
+}
+
 h1 {
     margin: 2.5rem auto;
     font: inherit;
@@ -78,9 +82,8 @@ nav {
     }
 }
 
-.standalone {
-    height: fit-content;
-    min-height: 100lvh;
+.content {
+    margin-bottom: 6rem;
 }
 
 .logo {
@@ -158,4 +161,9 @@ footer {
     &::after {
         content: "\00a0→";
     }
+}
+
+.transition {
+    height: 6rem;
+    background: linear-gradient(to top, #720071 20%, #91006c 20%, #91006c 40%, #ac0064 40%, #ac0064 60%, #c30059 60%, #c30059 80%, #d6004c 80%);
 }
