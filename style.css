@@ -14,7 +14,7 @@
 }
 
 body {
-    font: 400 1.0rem/1.6 'Source Serif 4', serif;
+    font: 400 1.0rem/1.6 'Source Sans 3', sans-serif;
     letter-spacing: 0.035rem;
     background: var(--bg-color);
     color: var(--text-color);
@@ -50,8 +50,15 @@ h2 {
     border-bottom: 1px solid var(--text-color);
 }
 
+h3 {
+    margin: 0 auto;
+    font: inherit;
+    font-weight: 500;
+}
+
+
 p {
-    margin: 1rem auto;
+    margin: 0 auto 1rem;
 }
 
 a {
