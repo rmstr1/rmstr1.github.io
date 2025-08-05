@@ -16,8 +16,8 @@
 body {
     font: 400 1.0rem/1.6 'Source Serif 4', serif;
     letter-spacing: 0.035rem;
-    background: var(--bg-color);
-    color: var(--text-color);
+    background: var(--text-color);
+    color: #ffffff;
 }
 
 section {
@@ -120,7 +120,10 @@ footer {
 }
 
 .content {
-    margin-bottom: 6rem;
+    padding-top: 1rem;
+    padding-bottom: 6rem;
+    background: var(--bg-color);
+    color: var(--text-color);
 }
 
 .logo {
@@ -142,6 +145,6 @@ footer {
 
 .transition {
     height: 6rem;
-    background: linear-gradient(180deg, #d6004c 20%, #bc0e59 20%, #bc0e59 40%, #a21163 40%, #a21163 60%, #890c6b 60%, #890c6b 80%, #720071 80%);
+    background: linear-gradient(0deg, #d6004c 20%, #bc0e59 20%, #bc0e59 40%, #a21163 40%, #a21163 60%, #890c6b 60%, #890c6b 80%, #720071 80%);
     user-select: none;
 }
