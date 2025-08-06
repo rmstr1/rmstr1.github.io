@@ -34,12 +34,16 @@ section {
 
 #hero {
     margin-top: 6rem;
+
+    @media (width < 32rem) {
+        margin-top: 4rem;
+    }
 }
 
 h1 {
     margin: 2.5rem auto;
     font: inherit;
-    font-size: 2.0rem;
+    font-size: 2.25rem;
     letter-spacing: -0.0125em;
 }
 
@@ -65,7 +69,6 @@ a {
     padding: 0.125rem 0;
     color: inherit;
     transition: all .1s ease;
-    font-style: italic;
 
     &:hover {
         color: var(--accent-color);
@@ -148,4 +151,78 @@ footer {
     height: 6rem;
     background: linear-gradient(0deg, #d6004c 20%, #bc0e59 20%, #bc0e59 40%, #a21163 40%, #a21163 60%, #890c6b 60%, #890c6b 80%, #720071 80%);
     user-select: none;
+}
+
+.gallery {
+    --gallery-item-min-width: 15rem;
+    --card-aspect: 3/4;
+
+    /*max-width: calc(var(--base-width) + 3.0rem);*/
+    /*padding: 0 1.5rem;*/
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--gallery-item-min-width), 1fr));
+    grid-auto-rows: auto;
+    grid-gap: 1rem 1rem;
+}
+
+.card {
+    display: grid;
+
+    grid-template: "image" 1fr "content" auto / 1fr;
+
+    width: 100%;
+    height: fit-content;
+
+    .card-content {
+        grid-area: "content";
+        width: 100%;
+        padding: 0.75rem 0;
+        /*text-align: center;*/
+
+        sub {
+            font-size: 0.675rem;
+        }
+    }
+
+    &>a {
+        grid-area: "image";
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        aspect-ratio: var(--card-aspect);
+
+        overflow: hidden;
+
+        &::before {
+            content: none;
+        }
+    }
+
+    hr {
+        all: unset;
+        box-sizing: border-box;
+
+        display: block;
+
+        margin: 0.25rem 0;
+        width: 100%;
+        height: 1px;
+        color: #999999;
+        background-color: #999999;
+    }
+
+    img {
+        margin: 0;
+        padding: 0;
+
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all .1s ease;
+
+        &:hover {
+            filter: brightness(66%)
+        }
+    }
 }
