@@ -81,6 +81,11 @@ a {
     }
 }
 
+.cta {
+    background-color: var(--text-color);
+    color: #ffffff;
+}
+
 
 address {
     font: inherit;
