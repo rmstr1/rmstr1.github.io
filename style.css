@@ -14,7 +14,7 @@
 }
 
 body {
-    font: 400 1.0rem/1.6 'Source Serif 4', serif;
+    font: 400 1.0rem/1.6 'IBM Plex Mono', monospace;
     letter-spacing: 0.035rem;
     background: var(--bg-color);
     color: var(--text-color);
@@ -53,7 +53,7 @@ h2 {
 h3 {
     margin: 0 auto;
     font: inherit;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 
@@ -65,6 +65,7 @@ a {
     padding: 0.125rem 0;
     color: inherit;
     transition: all .1s ease;
+    font-style: italic;
 
     &:hover {
         color: var(--accent-color);
