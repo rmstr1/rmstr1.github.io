@@ -69,6 +69,7 @@ a {
     padding: 0.125rem 0;
     color: inherit;
     transition: all .1s ease;
+    font-style: italic;
 
     &:hover {
         color: var(--accent-color);
@@ -105,6 +106,7 @@ footer {
 
     a {
         font-size: 0.875rem;
+        font-style: normal;
 
         &::before {
             content: none;
