@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./css/fonts.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="Pushing Crates Presskit">
+    <title>Pushing Crates Presskit</title>
+    <style>
+        :root {
+            --base-width: 42rem;
+            --accent-color: #eb135e;
+            --bg-color: #f3f2f1;
+            --text-color: #222222;
+            --border-color: #22222244;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 400 1rem/1.75 'Source Serif 4', serif;
+            letter-spacing: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        nav {
+            /*font: 400 1.125rem/1.75 'Source Sans 3', sans-serif;*/
+            margin: 3.5rem auto;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: end;
+        }
+
+        header {
+            margin: 3.5rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+            max-width: var(--base-width);
+        }
+
+        hgroup p {
+            font: italic 400 1.125rem/1.75 'Source Sans 3', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 0.025em;
+        }
+
+        h1 {
+            margin: 1.5rem auto;
+            font: inherit;
+            font-size: 2.25rem;
+            font-weight: 600;
+
+            letter-spacing: 0.025em;
+        }
+
+        h2 {
+            margin: 1rem auto;
+            font: inherit;
+            font-size: 1.5rem;
+            font-weight: 600;
+
+            letter-spacing: 0.025em;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            font: inherit;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+        }
+
+        section {
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+            max-width: var(--base-width);
+        }
+
+        p {
+            margin: 0 auto;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style: inside;
+        }
+
+        a {
+            transition: all .1s ease;
+
+            &:hover {
+                color: var(--accent-color);
+                text-decoration: none;
+            }
+        }
+
+        video {
+            width: 100%;
+        }
+
+        .gallery {
+            --gallery-item-min-width: 14rem;
+            --img-aspect: 16/9;
+
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(var(--gallery-item-min-width), 1fr));
+            grid-auto-rows: auto;
+            grid-gap: 0.5rem;
+
+            img {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                aspect-ratio: var(--img-aspect);
+                object-fit: cover;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="#fact-sheet">Fact Sheet</a>
+            <a href="#description">Description</a>
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+            <a href="#media">Media</a>
+        </nav>
+    </header>
+    <article>
+        <header>
+            <hgroup>
+                <h1>Pushing Crates</h1>
+                <p>
+                    A fun and challenging sliding puzzle game that tests your logic and spatial skills.
+                </p>
+            </hgroup>
+        </header>
+        <section id="fact-sheet">
+            <h2>Fact Sheet</h2>
+            <h3>Developer/Publisher:</h3>
+            <p>
+                Normal Bytes Studio<br>
+                <a href="https://www.normalbytesstudio.com">www.normalbytesstudio.com</a><br>
+                <i>normalbytesstudio@gmail.com</i>
+            </p>
+            <h3>Release Date:</h3>
+            <p>
+                6 Sep, 2022
+            </p>
+            <h3>Platforms:</h3>
+            <p>
+                <a href="https://store.steampowered.com/app/1852060/Pushing_Crates/">Windows</a><br>
+            </p>
+            <h3>Website:</h3>
+            <p>
+                <a
+                    href="https://store.steampowered.com/app/1852060/Pushing_Crates/">https://store.steampowered.com/app/1852060/Pushing_Crates</a><br>
+            </p>
+            <h3>Release Price:</h3>
+            <p>
+                USD 4.99<br>
+                EUR 4.99<br>
+            </p>
+        </section>
+        <section id="description">
+            <h2>Description</h2>
+            <p>
+                Pushing Crates is a fun and challenging sliding puzzle game that tests your logic and spatial skills.
+            </p>
+        </section>
+        <section id="features">
+            <h2>Features</h2>
+            <ul>
+                <li>100 levels of increasing difficulty</li>
+                <li>Complete the levels in any order</li>
+                <li>For an extra challenge, try to complete each level in the fewest moves possible</li>
+            </ul>
+        </section>
+        <section id="about">
+            <h2>About Normal Bytes Studio</h2>
+            <p>
+                Normal Bytes Studio is a one-person independent game development studio based in
+                Graz, Austria.
+                Specializing
+                in pixel art games, I use generative art and pixel aesthetics to create immersive virtual
+                worlds.
+                In
+                addition to game development, I build dedicated tools for asset creation to streamline workflows and
+                expand creative possibilities.
+            </p>
+        </section>
+        <section id="media">
+            <h2>Media</h2>
+            <video playsinline controls>
+                <source src="./media/videos/Pushing Crates 2022-08-26 19-50-33_Trim.mp4" type="video/mp4">
+            </video>
+            <div class="gallery">
+                <img src="./media/screenshots/screenshot_1.png">
+                <img src="./media/screenshots/screenshot_2.png">
+                <img src="./media/screenshots/screenshot_3.png">
+                <img src="./media/screenshots/screenshot_3.png">
+                <img src="./media/screenshots/screenshot_5.png">
+            </div>
+        </section>
+    </article>
+</body>
+
+</html>
