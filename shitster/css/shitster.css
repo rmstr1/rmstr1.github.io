@@ -38,6 +38,11 @@ body {
 
     background-color: #efefef;
     color: #222222;
+
+    background:
+        radial-gradient(circle at top, #cfffbc, transparent),
+        radial-gradient(circle at bottom, #a0ffd3, transparent);
+    ;
 }
 
 .container {
@@ -87,14 +92,14 @@ body {
         aspect-ratio: 1.0;
         padding: 5%;
 
-        background: radial-gradient(circle at 10.0% 3.0%, #fffc5493, transparent 200%), radial-gradient(circle at 85.0% 95.0%, #39b6ffa2, transparent 200%), radial-gradient(circle at 50% 50%, #1ED760, #1ED760 100%);
-        transform-style: preserve-3d;
+        background: #222222;
+        color: #ffffff;
 
         transition: transform 0.6s;
         backface-visibility: hidden;
 
         border: 0.5rem solid #ffffff;
-        border-radius: 2rem;
+        border-radius: 0.5rem;
 
         display: flex;
         flex-direction: column;
@@ -102,8 +107,9 @@ body {
         justify-content: center;
         gap: 3%;
 
-        font-size: 6cqw;
+        font-size: 3.5cqw;
         font-weight: 400;
+        letter-spacing: 0.125em;
 
         box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
 
@@ -121,7 +127,7 @@ body {
 
         padding: 5%;
 
-        border-radius: 2rem;
+        border-radius: 0.5rem;
 
         display: flex;
         flex-direction: column;
