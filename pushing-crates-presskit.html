@@ -9,7 +9,7 @@
     <title>Pushing Crates Presskit</title>
     <style>
         :root {
-            --base-width: 42rem;
+            --base-width: 52rem;
             --accent-color: #eb135e;
             --bg-color: #f3f2f1;
             --text-color: #222222;
@@ -38,11 +38,58 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
-            justify-content: end;
+            justify-content: start;
         }
 
         header {
             margin: 3.5rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+            max-width: var(--base-width);
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+            max-width: var(--base-width);
+
+            display: grid;
+            grid-template:
+                "c s" auto / 1fr 13rem;
+
+            gap: 4rem;
+
+            @media (width < 48rem) {
+                grid-template:
+                    "s" auto
+                    "c" auto / 1fr;
+                gap: 0;
+            }
+
+            &>.content {
+                grid-area: c;
+            }
+
+            &>.sidebar {
+                grid-area: s;
+            }
+        }
+
+        section {
+            margin: 2.5rem auto;
+        }
+
+        #fact-sheet {
+            margin: 2.5rem auto;
+
+            @media (width < 48rem) {
+                margin: 0 auto;
+            }
+        }
+
+        #media {
+            margin: -1rem auto 2.5rem;
             padding: 0 1.5rem;
             width: 100%;
             max-width: var(--base-width);
@@ -77,13 +124,6 @@
             font: inherit;
             font-weight: 600;
             letter-spacing: 0.025em;
-        }
-
-        section {
-            margin: 2.5rem auto;
-            padding: 0 1.5rem;
-            width: 100%;
-            max-width: var(--base-width);
         }
 
         p {
@@ -148,60 +188,68 @@
                 </p>
             </hgroup>
         </header>
-        <section id="fact-sheet">
-            <h2>Fact Sheet</h2>
-            <h3>Developer/Publisher:</h3>
-            <p>
-                Normal Bytes Studio<br>
-                <a href="https://www.normalbytesstudio.com">www.normalbytesstudio.com</a><br>
-                <i>normalbytesstudio@gmail.com</i>
-            </p>
-            <h3>Release Date:</h3>
-            <p>
-                6 Sep, 2022
-            </p>
-            <h3>Platforms:</h3>
-            <p>
-                <a href="https://store.steampowered.com/app/1852060/Pushing_Crates/">Windows</a><br>
-            </p>
-            <h3>Website:</h3>
-            <p>
-                <a
-                    href="https://store.steampowered.com/app/1852060/Pushing_Crates/">https://store.steampowered.com/app/1852060/Pushing_Crates</a><br>
-            </p>
-            <h3>Release Price:</h3>
-            <p>
-                USD 4.99<br>
-                EUR 4.99<br>
-            </p>
-        </section>
-        <section id="description">
-            <h2>Description</h2>
-            <p>
-                Pushing Crates is a fun and challenging sliding puzzle game that tests your logic and spatial skills.
-            </p>
-        </section>
-        <section id="features">
-            <h2>Features</h2>
-            <ul>
-                <li>100 levels of increasing difficulty</li>
-                <li>Complete the levels in any order</li>
-                <li>For an extra challenge, try to complete each level in the fewest moves possible</li>
-            </ul>
-        </section>
-        <section id="about">
-            <h2>About Normal Bytes Studio</h2>
-            <p>
-                Normal Bytes Studio is a one-person independent game development studio based in
-                Graz, Austria.
-                Specializing
-                in pixel art games, I use generative art and pixel aesthetics to create immersive virtual
-                worlds.
-                In
-                addition to game development, I build dedicated tools for asset creation to streamline workflows and
-                expand creative possibilities.
-            </p>
-        </section>
+        <div class="container">
+            <div class="sidebar">
+                <section id="fact-sheet">
+                    <h2>Fact Sheet</h2>
+                    <h3>Developer/Publisher:</h3>
+                    <p>
+                        Normal Bytes Studio<br>
+                        <a href="https://www.normalbytesstudio.com">www.normalbytesstudio.com</a><br>
+                        <i>normalbytesstudio@gmail.com</i>
+                    </p>
+                    <h3>Release Date:</h3>
+                    <p>
+                        6 Sep, 2022
+                    </p>
+                    <h3>Platforms:</h3>
+                    <p>
+                        <a href="https://store.steampowered.com/app/1852060/Pushing_Crates/">Windows</a><br>
+                    </p>
+                    <h3>Website:</h3>
+                    <p>
+                        <a
+                            href="https://store.steampowered.com/app/1852060/Pushing_Crates/">https://store.steampowered.com/app/1852060/Pushing_Crates</a><br>
+                    </p>
+                    <h3>Release Price:</h3>
+                    <p>
+                        USD 4.99<br>
+                        EUR 4.99<br>
+                    </p>
+                </section>
+            </div>
+            <div class="content">
+                <section id="description">
+                    <h2>Description</h2>
+                    <p>
+                        Pushing Crates is a fun and challenging sliding puzzle game that tests your logic and spatial
+                        skills.
+                    </p>
+                </section>
+                <section id="features">
+                    <h2>Features</h2>
+                    <ul>
+                        <li>100 levels of increasing difficulty</li>
+                        <li>Complete the levels in any order</li>
+                        <li>For an extra challenge, try to complete each level in the fewest moves possible</li>
+                    </ul>
+                </section>
+                <section id="about">
+                    <h2>About Normal Bytes Studio</h2>
+                    <p>
+                        Normal Bytes Studio is a one-person independent game development studio based in
+                        Graz, Austria.
+                        Specializing
+                        in pixel art games, I use generative art and pixel aesthetics to create immersive virtual
+                        worlds.
+                        In
+                        addition to game development, I build dedicated tools for asset creation to streamline workflows
+                        and
+                        expand creative possibilities.
+                    </p>
+                </section>
+            </div>
+        </div>
         <section id="media">
             <h2>Media</h2>
             <video playsinline controls>
@@ -211,7 +259,7 @@
                 <img src="./media/screenshots/screenshot_1.png">
                 <img src="./media/screenshots/screenshot_2.png">
                 <img src="./media/screenshots/screenshot_3.png">
-                <img src="./media/screenshots/screenshot_3.png">
+                <img src="./media/screenshots/screenshot_4.png">
                 <img src="./media/screenshots/screenshot_5.png">
             </div>
         </section>
