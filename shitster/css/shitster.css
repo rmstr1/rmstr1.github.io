@@ -177,13 +177,14 @@ button {
 
     padding: 0.5rem 1.5rem;
 
-    border-radius: 1rem;
+    border-radius: 0;
     background-color: #222222;
     color: #ffffff;
 
-    letter-spacing: 0.126em;
-    font-size: 1.5rem;
+    letter-spacing: 0.125em;
+    font-size: 1.25rem;
     font-weight: 400;
+    text-transform: uppercase;
 
     box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
 
