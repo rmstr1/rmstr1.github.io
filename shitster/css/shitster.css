@@ -22,7 +22,6 @@
 html {
     height: 100%;
     overscroll-behavior: none;
-    background-color: #d6d6d6;
 }
 
 body {
@@ -41,17 +40,17 @@ body {
 
     background:
         radial-gradient(circle at 10% 60% in oklab, #d6d6d6 0, transparent 25%),
-        radial-gradient(circle at 80% 40% in oklab, #d6d6d6 0, transparent 25%),
-        radial-gradient(circle at 60% 110% in oklab, #ffe60059 0, transparent 33%),
-        radial-gradient(circle at 40% 10% in oklab, #ff00dd48 0, transparent 75%),
-        radial-gradient(circle at 66% 90% in oklab, #00ffea63 0, transparent 75%);
+        radial-gradient(circle at 85% 40% in oklab, #d6d6d6 0, transparent 25%),
+        radial-gradient(circle at 60% 110% in oklab, #00ff73ce 0, transparent 33%),
+        radial-gradient(circle at 40% 10% in oklab, #33ff0065 0, transparent 75%),
+        radial-gradient(circle at 66% 90% in oklab, #00ffea 0, #90c0b4 75%);
 }
 
 .container {
     height: 100%;
     margin: 0 auto;
     width: 100%;
-    max-width: 38rem;
+    max-width: 32rem;
     padding: 1.5rem;
     background-color: none;
     display: flex;
