@@ -190,6 +190,11 @@ header {
             align-items: center;
             gap: 0;
 
+
+            @media (max-width: 50rem) {
+                width: 100%;
+            }
+
             a {
                 border-left: 1px solid var(--header-border-color);
 
@@ -199,13 +204,11 @@ header {
                 color: inherit;
                 text-decoration: none;
                 transition: all 0.2s ease;
+                text-align: center;
 
                 @media (max-width: 50rem) {
-                    padding: 1.5rem 1.5rem 1rem;
-                }
-
-                @media (max-width: 32rem) {
-                    padding: 1.5rem 1rem 1rem;
+                    flex: 1;
+                    padding: 1.75rem 0 1rem;
                 }
 
                 &::before {
