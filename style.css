@@ -38,13 +38,13 @@ h1 {
 h2 {
     margin: 0 auto 1rem;
     padding: 0 1.5rem;
-    font: 400 2rem/1.25 'Mozilla Headline', sans-serif;
+    font: 400 2rem/1.75 'Mozilla Headline', sans-serif;
     letter-spacing: 0;
 }
 
 h3 {
     margin: 0 auto;
-    font: 400 1.375rem/1.2 'Mozilla Headline', sans-serif;
+    font: 400 1.375rem/1.75 'Mozilla Headline', sans-serif;
 }
 
 .list-element {
