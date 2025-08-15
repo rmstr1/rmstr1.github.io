@@ -7,8 +7,9 @@
     --content-font-color: #ffffff;
     --content-font-weight: 400;
 
-    --border-color: #22222238;
     --accent-color: #ec0047;
+    --border-color: #22222238;
+    --border: 1px solid var(--border-color);
 
     --base-width: 48rem;
 }
@@ -38,7 +39,8 @@ h1 {
 }
 
 h2 {
-    margin: 0 auto;
+    margin: 1rem auto;
+    padding: 0 1.5rem;
     font: inherit;
     font-size: 2rem;
     letter-spacing: 0;
@@ -47,11 +49,17 @@ h2 {
 h3 {
     margin: 0 auto;
     font: inherit;
-    font-weight: 500;
+    font-size: 1.375rem;
 }
 
-p {
-    margin-bottom: 1rem;
+.list-element {
+    border: var(--border);
+    border-top: none;
+    padding: 1.5rem 1.5rem 1.5rem;
+
+    &:first-of-type {
+        border-top: var(--border);
+    }
 }
 
 a {
@@ -107,7 +115,7 @@ section {
     margin: 0 auto;
     padding: 4.5rem 1.5rem;
     width: 100%;
-    border: 1px solid var(--border-color);
+    border: var(--border);
     border-top: none;
     background: #fafafa;
 
@@ -209,7 +217,7 @@ header {
 
                 @media (max-width: 50rem) {
                     flex: 1;
-                    padding: 1.75rem 0 1rem;
+                    padding: 1rem 0 1rem;
                 }
 
                 &::before {
