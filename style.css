@@ -83,11 +83,11 @@ a {
 #hero {
     width: 100%;
     background:
-        radial-gradient(circle at 10% 60% in oklab, #babababb 0, transparent 40%),
-        radial-gradient(circle at 85% 40% in oklab, #babababb 0, transparent 40%),
+        radial-gradient(circle at 10% 60% in oklab, #bababa 0, transparent 40%),
+        radial-gradient(circle at 85% 40% in oklab, #bababa 0, transparent 40%),
         radial-gradient(circle at 60% 110% in oklab, #00fff288 0, transparent 33%),
         radial-gradient(circle at 40% 10% in oklab, #00ffff65 0, transparent 75%),
-        radial-gradient(circle at 66% 90% in oklab, #00fff2 0, #b3c090 75%);
+        radial-gradient(circle at 66% 90% in oklab, #00fff2 0, #bbc090 75%);
     border: none;
 
     .hero-container {
