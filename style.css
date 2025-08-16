@@ -75,7 +75,7 @@ a {
     margin: 6rem auto 2rem;
 
     @media (max-width: 48rem) {
-        margin: 9rem auto 1rem;
+        margin: 7rem auto 1rem;
     }
 }
 
@@ -124,7 +124,7 @@ section {
     }
 
     @media (max-width: 48rem) {
-        scroll-margin: 6rem;
+        scroll-margin: 5rem;
     }
 }
 
