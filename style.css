@@ -1,7 +1,6 @@
 :root {
     --header-bg-color: #fafafa;
     --header-font-color: #222222;
-    --header-font-weight: 400;
 
     --content-bg-color: #222222;
     --content-font-color: #ffffff;
@@ -173,8 +172,8 @@ header {
             justify-content: center;
             align-items: center;
 
-            padding: 1.75rem 2rem 0.25rem;
-            font: var(--header-font-weight) 1.25rem/1.4 'Source Sans 3', sans-serif;
+            padding: 2.375rem 2rem 0.875rem;
+            font: 400 1.25rem/1 'Source Sans 3', sans-serif;
             letter-spacing: 0;
             text-decoration: none;
             color: inherit;
@@ -207,9 +206,9 @@ header {
             a {
                 border-left: 1px solid var(--header-border-color);
 
-                font: 400 1.0rem/1.4 'Source Sans 3', sans-serif;
+                font: 400 1.0rem/1 'Source Sans 3', sans-serif;
                 letter-spacing: 0.035em;
-                padding: 2.25rem 1.5rem 1rem;
+                padding: 2.5rem 1.5rem 1rem;
                 color: inherit;
                 text-decoration: none;
                 transition: all 0.2s ease;
