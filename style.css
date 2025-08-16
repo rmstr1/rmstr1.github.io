@@ -80,6 +80,8 @@ a {
 }
 
 #hero {
+    min-height: 80vh;
+    height: auto;
     width: 100%;
     background:
         radial-gradient(circle at 10% 60% in oklab, #bababa 0, transparent 40%),
@@ -88,6 +90,14 @@ a {
         radial-gradient(circle at 40% 10% in oklab, #00ffff65 0, transparent 75%),
         radial-gradient(circle at 66% 90% in oklab, #00fff2 0, #bbc090 75%);
     border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 48rem) {
+        min-height: 100vh;
+    }
 
     .hero-container {
         container-type: inline-size;
