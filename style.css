@@ -104,6 +104,7 @@ a {
     }
 
     h1 {
+        /*font-size: calc(0.26 * (100cqw - 2 * 4rem));*/
         font-size: calc(18cqw);
         color: #000000;
     }
