@@ -73,10 +73,10 @@ a {
 }
 
 .hero-container {
-    margin: 5rem auto 1rem;
+    margin: 6rem auto 2rem;
 
     @media (max-width: 48rem) {
-        margin: 8rem auto 0;
+        margin: 9rem auto 1rem;
     }
 }
 
@@ -93,7 +93,7 @@ a {
     .hero-container {
         container-type: inline-size;
         width: 100%;
-        max-width: 38rem;
+        max-width: 32rem;
         aspect-ratio: 1.0;
         padding: 0;
         background-color: #ff6161;
