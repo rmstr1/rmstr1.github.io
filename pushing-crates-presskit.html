@@ -25,7 +25,7 @@
         }
 
         body {
-            font: 400 1rem/1.75 'Source Serif 4', serif;
+            font: 400 1rem/1.75 'Source Sans 3', sans-serif;
             letter-spacing: 0;
             background: var(--bg-color);
             color: var(--text-color);
@@ -79,6 +79,8 @@
 
         section {
             margin: 2.5rem auto;
+            width: 100%;
+            max-width: var(--base-width);
         }
 
         #fact-sheet {
@@ -92,33 +94,35 @@
             }
         }
 
-        #media {
-            margin: -1rem auto 2.5rem;
+        #videos {
+            margin: 0rem auto 2.5rem;
             padding: 0 1.5rem;
-            width: 100%;
-            max-width: var(--base-width);
+        }
+
+
+        #screenshots {
+            margin: 2.5rem auto 2.5rem;
+            padding: 0 1.5rem;
         }
 
         hgroup p {
-            font: italic 400 1.125rem/1.75 'Source Sans 3', sans-serif;
+            font: inherit;
             font-size: 1.25rem;
             letter-spacing: 0.025em;
         }
 
         h1 {
             margin: 1.5rem auto;
-            font: inherit;
-            font-size: 2.25rem;
-            font-weight: 600;
+            font: 400 4rem/1.2 'Mozilla Headline', sans-serif;
+            letter-spacing: 0;
 
             letter-spacing: 0.025em;
         }
 
         h2 {
-            margin: 1rem auto;
-            font: inherit;
-            font-size: 1.5rem;
-            font-weight: 600;
+            margin: 0 auto 1rem;
+            font: 400 2rem/1.75 'Mozilla Headline', sans-serif;
+            letter-spacing: 0;
 
             letter-spacing: 0.025em;
             border-bottom: 1px solid var(--border-color);
@@ -156,7 +160,7 @@
         }
 
         .gallery {
-            --gallery-item-min-width: 14rem;
+            --gallery-item-min-width: 16rem;
             --img-aspect: 16/9;
 
             width: 100%;
@@ -183,7 +187,8 @@
             <a href="#description">Description</a>
             <a href="#features">Features</a>
             <a href="#about">About</a>
-            <a href="#media">Media</a>
+            <a href="#videos">Videos</a>
+            <a href="#screenshots">Screenshots</a>
         </nav>
     </header>
     <article>
@@ -257,11 +262,14 @@
                 </section>
             </div>
         </div>
-        <section id="media">
-            <h2>Media</h2>
+        <section id="videos">
+            <h2>Videos</h2>
             <video playsinline controls>
                 <source src="./media/videos/Pushing Crates 2022-08-26 19-50-33_Trim.mp4" type="video/mp4">
             </video>
+        </section>
+        <section id="screenshots">
+            <h2>Screenshots</h2>
             <div class="gallery">
                 <img src="./media/screenshots/screenshot_1.png">
                 <img src="./media/screenshots/screenshot_2.png">
