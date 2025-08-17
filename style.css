@@ -1,6 +1,9 @@
 :root {
+    /*--bg-color: #ffd561;*/
+    /*--bg-color: #ff746a;*/
+    --bg-color: #fafafa;
     --accent-color: #ec0047;
-    --border-color: #22222238;
+    --border-color: #22222234;
     --border: 1px solid var(--border-color);
 
     --base-width: 48rem;
@@ -19,7 +22,7 @@ body {
     font: 400 1rem/1.75 'Source Sans 3', sans-serif;
     letter-spacing: 0.035em;
     color: #222222;
-    background: #fafafa;
+    background: var(--bg-color);
 }
 
 h1 {
@@ -95,17 +98,10 @@ a {
 
     .hero-container {
         margin: 5rem auto 0rem;
+        padding: 1.5rem;
 
         container-type: inline-size;
         width: 100%;
-        max-width: 32rem;
-        aspect-ratio: 1.0;
-        padding: 0;
-        border: var(--border);
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
 
         @media (max-width: 48rem) {
             margin: 6rem auto -1rem;
@@ -114,7 +110,7 @@ a {
 
     h1 {
         /*font-size: calc(0.26 * (100cqw - 2 * 4rem));*/
-        font-size: calc(18cqw);
+        font-size: calc(min(18cqw, 6rem));
         color: #000000;
     }
 }
@@ -124,7 +120,6 @@ section {
     margin: 6rem auto;
     padding: 0 1.5rem;
     width: 100%;
-    background: #fafafa;
 
     &>* {
         max-width: var(--base-width);
@@ -138,7 +133,7 @@ section {
 }
 
 header {
-    --header-bg-color: #fafafa;
+    --header-bg-color: var(--bg-color);
     --header-font-color: #222222;
     --header-border-color: var(--border-color);
     --header-font-weight: 400;
