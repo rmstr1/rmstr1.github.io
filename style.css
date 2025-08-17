@@ -1,6 +1,7 @@
 :root {
     /*--bg-color: #ffd561;*/
     /*--bg-color: #ff746a;*/
+    --text-color: #222222;
     --bg-color: #fafafa;
     --accent-color: #ec0047;
     --border-color: #22222234;
@@ -21,7 +22,7 @@ body {
     width: 100%;
     font: 400 1rem/1.75 'Source Sans 3', sans-serif;
     letter-spacing: 0.035em;
-    color: #222222;
+    color: var(--text-color);
     background: var(--bg-color);
 }
 
@@ -55,10 +56,10 @@ hr {
     background-color: var(--border-color);
 }
 
-.list-element {
+.framed {
     border: var(--border);
     border-top: none;
-    padding: 1.5rem 1.5rem 1.5rem;
+    padding: 1.5rem;
 
     &:first-of-type {
         border-top: var(--border);
@@ -81,10 +82,10 @@ a {
 }
 
 .hero-container {
-    margin: 12rem auto 0rem;
+    margin: 12rem auto 0;
 
     @media (max-width: 48rem) {
-        margin: 13rem auto -1rem;
+        margin: 10rem auto 0;
     }
 }
 
@@ -92,26 +93,15 @@ a {
     height: auto;
     width: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     .hero-container {
-        margin: 5rem auto 0rem;
-        padding: 1.5rem;
-
+        padding: 0 1.5rem;
         container-type: inline-size;
         width: 100%;
-
-        @media (max-width: 48rem) {
-            margin: 6rem auto -1rem;
-        }
     }
 
     h1 {
         /*font-size: calc(0.26 * (100cqw - 2 * 4rem));*/
         font-size: calc(min(18cqw, 6rem));
-        color: #000000;
     }
 }
 
@@ -134,10 +124,9 @@ section {
 
 header {
     --header-bg-color: var(--bg-color);
-    --header-font-color: #222222;
+    --header-font-color: var(--text-color);
     --header-border-color: var(--border-color);
-    --header-font-weight: 400;
-    --hover-color: #ec0047;
+    --hover-color: var(--accent-color);
 
     position: fixed;
     top: 0;
@@ -250,7 +239,7 @@ footer {
     .logo {
         display: block;
         padding: 0.25rem 0.5rem;
-        font: 600 1.25rem/1.4 'Source Sans 3', sans-serif;
+        font: 400 1.25rem/1.4 'Source Sans 3', sans-serif;
         letter-spacing: 0;
         text-decoration: none;
         color: inherit;
@@ -266,7 +255,7 @@ footer {
 
 
     h2 {
-        font-size: 1.0rem;
+        font: 400 1.0rem/1.6 'Source Sans 3', sans-serif;
         margin: 2rem auto 1.25rem;
         border: none;
     }
