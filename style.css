@@ -1,11 +1,4 @@
 :root {
-    --header-bg-color: #fafafa;
-    --header-font-color: #222222;
-
-    --content-bg-color: #222222;
-    --content-font-color: #ffffff;
-    --content-font-weight: 400;
-
     --accent-color: #ec0047;
     --border-color: #22222238;
     --border: 1px solid var(--border-color);
@@ -23,14 +16,14 @@
 
 body {
     width: 100%;
-    font: var(--content-font-weight) 1rem/1.75 'Source Sans 3', sans-serif;
+    font: 400 1rem/1.75 'Source Sans 3', sans-serif;
     letter-spacing: 0.035em;
     color: #222222;
     background: #fafafa;
 }
 
 h1 {
-    font: 400 4rem/1.2 'Mozilla Headline', sans-serif;
+    font: 200 4rem/1.2 'Mozilla Headline', sans-serif;
     letter-spacing: 0;
 }
 
@@ -44,6 +37,19 @@ h2 {
 h3 {
     margin: 0 auto;
     font: 400 1.375rem/1.75 'Mozilla Headline', sans-serif;
+}
+
+hr {
+    all: unset;
+    box-sizing: border-box;
+
+    display: block;
+
+    margin: 0.25rem 0;
+    width: 100%;
+    height: 1px;
+    color: var(--border-color);
+    background-color: var(--border-color);
 }
 
 .list-element {
@@ -72,44 +78,38 @@ a {
 }
 
 .hero-container {
-    margin: 6rem auto 2rem;
+    margin: 12rem auto 0rem;
 
     @media (max-width: 48rem) {
-        margin: 7rem auto 1rem;
+        margin: 13rem auto -1rem;
     }
 }
 
 #hero {
-    min-height: 80vh;
     height: auto;
     width: 100%;
-    background:
-        radial-gradient(circle at 10% 60% in oklab, #bababa 0, transparent 40%),
-        radial-gradient(circle at 85% 40% in oklab, #bababa 0, transparent 40%),
-        radial-gradient(circle at 60% 110% in oklab, #00fff288 0, transparent 33%),
-        radial-gradient(circle at 40% 10% in oklab, #00ffff65 0, transparent 75%),
-        radial-gradient(circle at 66% 90% in oklab, #00fff2 0, #bbc090 75%);
-    border: none;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    @media (max-width: 48rem) {
-        min-height: 100vh;
-    }
-
     .hero-container {
+        margin: 5rem auto 0rem;
+
         container-type: inline-size;
         width: 100%;
         max-width: 32rem;
         aspect-ratio: 1.0;
         padding: 0;
-        background-color: #ff6161;
+        border: var(--border);
 
         display: flex;
         align-items: center;
         justify-content: center;
+
+        @media (max-width: 48rem) {
+            margin: 6rem auto -1rem;
+        }
     }
 
     h1 {
@@ -121,11 +121,9 @@ a {
 
 section {
     scroll-margin: 3rem;
-    margin: 0 auto;
-    padding: 4.5rem 1.5rem;
+    margin: 6rem auto;
+    padding: 0 1.5rem;
     width: 100%;
-    border: var(--border);
-    border-top: none;
     background: #fafafa;
 
     &>* {
@@ -134,6 +132,7 @@ section {
     }
 
     @media (max-width: 48rem) {
+        margin: 4rem auto;
         scroll-margin: 5rem;
     }
 }
@@ -141,7 +140,7 @@ section {
 header {
     --header-bg-color: #fafafa;
     --header-font-color: #222222;
-    --header-border-color: #22222238;
+    --header-border-color: var(--border-color);
     --header-font-weight: 400;
     --hover-color: #ec0047;
 
