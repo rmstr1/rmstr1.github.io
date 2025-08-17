@@ -120,7 +120,7 @@ a {
 }
 
 section {
-    scroll-margin: 3rem;
+    scroll-margin: 7rem;
     margin: 6rem auto;
     padding: 0 1.5rem;
     width: 100%;
@@ -133,7 +133,7 @@ section {
 
     @media (max-width: 48rem) {
         margin: 4rem auto;
-        scroll-margin: 5rem;
+        scroll-margin: 9rem;
     }
 }
 
