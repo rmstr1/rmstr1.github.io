@@ -48,6 +48,21 @@
             max-width: var(--base-width);
         }
 
+        a {
+            padding: 0.125rem 0;
+            color: inherit;
+            transition: all .1s ease;
+
+            &:hover {
+                color: var(--accent-color);
+                text-decoration: none;
+            }
+
+            &::before {
+                content: "→\00a0";
+            }
+        }
+
         .container {
             margin: 0 auto;
             padding: 0 3.5rem 0 2rem;
@@ -86,8 +101,10 @@
         #fact-sheet {
             margin: 2.5rem auto;
             width: 100%;
-            background: #e7f9ef;
-            outline: 2rem solid #e7f9ef;
+
+            background: #353535;
+            outline: 2rem solid #353535;
+            color: #ffffff;
 
             @media (width < 48rem) {
                 margin: 0 auto;
