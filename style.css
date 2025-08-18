@@ -182,7 +182,7 @@ section {
         padding: 2.5rem;
     }
 
-    @media (max-width: 40rem) {
+    @media (max-width: 48rem) {
         grid-template: "img" 1fr "content" auto / 1fr;
 
         img {
