@@ -334,7 +334,7 @@ footer {
     margin: 2rem auto;
     height: auto;
     width: 100%;
-    grid-template: "img content" 1fr / 1fr 1fr;
+    grid-template: "img content" 1fr / 1fr 2fr;
     align-items: center;
     overflow: hidden;
 
