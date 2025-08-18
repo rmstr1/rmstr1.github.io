@@ -145,22 +145,22 @@ section {
 #tools {
     background:
         linear-gradient(90deg, var(--bg-color) 50%, transparent 50%),
-        linear-gradient(90deg in oklab, #ffe3b9 50%, #ffe3b94b);
+        linear-gradient(90deg in oklab, #ffe6bf 50%, #fafafa 125%);
 
     @media (max-width: 48rem) {
         background:
             linear-gradient(90deg, var(--bg-color) 75%, transparent 75%),
-            linear-gradient(90deg in oklab, #ffe3b9 75%, #ffe3b9aa);
+            linear-gradient(90deg in oklab, #ffe6bf 75%, #fafafa 150%);
     }
 }
 
 #socials {
     background: linear-gradient(90deg, var(--bg-color) 50%, transparent 50%),
-        linear-gradient(90deg in oklab, #ffa18a 50%, #ffa18a38);
+        linear-gradient(90deg in oklab, #ffac98 50%, #fafafa 125%);
 
     @media (max-width: 48rem) {
         background: linear-gradient(90deg, var(--bg-color) 75%, transparent 75%),
-            linear-gradient(90deg in oklab, #ffa18a 75%, #ffa18abb);
+            linear-gradient(90deg in oklab, #ffac98 75%, #fafafa 150%);
     }
 }
 
