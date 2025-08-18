@@ -158,7 +158,7 @@ section {
     &:nth-of-type(even) {
         grid-template: "content img" 1fr / 2fr 3fr;
 
-        @media (max-width: 40rem) {
+        @media (max-width: 48rem) {
             grid-template: "img" 1fr "content" auto / 1fr;
 
             img {
