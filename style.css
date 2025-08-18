@@ -135,18 +135,24 @@ section {
 }
 
 #tools {
-    background: linear-gradient(90deg, transparent 50%, #fdefb9 50%);
+    background:
+        linear-gradient(90deg, var(--bg-color) 50%, transparent 50%),
+        linear-gradient(90deg in oklab, #ffdaa1, #ffa1a14b);
 
     @media (max-width: 48rem) {
-        background: linear-gradient(90deg, transparent 75%, #fdefb9 75%);
+        background:
+            linear-gradient(90deg, var(--bg-color) 75%, transparent 75%),
+            linear-gradient(90deg in oklab, #ffdaa1, #ffa1a14b);
     }
 }
 
 #socials {
-    background: linear-gradient(90deg, transparent 50%, #ff9379 50%);
+    background: linear-gradient(90deg, var(--bg-color) 50%, transparent 50%),
+        linear-gradient(90deg in oklab, #ff8667, #ff679a38);
 
     @media (max-width: 48rem) {
-        background: linear-gradient(90deg, transparent 75%, #ff9379 75%);
+        background: linear-gradient(90deg, var(--bg-color) 75%, transparent 75%),
+            linear-gradient(90deg in oklab, #ff8667, #ff679a38);
     }
 }
 
