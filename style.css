@@ -7,7 +7,7 @@
     --border-color: #22222234;
     --border: 1px solid var(--border-color);
 
-    --base-width: 46rem;
+    --base-width: 66rem;
 }
 
 *,
@@ -33,14 +33,14 @@ h1 {
 
 h2 {
     margin: 0 auto 1rem;
-    font: 400 2rem/1.75 'Mozilla Headline', sans-serif;
+    font: 400 3rem/1.75 'Mozilla Headline', sans-serif;
     letter-spacing: 0;
     border-bottom: var(--border);
 }
 
 h3 {
     margin: 0 auto;
-    font: 400 1.25rem/1.75 'Mozilla Headline', sans-serif;
+    font: 400 1.75rem/1.75 'Mozilla Headline', sans-serif;
 }
 
 p {
@@ -140,6 +140,56 @@ section {
         scroll-margin: 4rem;
         padding: 4rem 2rem;
     }*/
+}
+
+.game-card {
+    display: grid;
+    margin: 2rem auto;
+    max-width: 75rem;
+    height: auto;
+    width: 100%;
+    grid-template: "img content" 1fr / 1fr 1fr;
+    align-items: center;
+    overflow: hidden;
+
+    background: #222222;
+    color: #ffffff;
+    font-weight: 500;
+
+    &:nth-of-type(even) {
+        grid-template: "content img" 1fr / 1fr 1fr;
+
+        @media (max-width: 40rem) {
+            grid-template: "img" 1fr "content" auto / 1fr;
+
+            img {
+                aspect-ratio: 4/3;
+            }
+        }
+    }
+
+    img {
+        grid-area: img;
+        display: block;
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+    }
+
+    .card-content {
+        grid-area: content;
+        width: 100%;
+        height: auto;
+        padding: 2.5rem;
+    }
+
+    @media (max-width: 40rem) {
+        grid-template: "img" 1fr "content" auto / 1fr;
+
+        img {
+            aspect-ratio: 4/3;
+        }
+    }
 }
 
 #tools {
@@ -327,49 +377,6 @@ footer {
     border-radius: 50%;
     backdrop-filter: invert(1);
     transform: perspective(400) translateZ(-100px);
-}
-
-.game-card {
-    display: grid;
-    margin: 2rem auto;
-    height: auto;
-    width: 100%;
-    grid-template: "img content" 1fr / 1fr 2fr;
-    align-items: center;
-    overflow: hidden;
-
-    background: #222222;
-    color: #ffffff;
-    font-weight: 500;
-    border-radius: 1.5rem;
-
-    h2 {
-        border-color: #ffffff66;
-    }
-
-
-    img {
-        grid-area: img;
-        display: block;
-        width: 100%;
-        aspect-ratio: 3/4;
-        object-fit: cover;
-    }
-
-    .card-content {
-        grid-area: content;
-        width: 100%;
-        height: auto;
-        padding: 2.5rem;
-    }
-
-    @media (max-width: 40rem) {
-        grid-template: "img" 1fr "content" auto / 1fr;
-
-        img {
-            aspect-ratio: 4/3;
-        }
-    }
 }
 
 .btn {
