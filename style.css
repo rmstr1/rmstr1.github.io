@@ -144,11 +144,10 @@ section {
 
 .game-card {
     display: grid;
-    margin: 2rem auto;
-    max-width: 75rem;
+    margin: 2.5rem auto;
     height: auto;
     width: 100%;
-    grid-template: "img content" 1fr / 1fr 1fr;
+    grid-template: "img content" 1fr / 3fr 2fr;
     align-items: center;
     overflow: hidden;
 
@@ -157,7 +156,7 @@ section {
     font-weight: 500;
 
     &:nth-of-type(even) {
-        grid-template: "content img" 1fr / 1fr 1fr;
+        grid-template: "content img" 1fr / 2fr 3fr;
 
         @media (max-width: 40rem) {
             grid-template: "img" 1fr "content" auto / 1fr;
