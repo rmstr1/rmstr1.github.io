@@ -76,7 +76,7 @@ a {
 }
 
 .hero-container {
-    margin: 7rem auto 0;
+    margin: 6rem auto 0;
 
     @media (max-width: 48rem) {
         margin: 8rem auto 1rem;
