@@ -132,6 +132,14 @@ section {
     background-color: #353535;
     color: #ffffff;
     font-weight: 500;
+
+    scroll-margin: 2.5rem;
+    padding: 5rem 2rem;
+
+    @media (max-width: 48rem) {
+        scroll-margin: 4rem;
+        padding: 4rem 2rem;
+    }
 }
 
 #tools {
@@ -148,11 +156,11 @@ section {
 
 #socials {
     background: linear-gradient(90deg, var(--bg-color) 50%, transparent 50%),
-        linear-gradient(90deg in oklab, #ff8667, #ff679a38);
+        linear-gradient(90deg in oklab, #ff8667, #ff866738);
 
     @media (max-width: 48rem) {
         background: linear-gradient(90deg, var(--bg-color) 75%, transparent 75%),
-            linear-gradient(90deg in oklab, #ff8667, #ff679a38);
+            linear-gradient(90deg in oklab, #ff8667, #ff866777);
     }
 }
 
