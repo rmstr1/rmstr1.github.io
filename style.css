@@ -126,7 +126,27 @@ section {
         radial-gradient(circle at 60% 110% in oklab, #fbff0015 0, transparent 33%),
         radial-gradient(circle at 40% 10% in oklab, #1eff0011 0, transparent 75%),
         linear-gradient(-22deg in oklab, #00eeff30 0, #00ff5500);
+}
 
+#games {
+    background-color: #353535;
+    color: #ffffff;
+}
+
+#tools {
+    background: linear-gradient(90deg, transparent 50%, #fdefb9 50%);
+
+    @media (max-width: 48rem) {
+        background: linear-gradient(90deg, transparent 75%, #fdefb9 75%);
+    }
+}
+
+#socials {
+    background: linear-gradient(90deg, transparent 50%, #ff9379 50%);
+
+    @media (max-width: 48rem) {
+        background: linear-gradient(90deg, transparent 75%, #ff9379 75%);
+    }
 }
 
 header {
