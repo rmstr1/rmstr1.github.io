@@ -133,6 +133,16 @@ section {
     color: #ffffff;
     font-weight: 500;
 
+    padding-left: 0;
+    padding-right: 0;
+
+    h2 {
+        max-width: calc(var(--base-width) + 4rem);
+        padding-left: 2rem;
+        padding-right: 2rem;
+        border: none;
+    }
+
     /*scroll-margin: 2.5rem;
     padding: 5rem 2rem;
 
@@ -143,8 +153,8 @@ section {
 }
 
 .game-card {
+    margin: 1.5rem auto;
     display: grid;
-    margin: 2.5rem auto;
     height: auto;
     width: 100%;
     grid-template: "img content" 1fr / 3fr 2fr;
@@ -183,10 +193,19 @@ section {
     }
 
     @media (max-width: 48rem) {
+        margin: 0 auto;
         grid-template: "img" 1fr "content" auto / 1fr;
 
         img {
             aspect-ratio: 4/3;
+        }
+
+        &:nth-of-type(even) {
+            grid-template: "img" 1fr "content" auto / 1fr;
+
+            img {
+                aspect-ratio: 4/3;
+            }
         }
     }
 }
