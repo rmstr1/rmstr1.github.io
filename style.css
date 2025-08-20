@@ -421,7 +421,7 @@ footer {
 }
 
 .card-text-only {
-    margin: 2rem 0;
+    margin: 3rem 0;
     padding: 2rem;
     width: 100%;
     max-width: calc(var(--base-width) / 2.0);
@@ -442,6 +442,8 @@ footer {
 
     @media (max-width: 48rem) {
         max-width: 100%;
+        border: none;
+        outline: 2.5rem solid #ff5c5c;
     }
 
     .card-text {
