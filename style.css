@@ -424,16 +424,12 @@ footer {
     margin: 2rem 0;
     padding: 2rem;
     width: 100%;
-    max-width: calc(var(--base-width) / 2.0 - 2.0rem);
+    max-width: calc(var(--base-width) / 2.0);
     min-height: calc(var(--base-width) / 2.0 * 0.5);
-
-    @media (max-width: 48rem) {
-        max-width: 100%;
-    }
 
     display: grid;
     grid-template: "t" 1fr
-    "cta" auto / 1fr;
+        "cta" auto / 1fr;
     align-items: start;
 
     overflow: hidden;
@@ -441,7 +437,12 @@ footer {
     background: none;
     color: #ffffff;
 
-    border: 1px solid #ffffff66;
+    /*border: 1px solid #ffffff66;*/
+    border: 2.5rem solid #ff5c5c;
+
+    @media (max-width: 48rem) {
+        max-width: 100%;
+    }
 
     .card-text {
         grid-area: t;
