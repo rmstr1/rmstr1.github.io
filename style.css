@@ -401,10 +401,23 @@ footer {
     background-color: #fafafa;
     color: #222222;
 
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 0.5em;
+
     &:hover {
         background: none;
         border: 1px solid var(--accent-color);
         color: var(--accent-color);
+    }
+
+    &::before {
+        content: none;
+    }
+
+    &::after {
+        content: "→";
     }
 }
 
