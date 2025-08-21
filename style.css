@@ -7,7 +7,7 @@
     --border-color: #22222234;
     --border: 1px solid var(--border-color);
 
-    --base-width: 66rem;
+    --base-width: 65rem;
 }
 
 *,
@@ -89,7 +89,6 @@ a {
 
     .hero-container {
         container-type: inline-size;
-        width: 100%;
     }
 
     h1 {
@@ -105,7 +104,8 @@ section {
     width: 100%;
 
     &>* {
-        max-width: var(--base-width);
+        /* for better middle-screen size padding. */
+        width: clamp(0rem, 90%, var(--base-width));
         margin: 0 auto;
     }
 
