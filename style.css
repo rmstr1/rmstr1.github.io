@@ -1,12 +1,9 @@
 :root {
-    /*--bg-color: #ffd561;*/
-    /*--bg-color: #ff746a;*/
     --text-color: #222222;
     --bg-color: #fafafa;
     --accent-color: #ec0047;
     --border-color: #22222234;
     --border: 1px solid var(--border-color);
-
     --base-width: 65rem;
 }
 
@@ -132,6 +129,18 @@ section {
     background-color: #353535;
     color: #ffffff;
     font-weight: 500;
+
+    padding: 0 2rem;
+
+    @media (max-width: 48rem) {
+        &>* {
+            width: clamp(0rem, 100%, var(--base-width));
+            margin: 0 auto;
+        }
+
+        padding: 0;
+        scroll-margin: 6rem;
+    }
 
     h2 {
         border-bottom: 1px solid #ffffff22;
@@ -356,13 +365,13 @@ footer {
 }
 
 .card-3 {
-    margin: 3rem 0;
+    margin: 0 0;
     width: 100%;
     min-height: calc(var(--base-width) / 2.0);
 
     display: grid;
     grid-template: "t i" auto / 1fr 1fr;
-    align-items: center;
+    align-items: start;
 
     overflow: hidden;
 
@@ -399,11 +408,13 @@ footer {
     }
 
     .card-text {
+        margin: 0 auto;
         grid-area: t;
-        padding: 2rem 2rem 2rem 0;
+        padding: 3rem 2rem 3rem 0;
 
         @media (max-width: 48rem) {
-            padding: 2rem 0;
+            width: clamp(0rem, 90%, var(--base-width));
+            padding: 2rem;
         }
     }
 }
