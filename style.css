@@ -136,72 +136,6 @@ section {
     h2 {
         border-bottom: 1px solid #ffffff22;
     }
-
-    /*scroll-margin: 2.5rem;
-    padding: 5rem 2rem;
-
-    @media (max-width: 48rem) {
-        scroll-margin: 4rem;
-        padding: 4rem 2rem;
-    }*/
-}
-
-.game-card {
-    margin: 1.5rem auto;
-    display: grid;
-    height: auto;
-    width: 100%;
-    grid-template: "img content" 1fr / 3fr 2fr;
-    align-items: center;
-    overflow: hidden;
-
-    background: #222222;
-    color: #ffffff;
-    font-weight: 500;
-
-    &:nth-of-type(even) {
-        grid-template: "content img" 1fr / 2fr 3fr;
-
-        @media (max-width: 48rem) {
-            grid-template: "img" 1fr "content" auto / 1fr;
-
-            img {
-                aspect-ratio: 4/3;
-            }
-        }
-    }
-
-    img {
-        grid-area: img;
-        display: block;
-        width: 100%;
-        aspect-ratio: 1/1;
-        object-fit: cover;
-    }
-
-    .card-content {
-        grid-area: content;
-        width: 100%;
-        height: auto;
-        padding: 2.5rem;
-    }
-
-    @media (max-width: 48rem) {
-        margin: 0 auto;
-        grid-template: "img" 1fr "content" auto / 1fr;
-
-        img {
-            aspect-ratio: 4/3;
-        }
-
-        &:nth-of-type(even) {
-            grid-template: "img" 1fr "content" auto / 1fr;
-
-            img {
-                aspect-ratio: 4/3;
-            }
-        }
-    }
 }
 
 #tools {
@@ -424,11 +358,10 @@ footer {
 .card-3 {
     margin: 3rem 0;
     width: 100%;
-    max-width: calc(var(--base-width));
-    min-height: 24rem;
+    min-height: calc(var(--base-width) / 2.0);
 
     display: grid;
-    grid-template: "i t" auto / 2fr 1fr;
+    grid-template: "t i" auto / 1fr 1fr;
     align-items: center;
 
     overflow: hidden;
@@ -467,7 +400,7 @@ footer {
 
     .card-text {
         grid-area: t;
-        padding: 2rem;
+        padding: 2rem 2rem 2rem 0;
 
         @media (max-width: 48rem) {
             padding: 2rem 0;
