@@ -3,144 +3,16 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/fonts.css">
+    <link rel="stylesheet" href="./style-editors-simple.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="CSS Discrete Gradient Generator">
-    <title>CSS Discrete Gradient Generator</title>
-    <style>
-        @font-face {
-            font-family: 'Source Code Pro';
-            font-style: normal;
-            font-weight: 400;
-            src: url('./fonts/SourceCodePro-Regular.ttf.woff2') format('woff2');
-        }
-
-        @font-face {
-            font-family: 'Source Sans 3';
-            font-style: normal;
-            font-weight: 600;
-            src: url('./fonts/SourceSans3-Semibold.ttf.woff2') format('woff2');
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-
-        html {
-            margin: 0;
-            height: 100%;
-        }
-
-        body {
-            margin: 0;
-            background-color: #252528;
-            color: #ffffff;
-            font-family: "Source Sans 3", sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-items: center;
-            line-height: 1.8;
-        }
-
-        textarea,
-        input,
-        select {
-            padding: 0.25rem 0.5rem;
-            font-family: "Source Code Pro", monospace;
-            font-size: 1rem;
-            font-weight: 400;
-            border: none;
-            border-radius: 0.5rem;
-            background-color: #1a1b1c;
-            color: #ffffff;
-            box-shadow: inset 0.1875rem 0.1875rem rgba(0, 0, 0, 0.231);
-        }
-
-        input[type=color] {
-            all: unset;
-            box-sizing: border-box;
-            display: inline-block;
-            width: 2rem;
-            height: 2rem;
-            margin: 0;
-            padding: 0;
-            border: 0.25rem solid #1a1b1c;
-            border-radius: 1rem;
-
-            cursor: pointer;
-
-            &:hover {
-                border: 0.25rem solid #636363;
-            }
-
-            &::-webkit-color-swatch-wrapper {
-                padding: 0;
-            }
-
-            &::-moz-color-swatch {
-                border: none;
-            }
-
-            &::-webkit-color-swatch {
-                border: none;
-            }
-        }
-
-        input[type=checkbox] {
-            height: 1.25rem;
-            width: 1.25rem;
-        }
-
-        textarea {
-            width: 100%;
-            resize: none;
-        }
-
-        .group {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .container {
-            margin: 0 auto;
-            padding: 3rem;
-            width: calc(100% - 4rem);
-            border-radius: 2rem;
-            max-width: 30rem;
-            height: fit-content;
-            background: #252528;
-            box-shadow: 0px 3rem 6rem -1rem rgba(0, 0, 0, 0.123), 0px 2rem 4rem -2rem rgba(0, 0, 0, 0.3);
-        }
-
-        hr {
-            all: unset;
-            box-sizing: border-box;
-            display: block;
-            margin: 0.5rem 0;
-            padding: 0;
-            width: 100%;
-            height: 1px;
-            color: #44484b;
-            background-color: #44484b;
-        }
-    </style>
+    <meta name="description" content="Ambient Light Extraction">
+    <title>Ambient Light Extraction</title>
 </head>
 
 <body>
     <div class="container">
-        Extract ambient light color from lit and shadow colors
+        <h1>Extract ambient light color from lit and shadow colors</h1>
         Colors (sRGB):<br>
         <div class="group">
             lit:
