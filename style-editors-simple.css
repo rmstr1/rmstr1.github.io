@@ -41,6 +41,7 @@ hr {
 }
 
 label {
+    width: fit-content;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
