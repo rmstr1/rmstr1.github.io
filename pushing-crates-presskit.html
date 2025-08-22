@@ -68,7 +68,8 @@
         header {
             margin: 3.5rem auto;
             padding: 0 2rem;
-            width: clamp(0rem, 90%, var(--base-width));
+            width: 100%;
+            max-width: var(--base-width);
         }
 
         hgroup p {
@@ -95,7 +96,8 @@
         .container {
             margin: 0 auto;
             padding: 0 3.5rem 0 2rem;
-            width: clamp(0rem, 90%, var(--base-width));
+            width: 100%;
+            max-width: var(--base-width);
 
             display: grid;
             grid-template:
@@ -118,16 +120,12 @@
             &>.sidebar {
                 grid-area: s;
             }
-
-            section {
-                width: 100%;
-                max-width: var(--base-width);
-            }
         }
 
         section {
             margin: 2.5rem auto;
-            width: clamp(0rem, 90%, var(--base-width));
+            width: 100%;
+            max-width: var(--base-width);
         }
 
         #fact-sheet {

@@ -81,13 +81,12 @@ section {
     width: 100%;
 
     &>* {
-        /* for better middle-screen size padding. */
-        width: clamp(0rem, 90%, var(--base-width));
+        width: 100%;
+        max-width: var(--base-width);
         margin: 0 auto;
     }
 
     @media (max-width: 48rem) {
-        padding: 2rem 2rem;
         scroll-margin: 6rem;
     }
 
@@ -124,7 +123,6 @@ section {
 }
 
 #about {
-    /*background-color: #eeeeee;*/
     background:
         radial-gradient(circle at 114% 40% in oklab, #eeeeee 0, transparent 40%),
         radial-gradient(circle at 60% 110% in oklab, #fbff0015 0, transparent 33%),
