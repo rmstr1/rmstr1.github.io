@@ -118,12 +118,16 @@
             &>.sidebar {
                 grid-area: s;
             }
+
+            section {
+                width: 100%;
+                max-width: var(--base-width);
+            }
         }
 
         section {
             margin: 2.5rem auto;
-            width: 100%;
-            max-width: var(--base-width);
+            width: clamp(0rem, 90%, var(--base-width));
         }
 
         #fact-sheet {
