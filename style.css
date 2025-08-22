@@ -135,9 +135,9 @@ section {
 
     width: 100%;
     display: grid;
-    grid-template: "c _ i" auto / auto 1fr auto;
+    grid-template: "i c" auto / auto 1fr;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 
     img {
         grid-area: i;
