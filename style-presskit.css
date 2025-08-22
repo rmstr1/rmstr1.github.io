@@ -53,6 +53,9 @@ nav {
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: start;
+
+    text-transform: uppercase;
+    letter-spacing: 0.035em;
 }
 
 header {
