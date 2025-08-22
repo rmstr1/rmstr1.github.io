@@ -9,11 +9,12 @@
     <title>Pushing Crates Presskit</title>
     <style>
         :root {
-            --base-width: 52rem;
+            --base-width: 56rem;
             --accent-color: #ec0047;
             --bg-color: #fafafa;
             --text-color: #222222;
             --border-color: #22222234;
+            --border: 1px solid var(--border-color);
         }
 
         *,
@@ -25,10 +26,33 @@
         }
 
         body {
+            width: 100%;
             font: 400 1rem/1.75 'Source Sans 3', sans-serif;
             letter-spacing: 0;
-            background: var(--bg-color);
             color: var(--text-color);
+            background: var(--bg-color);
+        }
+
+        h1 {
+            font: 400 4rem/1.2 'Mozilla Headline', sans-serif;
+            letter-spacing: 0;
+        }
+
+        h2 {
+            margin: 0 auto 1rem;
+            font: 400 2.25rem/1.5 'Mozilla Headline', sans-serif;
+            letter-spacing: 0;
+            border-bottom: var(--border);
+        }
+
+        h3 {
+            margin: 0 auto;
+            letter-spacing: 0;
+            font: 400 1.5rem/1.5 'Mozilla Headline', sans-serif;
+        }
+
+        p {
+            margin-bottom: 1rem;
         }
 
         nav {
@@ -44,8 +68,13 @@
         header {
             margin: 3.5rem auto;
             padding: 0 2rem;
-            width: 100%;
-            max-width: var(--base-width);
+            width: clamp(0rem, 90%, var(--base-width));
+        }
+
+        hgroup p {
+            font: inherit;
+            font-size: 1.25rem;
+            letter-spacing: 0.025em;
         }
 
         a {
@@ -66,12 +95,11 @@
         .container {
             margin: 0 auto;
             padding: 0 3.5rem 0 2rem;
-            width: 100%;
-            max-width: var(--base-width);
+            width: clamp(0rem, 90%, var(--base-width));
 
             display: grid;
             grid-template:
-                "c s" auto / 1fr 14rem;
+                "c s" auto / 1fr 16rem;
 
             gap: 4rem;
 
@@ -99,14 +127,21 @@
         }
 
         #fact-sheet {
-            margin: 2.5rem auto;
-            width: 100%;
+            margin: 0.5rem auto 2.5rem;
+            margin-left: -2rem;
+            width: calc(100% + 4rem);
+            padding: 2rem;
 
-            background: #eaeaea;
-            outline: 2rem solid #eaeaea;
+            background:
+                radial-gradient(circle at 114% 40% in oklab, #eeeeee 0, transparent 40%),
+                radial-gradient(circle at 60% 110% in oklab, #fbff0015 0, transparent 33%),
+                radial-gradient(circle at 40% 10% in oklab, #1eff0011 0, transparent 75%),
+                linear-gradient(-22deg in oklab, #00eeff30 0, #00ff5500);
 
             @media (width < 48rem) {
                 margin: 0 auto;
+                margin-left: -2rem;
+                width: 100% + 4rem;
             }
         }
 
@@ -115,44 +150,9 @@
             padding: 0 1.5rem;
         }
 
-
         #screenshots {
             margin: 2.5rem auto 2.5rem;
             padding: 0 1.5rem;
-        }
-
-        hgroup p {
-            font: inherit;
-            font-size: 1.25rem;
-            letter-spacing: 0.025em;
-        }
-
-        h1 {
-            margin: 1.5rem auto;
-            font: 400 4rem/1.2 'Mozilla Headline', sans-serif;
-            letter-spacing: 0;
-
-            letter-spacing: 0.025em;
-        }
-
-        h2 {
-            margin: 0 auto 1rem;
-            font: 400 2rem/1.75 'Mozilla Headline', sans-serif;
-            letter-spacing: 0;
-
-            letter-spacing: 0.025em;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        h3 {
-            font: inherit;
-            font-weight: 600;
-            letter-spacing: 0.025em;
-        }
-
-        p {
-            margin: 0 auto;
-            margin-bottom: 1rem;
         }
 
         ul {
