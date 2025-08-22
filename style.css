@@ -133,33 +133,25 @@ section {
 }
 
 .card {
-    margin: 1rem auto;
+    margin: 1.5rem auto;
 
     width: 100%;
     display: grid;
     grid-template: "c _ i" auto / auto 1fr auto;
     align-items: center;
-    gap: 0.5rem 1rem;
-
-    @media (max-width: 48rem) {
-        grid-template: "i" auto
-            "c" auto / 1fr;
-
-        img {
-            width: 100%;
-        }
-    }
+    gap: 1rem;
 
     img {
         grid-area: i;
-        width: 6rem;
-        height: 6rem;
+        width: 8rem;
+        height: 8rem;
         object-fit: cover;
         object-position: center;
+        border-radius: 1rem;
 
         @media (max-width: 48rem) {
-            height: 6rem;
-            width: 100%;
+            width: 8rem;
+            height: 8rem;
         }
     }
 
