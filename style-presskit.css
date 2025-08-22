@@ -63,9 +63,17 @@ header {
     padding: 0 2rem;
     width: 100%;
     max-width: var(--base-width);
+
+    img {
+        margin: 1rem auto;
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
 }
 
 hgroup p {
+    margin: 1rem auto;
     font: inherit;
     font-size: 1.25rem;
     letter-spacing: 0.025em;
