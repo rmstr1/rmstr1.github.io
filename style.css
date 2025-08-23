@@ -280,3 +280,29 @@ footer {
         font-style: normal;
     }
 }
+
+.socials {
+    margin: 1.5rem auto;
+    width: fit-content;
+
+    a {
+        padding: 0.25rem;
+        font-size: 1.25rem;
+        text-decoration: none;
+    }
+}
+
+.social-link {
+    width: fit-content;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    padding: 0;
+
+    gap: 0.25rem;
+
+    &::before {
+        content: none;
+    }
+}
