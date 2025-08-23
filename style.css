@@ -15,6 +15,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     width: 100%;
     font: 400 1rem/1.75 'Source Sans 3', sans-serif;
