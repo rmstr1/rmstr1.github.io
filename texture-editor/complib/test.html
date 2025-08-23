@@ -110,6 +110,8 @@
     <ed-node-pin></ed-node-pin>
     <br>
     <ed-node-pin></ed-node-pin>
+    <ed-file></ed-file>
+    <ed-color></ed-color>
 
     <script type="module">
         const load_html_fragment = async (path) => {
@@ -148,6 +150,7 @@
             load_html_fragment("./ed-node.html"),
             load_html_fragment("./ed-node-pin.html"),
             load_html_fragment("./ed-node-cable.html"),
+            load_html_fragment("./ed-file.html"),
         ]);
         globalThis.document.body.append(...complib_fragments);
     </script>
