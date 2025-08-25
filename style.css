@@ -106,12 +106,8 @@ section {
 }
 
 .hero-container {
-    margin: 6rem auto 0;
+    margin: 9rem auto 1rem;
     container-type: inline-size;
-
-    @media (max-width: 48rem) {
-        margin: 8rem auto 1rem;
-    }
 }
 
 #about {
