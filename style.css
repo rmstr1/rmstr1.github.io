@@ -123,6 +123,18 @@ section {
         linear-gradient(-22deg in oklab, #00eeff30 0, #00ff5500);
 }
 
+.img-link {
+    padding: 0;
+
+    &::before {
+        content: none;
+    }
+
+    &:hover {
+        filter: brightness(0.75);
+    }
+}
+
 .card {
     margin: 1.5rem auto;
 
@@ -131,6 +143,12 @@ section {
     grid-template: "i c" auto / auto 1fr;
     align-items: center;
     gap: 1.5rem;
+
+    .img-link {
+        grid-area: i;
+        width: 8rem;
+        height: 8rem;
+    }
 
     img {
         grid-area: i;
