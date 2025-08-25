@@ -33,14 +33,13 @@ h1 {
 }
 
 h2 {
-    margin: 0 auto 1rem;
+    margin-bottom: 1rem;
     font: 400 2.25rem/1.5 'Mozilla Headline', sans-serif;
     letter-spacing: 0;
     border-bottom: var(--border);
 }
 
 h3 {
-    margin: 0 auto;
     letter-spacing: 0;
     font: 400 1.5rem/1.5 'Mozilla Headline', sans-serif;
 }
