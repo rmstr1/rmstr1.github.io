@@ -99,6 +99,17 @@ section {
     }
 }
 
+/*
+#hero {
+    background: radial-gradient(circle at 36% 30%,
+            #ff000030 12rem,
+            transparent 12rem),
+        radial-gradient(circle at calc(36% + 1rem) 30%,
+            #ffee004b 6rem,
+            transparent 14rem);
+}
+*/
+
 .tags {
     width: fit-content;
     opacity: 0.5;
