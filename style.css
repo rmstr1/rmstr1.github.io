@@ -126,6 +126,7 @@ section {
     container-type: inline-size;
 
     @media (max-width: 48rem) {
+        margin: 2.5rem auto;
         padding-top: 6.25rem;
     }
 }
