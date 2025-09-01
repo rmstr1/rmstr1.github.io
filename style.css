@@ -28,7 +28,7 @@ body {
 }
 
 h1 {
-    font: 400 calc(min(16cqw, 5rem))/1.2 'Mozilla Headline', sans-serif;
+    font: 400 calc(clamp(3rem, 16cqw, 5rem))/1.2 'Mozilla Headline', sans-serif;
     letter-spacing: 0;
 }
 
@@ -121,8 +121,13 @@ section {
 }
 
 .hero-container {
-    margin: 9rem auto 1rem;
+    margin: 4.5rem auto;
+    padding-top: 4.5rem;
     container-type: inline-size;
+
+    @media (max-width: 48rem) {
+        padding-top: 6.25rem;
+    }
 }
 
 #about {
