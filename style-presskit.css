@@ -36,9 +36,8 @@ h2 {
 }
 
 h3 {
-    margin: 0 auto;
-    letter-spacing: 0;
-    font: 400 1.5rem/1.5 'Mozilla Headline', sans-serif;
+    letter-spacing: 0.0125em;
+    font: 500 1.25rem/1.5 'Mozilla Headline', sans-serif;
 }
 
 p {

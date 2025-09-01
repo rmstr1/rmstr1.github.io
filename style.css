@@ -40,8 +40,8 @@ h2 {
 }
 
 h3 {
-    letter-spacing: 0;
-    font: 400 1.5rem/1.5 'Mozilla Headline', sans-serif;
+    letter-spacing: 0.0125em;
+    font: 500 1.25rem/1.5 'Mozilla Headline', sans-serif;
 }
 
 p {
@@ -99,16 +99,21 @@ section {
     }
 }
 
-/*
 #hero {
-    background: radial-gradient(circle at 36% 30%,
-            #ff000030 12rem,
-            transparent 12rem),
-        radial-gradient(circle at calc(36% + 1rem) 30%,
-            #ffee004b 6rem,
-            transparent 14rem);
+    background: #10004b;
+    background:
+        radial-gradient(circle at 114% 40% in oklab, #464646a2 0, transparent 40%),
+        radial-gradient(circle at 60% 110% in oklab, #00ff8848 0, transparent 90%),
+        radial-gradient(circle at 40% 10% in oklab, #88ff0028 0, transparent 75%),
+        linear-gradient(-22deg in oklab, #10004b 0, #6f00ff);
+
+    color: #ff9784;
+
+    hr {
+        color: #ff978434;
+        background-color: #ff978434;
+    }
 }
-*/
 
 .tags {
     width: fit-content;
@@ -176,9 +181,9 @@ section {
 }
 
 header {
-    --header-bg-color: var(--bg-color);
-    --header-font-color: var(--text-color);
-    --header-border-color: var(--border-color);
+    --header-bg-color: var(--text-color);
+    --header-font-color: #ffffff;
+    --header-border-color: transparent;
     --hover-color: var(--accent-color);
 
     position: fixed;
