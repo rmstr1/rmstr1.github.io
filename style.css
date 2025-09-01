@@ -183,7 +183,7 @@ section {
 header {
     --header-bg-color: var(--text-color);
     --header-font-color: #ffffff;
-    --header-border-color: transparent;
+    --header-border-color: #ffffff34;
     --hover-color: var(--accent-color);
 
     position: fixed;
