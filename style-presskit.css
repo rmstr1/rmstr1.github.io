@@ -37,7 +37,7 @@ h2 {
 
 h3 {
     letter-spacing: 0.0125em;
-    font: 500 1.25rem/1.5 'Mozilla Headline', sans-serif;
+    font: 600 1rem/1.75 'Source Sans 3', sans-serif;
 }
 
 p {
@@ -45,7 +45,6 @@ p {
 }
 
 nav {
-    /*font: 400 1.125rem/1.75 'Source Sans 3', sans-serif;*/
     margin: 3.5rem auto;
     width: 100%;
     display: flex;
