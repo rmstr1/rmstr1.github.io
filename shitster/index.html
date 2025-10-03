@@ -280,7 +280,7 @@
             }
 
             const start_with_device = async (device) => {
-                deviceLabel.innerHTML = device.name;
+                deviceLabel.textContent = device.name;
 
                 let playlistUrl = new URL(playlistInput.value);
                 const playlistId = playlistUrl.pathname.split('/').at(-1);
@@ -292,7 +292,7 @@
                 }
 
                 const trackCount = Number(playlist.tracks.total);
-                trackCounter.innerHTML = `1 / ${trackCount}`;
+                trackCounter.textContent = `1 / ${trackCount}`;
 
                 let position = 0;
                 let offsets = Array.from({ length: trackCount }, (_, index) => index + 1);
@@ -321,9 +321,9 @@
                     const response = await getCurrentSong(accessToken);
                     const track = response.item;
 
-                    artist.innerHTML = track.artists.map((artist) => artist.name).join(', ');
-                    title.innerHTML = track.name;
-                    release_date.innerHTML = track.album.release_date;
+                    artist.textContent = track.artists.map((artist) => artist.name).join(', ');
+                    title.textContent = track.name;
+                    release_date.textContent = track.album.release_date;
 
                     card.setAttribute("flipped", true)
                     if (position < offsets.length - 1) {
@@ -333,7 +333,7 @@
 
                 const nextSong = async () => {
                     position += 1;
-                    trackCounter.innerHTML = `${position + 1} / ${offsets.length}`;
+                    trackCounter.textContent = `${position + 1} / ${offsets.length}`;
                     nextBtn.disabled = true;
                     card.setAttribute("flipped", false)
                     //await wakeUp(device.id, accessToken);
