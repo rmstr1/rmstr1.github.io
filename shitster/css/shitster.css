@@ -118,6 +118,7 @@ body {
         letter-spacing: 0.125em;
 
         user-select: none;
+        -webkit-user-select: none;
         cursor: pointer;
     }
 
@@ -180,6 +181,7 @@ button {
     box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
 
     user-select: none;
+    -webkit-user-select: none;
     cursor: pointer;
 
     transition: all 0.2s;
@@ -276,6 +278,8 @@ summary {
     height: 3rem;
 
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
 
     [open] & {
         color: #ffffff;
