@@ -78,11 +78,11 @@ body {
     text-align: center;
     letter-spacing: 0.05em;
 
-    &[flipped="true"] .back {
+    &[flipped="true"] .front {
         transform: rotateY(0deg);
     }
 
-    &[flipped="true"] .front {
+    &[flipped="true"] .back {
         transform: rotateY(180deg);
     }
 
@@ -93,19 +93,19 @@ body {
         padding: 5%;
         border-radius: 2rem;
         box-shadow: 0.25rem 1rem 3rem -1rem rgba(0, 0, 0, 1);
+        transition: transform 0.6s;
+        backface-visibility: hidden;
     }
 
     .back {
         color: #ffffff;
-
-        transition: transform 0.6s;
-        backface-visibility: hidden;
 
         /*border: 0.125rem solid #ffffff;*/
 
         /*background: #222222;*/
         background:
             linear-gradient(145deg in oklab, #000000 0%, #333333 100%);
+        transform-style: preserve-3d;
 
         display: flex;
         flex-direction: column;
@@ -132,9 +132,7 @@ body {
 
         background: #ffffff;
 
-        transition: transform 0.6s;
         transform-style: preserve-3d;
-        backface-visibility: hidden;
 
         h2 {
             margin: 0.75em 0;
