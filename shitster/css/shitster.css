@@ -39,11 +39,11 @@ body {
     color: #222222;
 
     background:
-        radial-gradient(circle at 10% 60% in oklab, #d6d6d6 0, transparent 25%),
-        radial-gradient(circle at 85% 40% in oklab, #d6d6d6 0, transparent 25%),
+        radial-gradient(circle at 10% 60% in oklab, #c9c9c988 0, transparent 45%),
+        radial-gradient(circle at 85% 40% in oklab, #d8d8d888 0, transparent 45%),
         radial-gradient(circle at 60% 110% in oklab, #00ff73ce 0, transparent 33%),
-        radial-gradient(circle at 40% 10% in oklab, #33ff0065 0, transparent 75%),
-        radial-gradient(circle at 66% 90% in oklab, #00ffea 0, #90c0b4 75%);
+        radial-gradient(circle at 40% 10% in oklab, #ffe555cb 0, transparent 75%),
+        radial-gradient(circle at 66% 90% in oklab, #00ffea 0, #00745c 75%);
 }
 
 .container {
@@ -86,21 +86,26 @@ body {
         transform: rotateY(180deg);
     }
 
-    .front {
+    .face {
         position: absolute;
-
         width: 100%;
         aspect-ratio: 1.0;
         padding: 5%;
+        border-radius: 2rem;
+        box-shadow: 0.25rem 1rem 3rem -1rem rgba(0, 0, 0, 1);
+    }
 
-        background: #222222;
+    .back {
         color: #ffffff;
 
         transition: transform 0.6s;
         backface-visibility: hidden;
 
-        border: 1cqw solid #ffffff;
-        border-radius: 2rem;
+        /*border: 0.125rem solid #ffffff;*/
+
+        /*background: #222222;*/
+        background:
+            linear-gradient(145deg in oklab, #000000 0%, #333333 100%);
 
         display: flex;
         flex-direction: column;
@@ -112,23 +117,12 @@ body {
         font-weight: 400;
         letter-spacing: 0.125em;
 
-        box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
-
         user-select: none;
         cursor: pointer;
     }
 
-    .back {
-        position: absolute;
-
-        width: 100%;
-        aspect-ratio: 1.0;
-
+    .front {
         transform: rotateY(180deg);
-
-        padding: 5%;
-
-        border-radius: 2rem;
 
         display: flex;
         flex-direction: column;
@@ -141,8 +135,6 @@ body {
         transition: transform 0.6s;
         transform-style: preserve-3d;
         backface-visibility: hidden;
-
-        box-shadow: 4px 8px 20px -5px rgba(0, 0, 0, 0.33);
 
         h2 {
             margin: 0.75em 0;
@@ -245,5 +237,46 @@ dialog {
             border-radius: 1.0rem;
             width: 100%;
         }
+    }
+}
+
+header {
+    position: fixed;
+    padding: 1rem;
+    width: 100%;
+    z-index: 10;
+}
+
+nav {
+    button {
+        display: block;
+        margin: 0.5rem;
+    }
+}
+
+summary {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+
+    &:hover {
+        color: #ffffff;
+    }
+
+    &::marker {
+        content: "";
+    }
+
+    &::after {
+        width: 3rem;
+        height: 3rem;
+        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='100%' viewBox='0 -960 960 960' width='100%' fill='currentColor'%3E%3Cpath d='M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z'/%3E%3C/svg%3E");
+    }
+
+    [open] &::after {
+        width: 3rem;
+        height: 3rem;
+        ;
+        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='100%' viewBox='0 -960 960 960' width='100%' fill='currentColor'%3E%3Cpath d='m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z'/%3E%3C/svg%3E");
     }
 }
