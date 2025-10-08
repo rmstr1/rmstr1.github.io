@@ -6,4 +6,5 @@
     if they threw their hitster card they dont get the song. TODO: remove duplicate songs?
     text: It's your turn, <name>!
     Add checkbox for playing next to player - use songs from playlist even if not playing.
+- too few songs remaining: add a playist to continue playing - modal dialog
 - support the dev by buying one of my games on steam!
