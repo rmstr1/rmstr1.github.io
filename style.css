@@ -162,26 +162,28 @@ section {
 
 .card {
     margin: 1.5rem auto;
+    container-type: inline-size;
 
     width: 100%;
     display: grid;
-    grid-template: "i c" auto / auto 1fr;
+    grid-template: "c i" auto / 1fr auto;
     align-items: start;
     gap: 1.5rem;
 
     .img-link {
         grid-area: i;
-        width: 8rem;
-        height: 8rem;
+        width: 12rem;
+        max-width: calc(50cqw - 1.5rem / 2);
+        aspect-ratio: 1;
     }
 
     img {
         grid-area: i;
-        width: 8rem;
-        height: 8rem;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         object-position: center;
-        border-radius: 1rem;
+        border-radius: 1.5rem;
     }
 
     .card-content {
