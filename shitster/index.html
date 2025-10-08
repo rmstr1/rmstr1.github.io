@@ -14,9 +14,12 @@
         <details>
             <summary></summary>
             <nav>
+                <button>Restart</button>
                 <button>New Game</button>
+                <button>Change Players / Playlists</button>
                 <button>Save Game</button>
                 <button>Log Out</button>
+                <button>Play my other Games!</button>
             </nav>
         </details>
     </header>
@@ -268,7 +271,7 @@
             const nextBtn = document.querySelector('#next-button');
             const artist = document.querySelector('#artist');
             const title = document.querySelector('#title');
-            const release_date = document.querySelector('#release-date');
+            const releaseDate = document.querySelector('#release-date');
             const startDialog = document.querySelector('#start-dialog');
             const playlistInput = document.querySelector('#playlist-input');
             const startBtn = document.querySelector('#start');
@@ -333,7 +336,7 @@
 
                     artist.textContent = track.artists.map((artist) => artist.name).join(', ');
                     title.textContent = track.name;
-                    release_date.textContent = track.album.release_date.split("-")[0];
+                    releaseDate.textContent = track.album.releaseDate.split("-")[0];
 
                     card.setAttribute("flipped", true)
                     if (position < offsets.length - 1) {
@@ -348,6 +351,11 @@
                     card.setAttribute("flipped", false)
                     //await wakeUp(device.id, accessToken);
                     let response = await playSong(playlistId, offsets[position], accessToken);
+
+                    artist.textContent = "-";
+                    title.textContent = "-";
+                    releaseDate.textContent = "-";
+
                     card.addEventListener("click", showCard)
                 };
 
