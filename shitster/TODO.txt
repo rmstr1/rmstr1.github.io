@@ -1,0 +1,3 @@
+- change url to seed, playlist , and currently playiong song.
+- clicking oon reveal too fast displays previous song
+- recover form closed player,
