@@ -1,3 +1,6 @@
 - change url to seed, playlist , and currently playiong song.
 - clicking oon reveal too fast displays previous song
 - recover form closed player,
+- Add per-player playlist, dont play songs from this players playlist
+    when its their turn. add players in order of play! (and choose start, reorder...); after reveal; reveal from which player playlist the song is,
+    if they threw their hitster card they dont get the song. TODO: remove duplicate songs?
