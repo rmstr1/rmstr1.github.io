@@ -1,6 +1,26 @@
 <template id="ed-node-pin-template">
-    <div>
-        <ed-icon icon="circle"></ed-icon>
+    <style>
+        /*TODO: ed-node pin does not use shadow dom (so connector xcan be rendered outside of the element), style from outside??*/
+        .ed-node-pin-container {
+            display: inline-flex;
+            vertical-align: baseline;
+
+            width: 2rem;
+            height: 2rem;
+
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--foreground-color-alt-2);
+            }
+        }
+    </style>
+    <div class="ed-node-pin-container">
+        ◯
     </div>
 </template>
 

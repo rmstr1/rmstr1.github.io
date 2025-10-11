@@ -64,6 +64,8 @@
             display: block;
             padding: 0;
 
+            border-radius: 1.5rem;
+
             #caret {
                 display: none;
             }
@@ -75,7 +77,7 @@
 
         :host(.fit[checked=true]) button {
             color: var(--foreground-color-high-contrast);
-            background-color: var(--accent-color);
+            background-color: var(--foreground-color);
         }
 
         :host(.vertical) button {
@@ -127,7 +129,7 @@
 
         :host(.vertical[checked=true]) button {
             color: var(--foreground-color-high-contrast);
-            background-color: var(--accent-color);
+            background-color: var(--foreground-color-alt-2);
 
             &::after {
                 display: block;

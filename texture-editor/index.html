@@ -5,43 +5,44 @@
     <link rel="stylesheet" href="./css/editor.css">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ed">
-    <title>Editor</title>
+    <meta name="description" content="Texture Editor">
+    <title>Texture Editor</title>
 </head>
 
 <body>
     <div class="single-page-container">
-        <div class="navbar" id="navbar-target">
-            <!-- inner html set by model-->
-            <div class="logo">////</div>
-            <ed-dropdown-menu>
-                <button slot="header">File</button>
-                <div class="submenu">
-                    <button id="new" onclick='document.getElementById("new-model-dialog").showModal()'>New</button>
-                    <button onclick="document.getElementById('load-model').click();">Load Model</button>
-                    <hr>
-                    <button id="save-model">Save Model</button>
-                    <button id="export">Export</button>
+        <header id="navbar-target">
+            <div class="logo">LAYRD.ART</div>
+            <nav>
+                <div class="dropdown-menu">
+                    <button slot="header">File</button>
+                    <div class="dropdown-container">
+                        <button id="new" onclick='document.getElementById("new-model-dialog").showModal()'>New</button>
+                        <button onclick="document.getElementById('load-model').click();">Load Model</button>
+                        <hr>
+                        <button id="save-model">Save Model</button>
+                        <button id="export">Export</button>
+                    </div>
                 </div>
-            </ed-dropdown-menu>
-            <ed-dropdown-menu>
-                <button slot="header">Image</button>
-                <div class="submenu">
-                    <button id="resize">Resize Canvas</button>
+                <div class="dropdown-menu">
+                    <button slot="header">Image</button>
+                    <div class="dropdown-container">
+                        <button id="resize">Resize Canvas</button>
+                    </div>
                 </div>
-            </ed-dropdown-menu>
-            <ed-dropdown-menu>
-                <button slot="header">View</button>
-                <div class="submenu">
-                    <button id="reset-view">Reset View</button>
-                    <button id="reset-zoom">Reset Zoom</button>
-                    <button id="center-view">Center View</button>
-                    <hr>
-                    <button id="zoom-in">Zoom +</button>
-                    <button id="zoom-out">Zoom -</button>
+                <div class="dropdown-menu">
+                    <button slot="header">View</button>
+                    <div class="dropdown-container">
+                        <button id="reset-view">Reset View</button>
+                        <button id="reset-zoom">Reset Zoom</button>
+                        <button id="center-view">Center View</button>
+                        <hr>
+                        <button id="zoom-in">Zoom +</button>
+                        <button id="zoom-out">Zoom -</button>
+                    </div>
                 </div>
-            </ed-dropdown-menu>
-        </div>
+            </nav>
+        </header>
         <div class="sidebar">
             <div class="headings">
                 <ed-tab-group id="tab-headings" collapsible="true" value="">
