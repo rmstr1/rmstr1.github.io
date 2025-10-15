@@ -131,6 +131,7 @@
     --foreground-color: #e6e6e6;
     --foreground-color-alt: #d4d4d4;
     --foreground-color-alt-2: #555555;
+    --foreground-color-alt-3: #444444;
     --foreground-color-high-contrast: #ffffff;
     --accent-color: #f34951;
 
@@ -157,7 +158,7 @@
     --button-icon-small-size: 1.25rem;
 
     --shadow-color: rgba(0, 0, 0, 0.231);
-    --ed-shadow-node: 0px 4px 8px -2px rgba(0, 0, 0, 0.33);
+    --shadow-node: 0 0.125rem 0.5rem #00000080;
     --shadow-card: 0px 4px 8px -2px rgba(0, 0, 0, 0.33);
     --shadow-button: 0px 4px 8px -2px rgba(0, 0, 0, 0.33);
     --ed-field-inset-shadow: inset 0.1875rem 0.1875rem rgba(0, 0, 0, 0.231);
@@ -683,6 +684,7 @@ dialog {
 }
 
 #add-node {
+    margin: 0.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -693,7 +695,7 @@ dialog {
 
     border: 0.125rem dashed #555555;
     color: #aaaaaa;
-    height: 6rem;
+    height: 4.5rem;
 
     border-radius: 1.5rem;
 
