@@ -28,7 +28,7 @@ body {
 }
 
 h1 {
-    font: 400 calc(clamp(3rem, 16cqw, 5rem))/1.2 'Mozilla Headline', sans-serif;
+    font: 600 calc(clamp(3rem, 16cqw, 5rem))/1.2 'Mozilla Headline', sans-serif;
 }
 
 h2 {
