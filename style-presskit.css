@@ -24,14 +24,12 @@ body {
 }
 
 h1 {
-    font: 400 4rem/1.2 'Mozilla Headline', sans-serif;
-    letter-spacing: 0;
+    font: 600 5rem 'Mozilla Headline', sans-serif;
 }
 
 h2 {
     margin: 0 auto 1rem;
     font: 400 2.25rem/1.5 'Mozilla Headline', sans-serif;
-    letter-spacing: 0;
     border-bottom: var(--border);
 }
 
