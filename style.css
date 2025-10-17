@@ -31,6 +31,13 @@ h1 {
     font: 600 calc(clamp(3rem, 16cqw, 5rem))/1.2 'Mozilla Headline', sans-serif;
 }
 
+#hero h1 {
+    width: fit-content;
+    padding: 4rem;
+    border-radius: 1.5rem;
+    background-color: #222222;
+}
+
 h2 {
     margin-bottom: 1rem;
     font: 400 2.25rem/1.5 'Mozilla Headline', sans-serif;
