@@ -33,10 +33,10 @@ h1 {
 
 #hero h1 {
     width: fit-content;
-    padding: 4rem;
+    padding: 4.5rem;
     border-radius: 1.5rem;
     background-color: #222222;
-    text-shadow: 0.05em 0.05em #ff00aa59;
+    text-shadow: 0.05em 0.05em #cc00ff44;
 }
 
 h2 {
