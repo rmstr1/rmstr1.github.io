@@ -36,6 +36,7 @@ h1 {
     padding: 4rem;
     border-radius: 1.5rem;
     background-color: #222222;
+    text-shadow: 0.05em 0.05em #ff00aa59;
 }
 
 h2 {
