@@ -1,5 +1,5 @@
 :root {
-    --base-padding: 5rem;
+    --base-padding: 2rem;
     --article-width: calc(60ch + var(--base-padding) * 2);
     --accent-color: #ec0047;
     --bg-color: #fafafa;
@@ -17,31 +17,29 @@
 }
 
 body {
-    font: 400 1.25rem/1.625 'Source Serif 4', serif;
+    font: 400 1rem/1.625 'Source Sans 3', sans-serif;
     background: var(--bg-color);
     color: var(--text-color);
+
+    &>img {
+        margin: 4rem auto 0;
+        width: 100%;
+        height: 40vh;
+        object-fit: cover;
+
+        @media (max-width: 48rem) {
+            margin: 6rem auto 0;
+            height: 35vh;
+        }
+    }
 }
 
 article {
-    margin: 35vh auto;
-    padding: 1rem var(--base-padding);
+    margin: 1rem auto;
+    padding: 0 var(--base-padding);
     width: 100%;
     max-width: var(--article-width);
     background-color: var(--bg-color);
-
-    header {
-        img {
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: -1;
-
-            margin: 1rem auto;
-            width: 100%;
-            height: 60vh;
-            object-fit: cover;
-        }
-    }
 }
 
 header {
@@ -84,28 +82,34 @@ header {
 }
 
 section {
+    scroll-margin: 8rem;
     margin: 2.5rem auto;
+
+    @media (max-width: 48rem) {
+        scroll-margin: 12rem;
+    }
 }
 
 p {
-    margin: 0 0 1.75rem;
+    margin: 0 0 1.0rem;
 }
 
 h1 {
-    margin: 1.5rem auto;
-    font: 400 5rem/1.2 'Mozilla Headline', sans-serif;
+    margin: 1rem auto;
+    font: 400 2.5rem/1.2 'Mozilla Headline', sans-serif;
 }
 
 h2 {
-    margin: 1rem auto;
-    font: 400 2.5rem/1.4 'Mozilla Headline', sans-serif;
+    margin: 0.5rem auto;
+    font: 400 1.75rem/1.4 'Mozilla Headline', sans-serif;
     letter-spacing: 0;
     border-bottom: 1px solid var(--border-color);
 }
 
 h3 {
     letter-spacing: 0.0125em;
-    font: 400 1.125rem/1.625 'Mozilla Headline', sans-serif;
+    font: inherit;
+    font-weight: 600;
 }
 
 blockquote {
@@ -141,6 +145,13 @@ a {
         color: var(--accent-color);
         text-decoration: none;
     }
+}
+
+#fact-sheet {
+    a {
+        word-break: break-word;
+    }
+
 }
 
 video {
@@ -193,11 +204,6 @@ video {
             color: var(--accent-color);
             text-decoration: none;
         }
-
-        &::before {
-            font-family: "Source Sans 3", sans-serif;
-            content: "→\00a0";
-        }
     }
 
 
@@ -242,6 +248,7 @@ video {
 
         nav {
             max-width: 100%;
+            padding: 0 1rem;
             display: flex;
             justify-content: center;
             align-items: stretch;
@@ -253,7 +260,7 @@ video {
             }
 
             a {
-                padding: 2.5rem 1.5rem 1rem;
+                padding: 2.5rem 1rem 1rem;
                 border-left: var(--header-border);
 
                 font: 400 1.0rem/1 'Source Sans 3', sans-serif;
@@ -262,7 +269,7 @@ video {
                 text-align: center;
 
                 @media (max-width: 48rem) {
-                    padding: 1rem 1.5rem 1rem;
+                    padding: 1rem 1rem 1rem;
                 }
             }
         }
