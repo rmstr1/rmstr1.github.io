@@ -4,7 +4,7 @@
     --accent-color: #ec0047;
     --border-color: #22222234;
     --border: 1px solid var(--border-color);
-    --base-width: calc(60ch + 2*2rem);
+    --base-width: calc(66ch + 2*2rem);
 }
 
 *,
@@ -21,20 +21,21 @@ html {
 
 body {
     width: 100%;
-    font: 400 1rem/1.625 'IBM Plex Mono', sans-serif;
+    font: 400 1rem/1.625 'IBM Plex Mono', monospace;
     letter-spacing: -0.025em;
     color: var(--text-color);
     background: var(--bg-color);
 }
 
 h1 {
-    font: 400 2.5rem/1.5 'Mozilla Headline', sans-serif;
+    font: 400 2.5rem/1.5 'Mozilla Headline', serif;
     letter-spacing: 0;
+    text-transform: uppercase;
 }
 
 h2 {
     margin-bottom: 0.5rem;
-    font: 400 1.75rem/1.5 'Mozilla Headline', sans-serif;
+    font: 400 1.75rem/1.5 'Mozilla Headline', serif;
     letter-spacing: 0;
     border-bottom: var(--border);
 }
@@ -70,6 +71,7 @@ section {
     margin: 0 auto;
     padding: 0.5rem 2rem;
     width: 100%;
+    max-width: var(--base-width);
 
     @media (max-width: 48rem) {
         scroll-margin: 6rem;
@@ -77,13 +79,6 @@ section {
 
     &:last-of-type {
         padding-bottom: 8rem;
-    }
-
-    &>* {
-        width: 100%;
-        max-width: var(--base-width);
-        margin-left: auto;
-        margin-right: auto;
     }
 }
 
@@ -175,8 +170,8 @@ header {
                 padding: 2.5rem 1.5rem 1rem;
                 border-left: var(--header-border);
 
-                font: 400 1.0rem/1 'Source Sans 3', sans-serif;
-                letter-spacing: 0.035em;
+                font: 400 1.0rem/1 'IBM Plex Mono', monospace;
+                letter-spacing: 0;
                 text-decoration: none;
                 text-align: center;
 
@@ -235,7 +230,7 @@ footer {
     address {
         display: inline-block;
         font-size: 0.875rem;
-        font-style: normal;
+        font-style: italic;
     }
 }
 

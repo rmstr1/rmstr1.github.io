@@ -90,6 +90,7 @@ p {
 h1 {
     margin: 1rem auto;
     font: 400 2.5rem/1.5 'Mozilla Headline', sans-serif;
+    text-transform: uppercase;
 }
 
 h2 {
