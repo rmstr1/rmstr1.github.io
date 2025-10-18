@@ -4,7 +4,7 @@
     --accent-color: #ec0047;
     --border-color: #22222234;
     --border: 1px solid var(--border-color);
-    --base-width: 52rem;
+    --base-width: calc(80ch + 2*2rem);
 }
 
 *,
@@ -21,40 +21,29 @@ html {
 
 body {
     width: 100%;
-    font: 400 1.125rem/1.625 'Source Sans 3', sans-serif;
-    letter-spacing: 0;
+    font: 400 1rem/1.625 'Source Sans 3', sans-serif;
     color: var(--text-color);
     background: var(--bg-color);
 }
 
 h1 {
-    font: 600 calc(clamp(3rem, 16cqw, 5rem))/1.3 'Mozilla Headline', sans-serif;
-}
+    font: 400 2.5rem/1.5 'Mozilla Headline', sans-serif;
+    letter-spacing: 0;
 
-#hero h1 {
-    width: fit-content;
-    padding: 4.5rem;
-    border-radius: 1.5rem;
-    background-color: #222222;
-    text-shadow: 0.05em 0.05em #cc00ff44;
 }
 
 h2 {
     margin-bottom: 1rem;
-    font: 400 2.25rem/1.5 'Mozilla Headline', sans-serif;
+    font: 400 1.75rem/1.5 'Mozilla Headline', sans-serif;
+    letter-spacing: 0;
     border-bottom: var(--border);
 }
 
 h3 {
     letter-spacing: 0.0125em;
     margin-bottom: 0.5rem;
-    font: 400 1.5rem/1.5 'Mozilla Headline', sans-serif;
-
-    a {
-        &::before {
-            content: none;
-        }
-    }
+    font: inherit;
+    font-weight: 600;
 }
 
 p {
@@ -97,7 +86,7 @@ hr {
 section {
     scroll-margin: 4.5rem;
     margin: 0 auto;
-    padding: 2rem 2rem;
+    padding: 0.5rem 2rem;
     width: 100%;
 
     @media (max-width: 48rem) {
@@ -116,22 +105,6 @@ section {
     }
 }
 
-#hero {
-    background: #10004b;
-    background:
-        radial-gradient(circle at 114% 40% in oklab, #464646a2 0, transparent 40%),
-        radial-gradient(circle at 60% 110% in oklab, #00ff8848 0, transparent 90%),
-        radial-gradient(circle at 40% 10% in oklab, #88ff0028 0, transparent 75%),
-        linear-gradient(-22deg in oklab, #10004b 0, #6f00ff);
-
-    color: #ff9784;
-
-    hr {
-        color: #ff978434;
-        background-color: #ff978434;
-    }
-}
-
 .tags {
     font-size: 0.875rem;
     width: fit-content;
@@ -139,28 +112,14 @@ section {
 }
 
 .hero-container {
-    margin: 4.5rem auto;
-    padding-top: 4.5rem;
+    margin: 2.5rem auto;
+    padding-top: 6.5rem;
     container-type: inline-size;
 
     @media (max-width: 48rem) {
         margin: 2.5rem auto;
-        padding-top: 6.25rem;
+        padding-top: 7.5rem;
     }
-}
-
-#about {
-    /*background:
-        radial-gradient(circle at 114% 40% in oklab, #eeeeee 0, transparent 40%),
-        radial-gradient(circle at 60% 110% in oklab, #fffb0015 0, transparent 33%),
-        radial-gradient(circle at 40% 10% in oklab, #b3ff0011 0, transparent 75%),
-        linear-gradient(-22deg in oklab, #ff000030 0, #6f00ff00);*/
-
-    background:
-        radial-gradient(circle at 114% 40% in oklab, #eeeeee 0, transparent 40%),
-        radial-gradient(circle at 60% 110% in oklab, #fbff0015 0, transparent 33%),
-        radial-gradient(circle at 40% 10% in oklab, #1eff0011 0, transparent 75%),
-        linear-gradient(-22deg in oklab, #00eeff30 0, #00ff5500);
 }
 
 .img-link {
@@ -175,48 +134,11 @@ section {
     }
 }
 
-.card {
-    margin: 1.5rem auto;
-    container-type: inline-size;
-
-    width: 100%;
-    display: grid;
-    grid-template: "c i" auto / 1fr auto;
-    align-items: start;
-    gap: 1.5rem;
-
-    .img-link {
-        grid-area: i;
-        width: 12rem;
-        max-width: calc(50cqw - 1.5rem / 2);
-        aspect-ratio: 1;
-    }
-
-    img {
-        grid-area: i;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        border-radius: 1.5rem;
-    }
-
-    .card-content {
-        grid-area: c;
-
-    }
-
-    p {
-        margin-bottom: 0.5rem;
-    }
-}
-
 header {
-    --header-bg-color: var(--text-color);
-    --header-font-color: #ffffff;
-    --header-border-color: #ffffff34;
-    --header-border: none;
-    /*1px solid var(--header-border-color);*/
+    --header-bg-color: var(--bg-color);
+    --header-font-color: var(--text-color);
+    --header-border-color: var(--border-color);
+    --header-border: 1px solid var(--header-border-color);
     --hover-color: var(--accent-color);
 
     position: fixed;
