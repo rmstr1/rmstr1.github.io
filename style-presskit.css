@@ -1,6 +1,6 @@
 :root {
     --base-padding: 2rem;
-    --article-width: calc(60ch + var(--base-padding) * 2);
+    --article-width: calc(90ch + var(--base-padding) * 2);
     --accent-color: #ec0047;
     --bg-color: #fafafa;
     --text-color: #222222;
@@ -24,12 +24,12 @@ body {
     &>img {
         margin: 4rem auto 0;
         width: 100%;
-        height: 40vh;
+        height: 33vh;
         object-fit: cover;
 
         @media (max-width: 48rem) {
             margin: 6rem auto 0;
-            height: 35vh;
+            height: 28vh;
         }
     }
 }
@@ -71,13 +71,6 @@ header {
                 border: 0.125rem solid var(--accent-color);
             }
         }
-    }
-
-
-    p {
-        margin: 0 calc(var(--base-padding) * -1);
-        padding: 1rem var(--base-padding);
-        background-color: var(--summary-bg-color)
     }
 }
 
@@ -156,6 +149,28 @@ a {
 
 video {
     width: 100%;
+}
+
+.text-content {
+    width: 100%;
+    gap: 2rem;
+
+    display: grid;
+    grid-template: "l r" auto / 15rem 1fr;
+
+    .left {
+        grid-area: "l";
+    }
+
+    .right {
+        grid-area: "r";
+    }
+
+    @media (max-width: 70ch) {
+        grid-template:
+            "l" auto
+            "r" auto / 1fr;
+    }
 }
 
 .gallery {
