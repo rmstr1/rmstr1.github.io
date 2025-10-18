@@ -89,12 +89,12 @@ p {
 
 h1 {
     margin: 1rem auto;
-    font: 400 2.5rem/1.2 'Mozilla Headline', sans-serif;
+    font: 400 2.5rem/1.5 'Mozilla Headline', sans-serif;
 }
 
 h2 {
     margin: 0.5rem auto;
-    font: 400 1.75rem/1.4 'Mozilla Headline', sans-serif;
+    font: 400 1.75rem/1.5 'Mozilla Headline', sans-serif;
     letter-spacing: 0;
     border-bottom: 1px solid var(--border-color);
 }
