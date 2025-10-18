@@ -76,7 +76,7 @@ header {
 
 section {
     scroll-margin: 8rem;
-    margin: 2.5rem auto;
+    margin: 0 auto 2.5rem;
 
     @media (max-width: 48rem) {
         scroll-margin: 12rem;
