@@ -22,6 +22,7 @@ html {
 body {
     width: 100%;
     font: 400 1rem/1.625 'IBM Plex Mono', sans-serif;
+    letter-spacing: -0.025em;
     color: var(--text-color);
     background: var(--bg-color);
 }
