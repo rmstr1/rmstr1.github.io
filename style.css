@@ -21,8 +21,8 @@ html {
 
 body {
     width: 100%;
-    font: 400 1rem/1.625 'IBM Plex Mono', monospace;
-    letter-spacing: -0.025em;
+    font: 400 1rem/1.5 'Source Sans 3', sans-serif;
+    letter-spacing: 0.025em;
     color: var(--text-color);
     background: var(--bg-color);
 }
@@ -42,7 +42,6 @@ h2 {
 
 h3 {
     letter-spacing: 0.0125em;
-    margin-bottom: 0.5rem;
     font: inherit;
     font-weight: 600;
 }

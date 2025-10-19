@@ -17,7 +17,7 @@
 }
 
 body {
-    font: 400 1rem/1.625 'Source Sans 3', sans-serif;
+    font: 400 1rem/1.5 'Source Sans 3', sans-serif;
     background: var(--bg-color);
     color: var(--text-color);
 
@@ -88,16 +88,16 @@ p {
 }
 
 h1 {
-    margin: 1rem auto;
-    font: 400 2.5rem/1.5 'Mozilla Headline', sans-serif;
+    font: 400 2.5rem/1.5 'Mozilla Headline', serif;
+    letter-spacing: 0;
     text-transform: uppercase;
 }
 
 h2 {
-    margin: 0.5rem auto;
-    font: 400 1.75rem/1.5 'Mozilla Headline', sans-serif;
+    margin-bottom: 0.5rem;
+    font: 400 1.75rem/1.5 'Mozilla Headline', serif;
     letter-spacing: 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border);
 }
 
 h3 {
