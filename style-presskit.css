@@ -1,6 +1,6 @@
 :root {
     --base-padding: 2rem;
-    --article-width: calc(90ch + var(--base-padding) * 2);
+    --article-width: calc(90ch + var(--base-padding) *2 + 4rem);
     --accent-color: #ec0047;
     --bg-color: #fafafa;
     --text-color: #222222;
@@ -154,10 +154,10 @@ video {
 
 .text-content {
     width: 100%;
-    gap: 2rem;
+    gap: 4rem;
 
     display: grid;
-    grid-template: "l r" auto / 15rem 1fr;
+    grid-template: "l r" auto / 30ch 1fr;
 
     .left {
         grid-area: "l";
