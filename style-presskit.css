@@ -294,3 +294,66 @@ video {
         }
     }
 }
+
+footer {
+    margin: 8rem auto 0;
+    padding: 6rem 2rem;
+
+    background-color: #222222;
+    color: #ffffff;
+
+    text-align: center;
+
+    font: 400 1.0rem/1.6 'Source Sans 3', sans-serif;
+    letter-spacing: 0.035rem;
+
+    .logo {
+        display: block;
+        padding: 0.25rem 0.5rem;
+        font: 400 1.25rem/1.4 'Source Sans 3', sans-serif;
+        letter-spacing: 0;
+        text-decoration: none;
+        color: inherit;
+
+        &:hover {
+            color: inherit;
+        }
+
+        &::before {
+            content: none;
+        }
+    }
+
+    .socials {
+        margin: 1.5rem auto;
+        width: fit-content;
+
+        a {
+            padding: 0.25rem;
+            font-size: 1.25rem;
+            text-decoration: none;
+        }
+    }
+
+
+    h2 {
+        font: 400 1.0rem/1.6 'Source Sans 3', sans-serif;
+        margin: 2rem auto 1.25rem;
+        border: none;
+    }
+
+    a {
+        color: inherit;
+        font-size: 0.875rem;
+
+        &::before {
+            content: none;
+        }
+    }
+
+    address {
+        display: inline-block;
+        font-size: 0.875rem;
+        font-style: italic;
+    }
+}
