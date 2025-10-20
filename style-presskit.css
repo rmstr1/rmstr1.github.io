@@ -24,15 +24,17 @@ body {
         radial-gradient(circle at 60% 110% in oklab, #ffee0005 0, transparent 33%),
         radial-gradient(circle at 40% 10% in oklab, #ff7b0005 0, transparent 75%),
         linear-gradient(-22deg in oklab, #ff009515 0, #ff7b0000);
+}
 
+.page-container {
     &>img {
-        margin: 4rem auto 0;
+        margin: 0 auto;
         width: 100%;
-        height: 33vh;
+        height: 25vh;
         object-fit: cover;
 
         @media (max-width: 48rem) {
-            margin: 6rem auto 0;
+            margin: 0 auto 0;
             height: 28vh;
         }
     }
@@ -43,7 +45,6 @@ article {
     padding: 0 var(--base-padding);
     width: 100%;
     max-width: var(--article-width);
-    background-color: var(--bg-color);
 }
 
 header {
@@ -205,15 +206,13 @@ video {
     /*1px solid var(--header-border-color);*/
     --hover-color: var(--accent-color);
 
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
     width: 100%;
     background: var(--header-bg-color);
     color: var(--header-font-color);
 
     border-bottom: var(--header-border);
-    z-index: 100;
 
     a {
         padding: 0.125rem 0;
