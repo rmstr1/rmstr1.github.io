@@ -18,8 +18,12 @@
 
 body {
     font: 400 1rem/1.5 'Source Sans 3', sans-serif;
-    background: var(--bg-color);
     color: var(--text-color);
+    background:
+        radial-gradient(circle at 114% 40% in oklab, #eeeeee 0, transparent 40%),
+        radial-gradient(circle at 60% 110% in oklab, #ffee0005 0, transparent 33%),
+        radial-gradient(circle at 40% 10% in oklab, #ff7b0005 0, transparent 75%),
+        linear-gradient(-22deg in oklab, #ff009515 0, #ff7b0000);
 
     &>img {
         margin: 4rem auto 0;

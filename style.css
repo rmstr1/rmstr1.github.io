@@ -4,7 +4,8 @@
     --accent-color: #ec0047;
     --border-color: #22222234;
     --border: 1px solid var(--border-color);
-    --base-width: calc(66ch + 2*2rem);
+    --page-padding: 2rem;
+    --base-width: calc(33rem + 2 * var(--page-padding));
 }
 
 *,
@@ -78,7 +79,7 @@ a {
 section {
     scroll-margin: 1rem;
     margin: 0 auto;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem var(--page-padding);
     width: 100%;
     max-width: var(--base-width);
 
@@ -102,7 +103,7 @@ header {
 
     nav {
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 var(--page-padding);
         width: 100%;
         max-width: var(--base-width);
         display: flex;
@@ -113,14 +114,13 @@ header {
 
         a {
             padding: 0.5rem 1rem;
-            border-left: var(--header-border);
 
             font: 400 1.0rem/1 'Source Sans 3', sans-serif;
             letter-spacing: 0.025em;
             text-decoration: none;
             text-align: center;
 
-            background-color: #222222;
+            background-color: var(--text-color);
             color: #ffffff;
 
             box-shadow: 0.125rem 0.125rem 0.5rem #22222244;
@@ -130,7 +130,7 @@ header {
 
 footer {
     margin: 0 auto;
-    padding: 6rem 2rem;
+    padding: 6rem var(--page-padding);
 
     background-color: #222222;
     color: #ffffff;
