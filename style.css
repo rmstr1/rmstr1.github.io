@@ -95,35 +95,87 @@ section {
 }
 
 #hero {
-    margin: 2rem auto;
+    margin: 4rem auto 2rem;
 }
 
-header {
-    margin: 4rem auto;
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
 
-    nav {
+    background: #222222;
+    color: #ffffff;
+
+    a {
+        &::before {
+            content: none;
+        }
+    }
+
+    .header-container {
         margin: 0 auto;
-        padding: 0 var(--page-padding);
         width: 100%;
-        max-width: var(--base-width);
+
         display: flex;
-        justify-content: start;
-        align-items: stretch;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        justify-content: space-between;
+        align-items: center;
 
-        a {
-            padding: 0.5rem 1rem;
+        @media (max-width: 48rem) {
+            flex-direction: column;
 
-            font: 400 1.0rem/1 'Source Sans 3', sans-serif;
-            letter-spacing: 0.025em;
+            a:first-child {
+                border-left: none;
+            }
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 2.375rem 2rem 0.875rem;
+            font: 400 1.25rem/1 'Source Sans 3', sans-serif;
+            letter-spacing: 0;
             text-decoration: none;
-            text-align: center;
+            white-space: nowrap;
 
-            background-color: var(--text-color);
-            color: #ffffff;
+            &:hover {
+                color: inherit;
+            }
 
-            box-shadow: 0.125rem 0.125rem 0.5rem #22222244;
+            @media (max-width: 48rem) {
+                padding: 1rem 0.5rem 1rem;
+                margin: 0 auto;
+                width: 100%;
+                border-bottom: var(--header-border);
+            }
+        }
+
+        nav {
+            max-width: 100%;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 0;
+
+            @media (max-width: 48rem) {
+                width: 100%;
+            }
+
+            a {
+                padding: 2.5rem 1rem 1rem;
+
+                font: 400 1.0rem/1 'Source Sans 3', sans-serif;
+                letter-spacing: 0.035em;
+                text-decoration: none;
+                text-align: center;
+
+                @media (max-width: 48rem) {
+                    padding: 1rem 1rem 1rem;
+                }
+            }
         }
     }
 }

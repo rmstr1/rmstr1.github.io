@@ -199,20 +199,12 @@ video {
 }
 
 .navbar {
-    --header-bg-color: var(--text-color);
-    --header-font-color: #ffffff;
-    --header-border-color: #ffffff34;
-    --header-border: none;
-    /*1px solid var(--header-border-color);*/
-    --hover-color: var(--accent-color);
-
     position: sticky;
     top: 0;
     width: 100%;
-    background: var(--header-bg-color);
-    color: var(--header-font-color);
 
-    border-bottom: var(--header-border);
+    background: #222222;
+    color: #ffffff;
 
     a {
         padding: 0.125rem 0;
@@ -234,7 +226,7 @@ video {
         justify-content: space-between;
         align-items: center;
 
-        @media (max-width: 48rem) {
+        @media (max-width: 55rem) {
             flex-direction: column;
 
             a:first-child {
@@ -257,7 +249,7 @@ video {
                 color: inherit;
             }
 
-            @media (max-width: 48rem) {
+            @media (max-width: 55rem) {
                 padding: 1rem 0.5rem 1rem;
                 margin: 0 auto;
                 width: 100%;
@@ -274,7 +266,7 @@ video {
             flex-wrap: wrap;
             gap: 0;
 
-            @media (max-width: 48rem) {
+            @media (max-width: 55rem) {
                 width: 100%;
             }
 
@@ -287,7 +279,7 @@ video {
                 text-decoration: none;
                 text-align: center;
 
-                @media (max-width: 48rem) {
+                @media (max-width: 55rem) {
                     padding: 1rem 1rem 1rem;
                 }
             }
