@@ -77,7 +77,7 @@ a {
 }
 
 section {
-    scroll-margin: 1rem;
+    scroll-margin: 6rem;
     margin: 0 auto;
     padding: 0.5rem var(--page-padding);
     width: 100%;
