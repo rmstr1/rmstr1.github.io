@@ -280,6 +280,7 @@ video {
                 text-align: center;
 
                 @media (max-width: 55rem) {
+                    /*flex: 1;*/
                     padding: 1rem 1rem 1rem;
                 }
             }
