@@ -259,7 +259,7 @@ footer {
 }
 
 .gallery {
-    --gallery-item-min-width: 14rem;
+    --gallery-item-min-width: 12rem;
 
     width: 100%;
     display: grid;
