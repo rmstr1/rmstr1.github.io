@@ -88,6 +88,22 @@ section {
     }
 }
 
+.socials {
+    margin-top: 2.5rem;
+    width: fit-content;
+
+    a {
+        padding: 0.25rem;
+        font-size: 1.375rem;
+        text-decoration: none;
+
+        &::before {
+            content: none;
+        }
+    }
+}
+
+
 .tags {
     font-size: 0.875rem;
     width: fit-content;
@@ -241,20 +257,6 @@ footer {
         display: inline-block;
         font-size: 0.875rem;
         font-style: italic;
-    }
-}
-
-.social-link {
-    width: fit-content;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-
-    padding: 0;
-    gap: 0.25rem;
-
-    &::before {
-        content: none;
     }
 }
 
