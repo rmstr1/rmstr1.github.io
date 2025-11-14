@@ -58,7 +58,7 @@ p {
 a {
     padding: 0.125rem 0;
     color: inherit;
-    transition: all .1s ease;
+    transition: all .15s ease;
 
     &:hover {
         color: var(--accent-color);
@@ -276,4 +276,75 @@ footer {
         aspect-ratio: 3/4;
         object-fit: cover;
     }
+}
+
+#promo {
+    img {
+        display: block;
+
+        margin: 0;
+        padding: 0;
+
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .img-link {
+        display: block;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: fit-content;
+        box-shadow: 0.125rem 0.125rem 0.5rem #00000055;
+        border-radius: 2rem;
+        overflow: hidden;
+
+        &::before {
+            content: none;
+        }
+
+        &:hover {
+            filter: brightness(75%);
+            box-shadow: 0.25rem 0.25rem 0.75rem #00000033;
+        }
+    }
+
+    .cta {
+        display: block;
+
+        margin: 1rem auto;
+        color: #ffffff;
+
+        padding: 0.5rem 1.5rem;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 0.125rem solid transparent;
+        background: var(--text-color);
+        box-shadow: 0.125rem 0.125rem 0.5rem #00000055;
+
+        text-align: center;
+
+        border-radius: 2rem;
+        gap: 0.5em;
+
+        width: fit-content;
+        /*width: 100%;*/
+
+        &:hover {
+            border: 0.125rem solid var(--accent-color);
+            color: var(--accent-color);
+            background: none;
+            box-shadow: 0.25rem 0.25rem 0.75rem #00000033;
+        }
+
+        &::before {
+            content: "";
+        }
+
+        &::after {
+            content: " →";
+        }
+    }
+
 }
