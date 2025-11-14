@@ -29,15 +29,15 @@ body {
 .page-container {
     &>img {
         display: block;
-        margin: 0 auto;
+        margin: 4rem auto 0;
         width: 100%;
         max-width: var(--article-width);
-        height: 45vh;
+        height: auto;
         object-fit: cover;
 
-        @media (max-width: 48rem) {
+        @media (max-width: 52rem) {
             margin: 0 auto 0;
-            height: 28vh;
+            height: auto;
         }
     }
 }
