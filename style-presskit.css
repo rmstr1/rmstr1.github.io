@@ -352,3 +352,9 @@ footer {
         font-style: italic;
     }
 }
+
+#assets {
+    img {
+        max-width: 100%;
+    }
+}
