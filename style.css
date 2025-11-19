@@ -5,7 +5,7 @@
     --border-color: #22222234;
     --border: 1px solid var(--border-color);
     --page-padding: 2rem;
-    --base-width: calc(33rem + 2 * var(--page-padding));
+    --base-width: calc(90ch + 2 * var(--page-padding));
 }
 
 *,
@@ -79,7 +79,7 @@ a {
 section {
     scroll-margin: 6rem;
     margin: 0 auto;
-    padding: 0.5rem var(--page-padding);
+    padding: 1.5rem var(--page-padding);
     width: 100%;
     max-width: var(--base-width);
 
@@ -101,13 +101,6 @@ section {
             content: none;
         }
     }
-}
-
-
-.tags {
-    font-size: 0.875rem;
-    width: fit-content;
-    opacity: 0.5;
 }
 
 #hero {
@@ -347,4 +340,44 @@ footer {
         }
     }
 
+}
+
+.card-2 {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 19rem;
+
+    display: grid;
+    grid-template:
+        "h" auto
+        "t" minmax(16rem, auto) "cta" auto / 1fr;
+    align-items: center;
+
+    overflow: hidden;
+
+    background: #fafafa;
+    color: #222222;
+    --border-color: none;
+
+    h1,
+    h2,
+    h3 {
+        grid-area: h;
+        width: 100%;
+        padding: 2.5rem;
+        background: #222222;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .card-text {
+        grid-area: t;
+        padding: 2.5rem 2.5rem 4rem;
+        text-align: center;
+
+        hr {
+
+            margin: 1.5rem 0;
+        }
+    }
 }
