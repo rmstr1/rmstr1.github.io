@@ -3,7 +3,8 @@
     --bg-color: #fafafa;
     --accent-color: #ec0047;
     --border-color: #22222234;
-    --border: 1px solid var(--border-color);
+    --border: none;
+    /*1px solid var(--border-color);*/
     --page-padding: 2rem;
     --base-width: calc(90ch + 2 * var(--page-padding));
 }
@@ -78,10 +79,14 @@ a {
 
 section {
     scroll-margin: 6rem;
-    margin: 0 auto;
-    padding: 1.5rem var(--page-padding);
+    margin: 2.5rem auto;
+    padding: 0 var(--page-padding);
     width: 100%;
     max-width: var(--base-width);
+
+    @media (max-width: 48rem) {
+        scroll-margin: 7.5rem;
+    }
 
     &:last-of-type {
         padding-bottom: 8rem;
@@ -89,7 +94,6 @@ section {
 }
 
 .socials {
-    margin-top: 2.5rem;
     width: fit-content;
 
     a {
