@@ -6,7 +6,7 @@
     --border: none;
     /*1px solid var(--border-color);*/
     --page-padding: 2rem;
-    --base-width: calc(48rem + 2 * var(--page-padding));
+    --base-width: calc(46rem + 2 * var(--page-padding));
 }
 
 *,
@@ -23,8 +23,8 @@ html {
 
 body {
     width: 100%;
-    font: 300 1.25rem/1.5 'Source Sans 3', sans-serif;
-    letter-spacing: 0.025em;
+    font: 400 1.0rem/1.6125 'Montserrat', sans-serif;
+    letter-spacing: 0;
     color: var(--text-color);
     background:
         radial-gradient(circle at 114% 40% in oklab, #eeeeee 0, transparent 40%),
@@ -165,8 +165,9 @@ section {
             align-items: center;
 
             padding: 2.375rem 2rem 0.875rem;
-            font: 400 1.25rem/1 'Source Sans 3', sans-serif;
+            font: 400 1.25rem/1 'Mozilla Headline', sans-serif;
             letter-spacing: 0;
+            text-transform: uppercase;
             text-decoration: none;
             white-space: nowrap;
 
@@ -198,8 +199,8 @@ section {
             a {
                 padding: 2.5rem 1rem 1rem;
 
-                font: 400 1.0rem/1 'Source Sans 3', sans-serif;
-                letter-spacing: 0.035em;
+                font: 400 1.0rem/1 'Montserrat', sans-serif;
+                letter-spacing: 0;
                 text-decoration: none;
                 text-align: center;
 
@@ -227,8 +228,9 @@ footer {
     .logo {
         display: block;
         padding: 0.25rem 0.5rem;
-        font: 400 1.25rem/1.4 'Source Sans 3', sans-serif;
+        font: 400 1.25rem/1.4 'Mozilla Headline', sans-serif;
         letter-spacing: 0;
+        text-transform: uppercase;
         text-decoration: none;
         color: inherit;
 
@@ -254,9 +256,13 @@ footer {
 
 
     h2 {
-        font: 400 1.0rem/1.6 'Source Sans 3', sans-serif;
+        font: 400 1.0rem/1.6 'Montserrat', sans-serif;
         margin: 2rem auto 1.25rem;
         border: none;
+
+        &::before {
+            content: none;
+        }
     }
 
     a {
@@ -390,6 +396,10 @@ footer {
         background: #222222;
         color: #ffffff;
         text-align: center;
+
+        &::before {
+            content: none;
+        }
     }
 
     .card-text {
