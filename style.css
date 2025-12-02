@@ -392,6 +392,10 @@ footer {
     >div {
         grid-area: t;
         padding: 1.5rem;
+
+        @media (max-width: 48rem) {
+            padding: 1.5rem 0;
+        }
     }
 
     @media (max-width: 48rem) {
