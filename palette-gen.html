@@ -72,6 +72,14 @@
         return (h * (1 - x * x)) / (1 + Math.sqrt(Math.max(0, radicand)));
     }
 
+    /// interpolated point with interpolation param t: [0.0, 1.0] along circular arc from [-1, 0] to [1, 0], with sagitta(bulge) h.
+    /// TODO: use this.
+    function interpolateArc(t, h) {
+        const u = 2 * t - 1;
+        const denom = 1 + h * h * u * u;
+        return [u * (1 + h * h) / denom, (h * (1 - u * u)) / denom];
+    }
+
     const srgbToLinear = (srgb) => {
         return srgb.map((x) => {
             const cutoff = x > 0.04045;
