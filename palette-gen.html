@@ -78,7 +78,6 @@
     }
 
     /// interpolated point with interpolation param t: [0.0, 1.0] along circular arc from [-1, 0] to [1, 0], with sagitta(bulge) h.
-    /// TODO: use this.
     function arcInterpolation(t, h) {
         const u = 2 * t - 1;
         const denom = 1 + h * h * u * u;
@@ -193,7 +192,7 @@
             output.insertAdjacentHTML("beforeend",
                 `
                 <div class="palette-group">
-                    <input type="color" value="${hex_rgb}" autocomplete="off" readonly>
+                    <div class="color-preview" style="background: ${hex_rgb}"></div>
                     <input type="text" value="${hex_rgb}" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
                     <button onclick="copyToClipboard('${hex_rgb}')" class="icon-button">📋</button>
                 </div>

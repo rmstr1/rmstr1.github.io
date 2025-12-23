@@ -116,6 +116,19 @@ input[type=color] {
     }
 }
 
+.color-preview {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 0.25rem solid #1a1b1c;
+    border-radius: 1rem;
+}
+
 input[type=checkbox] {
     height: 1.25rem;
     width: 1.25rem;
