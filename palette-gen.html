@@ -38,6 +38,7 @@
                 <input id="t_slider" type="range" min="-2.0" max="2.0" value="0.0" step=0.05 autocomplete="off">
                 <input id="t_number" type="number" min="-2.0" max="2.0" value="0.0" size="5" step=0.05
                     autocomplete="off">
+                <button id="t_reset" class="icon-button">⟲</button>
             </div>
         </label>
         <label>Palette Size:
@@ -192,9 +193,9 @@
             output.insertAdjacentHTML("beforeend",
                 `
                 <div class="palette-group">
-                    <input type="color" value="${hex_rgb}" autocomplete="off">
+                    <input type="color" value="${hex_rgb}" autocomplete="off" readonly>
                     <input type="text" value="${hex_rgb}" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
-                    <button onclick="copyToClipboard('${hex_rgb}')">📋</button>
+                    <button onclick="copyToClipboard('${hex_rgb}')" class="icon-button">📋</button>
                 </div>
                 `)
         }
@@ -209,6 +210,7 @@
     const interpolation = document.querySelector('#interpolation');
     const t_slider = document.querySelector('#t_slider');
     const t_number = document.querySelector('#t_number');
+    const t_reset = document.querySelector('#t_reset');
 
     a_text.addEventListener('change', (e) => { a_color.value = e.target.value; updateOutput(); });
     b_text.addEventListener('change', (e) => { b_color.value = e.target.value; updateOutput(); });
@@ -218,6 +220,7 @@
     interpolation.addEventListener('change', (e) => updateOutput());
     t_slider.addEventListener('input', (e) => { t_number.value = e.target.value; updateOutput() });
     t_number.addEventListener('change', (e) => { t_slider.value = e.target.value; updateOutput() });
+    t_reset.addEventListener('click', (e) => { t_slider.value = 0.0; t_number.value = 0.0; updateOutput() });
 
 
     updateOutput();

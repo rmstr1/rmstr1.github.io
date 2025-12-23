@@ -48,13 +48,19 @@ label {
     gap: 0.5rem;
 }
 
-button {
+.icon-button {
     all: unset;
+    height: 1.75rem;
+    width: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     box-sizing: border-box;
-    background-color: #222222;
+    background-color: #333333;
+    box-shadow: 0.1875rem 0.1875rem 0.1875rem rgba(0, 0, 0, 0.231);
 
     cursor: pointer;
-    padding: 0.125rem;
     border-radius: 0.5rem;
 
     &:hover {
@@ -63,6 +69,8 @@ button {
 
     &:active {
         background-color: #858585;
+        box-shadow: none;
+
     }
 }
 
