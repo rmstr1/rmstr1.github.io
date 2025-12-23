@@ -63,6 +63,10 @@
         return Math.min(Math.max(x, lower), upper);
     }
 
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text);
+    }
+
     /// y value of circle segment between x= -1, 1, with y=h at x = 0, evaluated at x.
     /// assumes -1.0 <= x <= 1.0
     function getArcY(x, h) {
@@ -190,6 +194,7 @@
                 <div class="palette-group">
                     <input type="color" value="${hex_rgb}" autocomplete="off">
                     <input type="text" value="${hex_rgb}" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
+                    <button onclick="copyToClipboard('${hex_rgb}')">📋</button>
                 </div>
                 `)
         }
