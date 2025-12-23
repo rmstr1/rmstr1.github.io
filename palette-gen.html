@@ -26,15 +26,22 @@
                     autocomplete="off">
             </div>
         </span>
-        <label>Interpolation Colorspace:a
+        <label>Interpolation Colorspace:
             <select id="interpolation" autocomplete="off">
                 <option value="oklab">okLab</option>
                 <option value="linear">linear sRGB</option>
                 <option value="srgb">sRGB</option>
             </select>
         </label>
+        <label>Interpolation Curvature:
+            <div class="group">
+                <input id="t_slider" type="range" min="-1.0" max="1.0" value="0.0" step=0.01 autocomplete="off">
+                <input id="t_number" type="number" min="-1.0" max="1.0" value="0.0" size="5" step=0.01
+                    autocomplete="off">
+            </div>
+        </label>
         <label>Palette Size:
-            <input id="n_bands" type="number" min="2" max="256" value="6" size="3" autocomplete="off">
+            <input id="n_bands" type="number" min="2" max="256" value="5" size="3" autocomplete="off">
         </label>
         <div>TODO: Add Curvature param</div>
         <hr>
@@ -54,6 +61,15 @@
 
     function clamp(x, lower, upper) {
         return Math.min(Math.max(x, lower), upper);
+    }
+
+    /// y value of circle segment between x= -1, 1, with y=h at x = 0, evaluated at x.
+    /// assumes -1.0 <= x <= 1.0
+    function getArcY(x, h) {
+        if (Math.abs(h) < 1e-12) return 0;
+        const curvature = (2 * h) / (h * h + 1);
+        const radicand = 1 - Math.pow(curvature * x, 2);
+        return (h * (1 - x * x)) / (1 + Math.sqrt(Math.max(0, radicand)));
     }
 
     const srgbToLinear = (srgb) => {
@@ -138,37 +154,34 @@
             "oklab": [srgbToOklab, oklabToSrgb],
         }[interpolation];
 
-        const a_srgb = to_ispace(parseHex(a_text.value));
-        const b_srgb = to_ispace(parseHex(b_text.value));
+        const a_ispace = to_ispace(parseHex(a_text.value));
+        const b_ispace = to_ispace(parseHex(b_text.value));
+        const normal_ispace = [-(b_ispace[2] - a_ispace[2]) / 2.0, (b_ispace[1] - a_ispace[1]) / 2.0]
 
-        const n_bands = Number(document.querySelector('#n_bands').value);
+        const palette_count = Number(n_bands.value);
+        const curvature_t = Number(t_slider.value);
 
-        const values = [];
         output.replaceChildren();
+        for (let i = 0; i < palette_count; i++) {
+            const t = i / (palette_count - 1.0);
 
-        for (let i = 0; i < n_bands; i++) {
-            const t = i / (n_bands - 1.0);
-            const percentage = i / n_bands;
+            const x = 2.0 * t - 1.0;
+            const y = getArcY(x, curvature_t);
 
-            const value = lerp(a_srgb, b_srgb, t)
-            const hex = writeHex(from_ispace(value))
+            let value_ispace = lerp(a_ispace, b_ispace, t)
+            value_ispace[1] += normal_ispace[0] * y;
+            value_ispace[2] += normal_ispace[1] * y;
+
+            const hex_rgb = writeHex(from_ispace(value_ispace))
 
             output.insertAdjacentHTML("beforeend",
                 `
                 <div class="palette-group">
-                    <input type="color" value="${hex}" autocomplete="off">
-                    <input type="text" value="${hex}" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
+                    <input type="color" value="${hex_rgb}" autocomplete="off">
+                    <input type="text" value="${hex_rgb}" maxlentgh="7" size="8" spellcheck="false" autocomplete="off">
                 </div>
                 `)
-
-            if (i < n_bands - 1) {
-                values.push(`${writeHex(from_ispace(value))}`);
-            }
         }
-
-        const gradient_str = `${values.join("\n")}`;
-
-
     }
 
     const a_text = document.querySelector('#a_text');
@@ -176,14 +189,20 @@
     const b_text = document.querySelector('#b_text');
     const b_color = document.querySelector('#b_color');
     const output = document.querySelector('#output');
-    const preview = document.querySelector('body');
+    const n_bands = document.querySelector('#n_bands');
+    const interpolation = document.querySelector('#interpolation');
+    const t_slider = document.querySelector('#t_slider');
+    const t_number = document.querySelector('#t_number');
 
     a_text.addEventListener('change', (e) => { a_color.value = e.target.value; updateOutput(); });
     b_text.addEventListener('change', (e) => { b_color.value = e.target.value; updateOutput(); });
     a_color.addEventListener('change', (e) => { a_text.value = e.target.value; updateOutput(); });
     b_color.addEventListener('change', (e) => { b_text.value = e.target.value; updateOutput(); });
-    document.querySelector('#n_bands').addEventListener('change', (e) => updateOutput());
-    document.querySelector('#interpolation').addEventListener('change', (e) => updateOutput());
+    n_bands.addEventListener('change', (e) => updateOutput());
+    interpolation.addEventListener('change', (e) => updateOutput());
+    t_slider.addEventListener('input', (e) => { t_number.value = e.target.value; updateOutput() });
+    t_number.addEventListener('change', (e) => { t_slider.value = e.target.value; updateOutput() });
+
 
     updateOutput();
 </script>
