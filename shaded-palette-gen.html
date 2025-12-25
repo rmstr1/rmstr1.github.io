@@ -101,7 +101,7 @@
     }
 
     const diffuseReflection = (diffuse, light_color, ambient_light_color, t) => {
-        // TODO: fresnel, riughness, ...
+        // TODO: fresnel, riughness, ... whiten highlights
         // https://alextardif.com/PhysicallyBasedRendering.html
         // https://reference.wolfram.com/language/tutorial/PhysicallyBasedRendering.html
         return [0, 1, 2].map((index) => {
