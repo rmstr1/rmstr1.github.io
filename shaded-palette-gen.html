@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./style-editor-simple.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Palette Generator">
-    <title>Palette Generator</title>
+    <meta name="description" content="Shaded Palette Generator">
+    <title>Shaded Palette Generator</title>
 </head>
 
 <body>
     <div class="container">
-        <h1>Palette Generator</h1>
+        <h1>Shaded Palette Generator</h1>
         <label>
             Base Color (sRGB):
             <div class="group">
@@ -37,10 +37,10 @@
                     autocomplete="off">
             </div>
         </label>
-        <label>Interpolation Exponent:
+        <label>Specular mix:
             <div class="group">
-                <input id="t_slider" type="range" min="-2.0" max="2.0" value="0.0" step=0.05 autocomplete="off">
-                <input id="t_number" type="number" min="-2.0" max="2.0" value="0.0" size="5" step=0.05
+                <input id="t_slider" type="range" min="0.0" max="1.0" value="0.0" step=0.01 autocomplete="off">
+                <input id="t_number" type="number" min="0.0" max="1.0" value="0.0" size="5" step=0.01
                     autocomplete="off">
                 <button id="t_reset" class="icon-button">⟲</button>
             </div>
@@ -105,7 +105,7 @@
         // https://alextardif.com/PhysicallyBasedRendering.html
         // https://reference.wolfram.com/language/tutorial/PhysicallyBasedRendering.html
         return [0, 1, 2].map((index) => {
-            return ambient_light_color[index] + (light_color[index] - ambient_light_color[index]) * Math.cos(t * Math.PI / 2.0) * diffuse[index];
+            return lerp_scalar(ambient_light_color[index], light_color[index], Math.cos(t * Math.PI / 2.0)) * diffuse[index];
         });
     }
 
@@ -123,14 +123,22 @@
         const ambient_linear = srgbToLinear(parseHex(ambient_text.value));
 
         const palette_count = Number(n_bands.value);
+        const specular = Number(t_slider.value);
 
         output.replaceChildren();
         for (let i = 0; i < palette_count; i++) {
             const t = (i / (palette_count - 1.0));
+            const cos_theta = Math.cos((1.0 - t) * Math.PI / 2.0);
 
             let diffuse_color_linear = diffuseReflection(base_linear, light_linear, ambient_linear, t)
 
-            const hex_rgb = writeHex(linearToSrgb(diffuse_color_linear))
+            // Schlick's approximation
+            let specular_exponent = 2;
+            let fresnel_factor = lerp_scalar(0.0, 1.0, Math.pow(1.0 - cos_theta, specular_exponent)) * specular
+
+            let color_linear = lerp(diffuse_color_linear, light_linear, fresnel_factor)
+
+            const hex_rgb = writeHex(linearToSrgb(color_linear))
 
             output.insertAdjacentHTML("beforeend",
                 `
