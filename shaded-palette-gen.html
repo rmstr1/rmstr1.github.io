@@ -101,8 +101,11 @@
     }
 
     const diffuseReflection = (diffuse, light_color, ambient_light_color, t) => {
+        // TODO: fresnel, riughness, ...
+        // https://alextardif.com/PhysicallyBasedRendering.html
+        // https://reference.wolfram.com/language/tutorial/PhysicallyBasedRendering.html
         return [0, 1, 2].map((index) => {
-            return ambient_light_color[index] + (light_color[index] - ambient_light_color[index]) * t * diffuse[index];
+            return ambient_light_color[index] + (light_color[index] - ambient_light_color[index]) * Math.cos(t * Math.PI / 2.0) * diffuse[index];
         });
     }
 
