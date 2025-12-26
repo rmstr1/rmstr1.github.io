@@ -6,16 +6,9 @@
     <style>
         :root {
             /*--foreground: #38ac8f;*/
-            --foreground: #b1b1b1;
-            --bg-border: #272727;
-            --bg: #141414;
-            --bg-ui: #313131;
-            --bg-ui-highlight: #505050;
-            --border-radius: 12px;
-            --neumorphic-backdrop-shadow:
-                4px 4px 8px 0px rgba(0, 0, 0, 0.4),
-                -4px -4px 8px 0px rgba(255, 255, 255, 0.08);
-            ;
+            --foreground: #fafafa;
+            --bg: #272727;
+            --border-radius: 2rem;
         }
 
         html {
@@ -37,10 +30,10 @@
 
             width: 100vw;
             margin: 0;
-            padding: 20px;
+            padding: 2rem;
 
-            background-color: #eeeeee;
-            color: #8b8b8b;
+            background-color: var(--bg);
+            color: var(--foreground);
 
             font-family: Arial, sans-serif;
             font-size: 1rem;
@@ -57,27 +50,22 @@
             text-align: center;
             letter-spacing: 0.1500rem;
 
-            margin: 4px;
-            padding: 12px 32px;
+            padding: 1rem 2rem;
             cursor: pointer;
 
             color: #fafafa;
-            background-color: #333333;
-            border: solid 2px #ffffff;
-            box-shadow: 4px 4px 0px #616161;
-            transition: box-shadow 0.15s ease-out, border 0.15s ease-out;
+            background-color: #ec1e40;
+            box-shadow: 0.25rem 0.25rem 0.25rem #00000044;
+            transition: all 0.15s ease-out;
         }
 
         button:hover {
-            box-shadow: 6px 6px 0px #8b8b8b;
-            border: solid 2px transparent;
-
-            transition: box-shadow 0.15s ease-out, border 0.15s ease-out;
+            background-color: #acacac;
         }
 
         .save {
             font-size: 1.25rem;
-            padding: 12px 32px;
+            padding: 12px 2rem;
             border-radius: 12px;
         }
 
@@ -89,9 +77,9 @@
 
         .v-container {
             width: 100%;
-            max-width: 1200px;
-            margin: 10px;
-            padding: 20px;
+            max-width: 52rem;
+            margin: 1rem;
+            padding: 2rem;
             display: flex;
             flex-flow: column nowrap;
             align-items: left;
@@ -100,7 +88,7 @@
 
         .h-container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 52rem;
             display: flex;
             justify-content: left;
             align-items: center;
@@ -116,16 +104,16 @@
 
         #drop-zone {
             width: 100%;
-            max-width: 1200px;
+            max-width: 52rem;
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
             justify-content: center;
 
-            background-color: #fafafa;
-            margin: 10px;
-            padding: 20px;
-            border: dashed 2px #8b8b8b;
+            margin: 1rem;
+            padding: 2rem;
+            border: dashed 0.125rem #8b8b8b;
+            border-radius: var(--border-radius);
         }
 
         #image-container {
@@ -133,23 +121,24 @@
         }
 
         #colors-border {
-            background-color: #d6d6d6;
-            border: solid 2px #8b8b8b;
+            border-radius: var(--border-radius);
+            background-color: #444444;
         }
 
         #colors-container {
-            margin: 10px;
-            padding: 20px;
+            border-radius: var(--border-radius);
+            margin: 1rem;
+            padding: 2rem;
         }
 
         #recolor-border {
-            border: solid 4px #11c992;
-            box-shadow: 5px 5px 0px #cd60ff;
+            border-radius: var(--border-radius);
+            background-color: #444444;
         }
 
         #recolor-container {
-            margin: 10px;
-            padding: 20px;
+            margin: 1rem;
+            padding: 2rem;
         }
 
         canvas {
@@ -158,31 +147,31 @@
         }
 
         input[type=color] {
-            height: 32px;
-            width: 32px;
+            height: 2rem;
+            width: 2rem;
             padding: 0;
             cursor: pointer;
         }
 
         input[type=checkbox] {
             appearance: none;
-            height: 26px;
-            width: 26px;
+            height: 1.5rem;
+            width: 1.5rem;
             margin: 1px;
             padding: 0;
             cursor: pointer;
-            border: dotted 2px #222222;
+            border: dotted 0.125rem #222222;
             accent-color: #000000;
             background-color: #000000;
         }
 
         input[type=checkbox]:hover {
-            border: solid 2px #ffffff;
+            border: solid 0.125rem #ffffff;
         }
 
         input[type=checkbox]:checked {
             appearance: auto;
-            border: solid 2px #ffffff;
+            border: solid 0.125rem #ffffff;
         }
     </style>
     <meta charset="utf-8">
