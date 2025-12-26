@@ -149,6 +149,17 @@
                 </div>
                 `)
         }
+
+        let url = new URL(window.location.href);
+
+        const params = new URLSearchParams();
+        params.append("base", base_color.value);
+        params.append("ambient", ambient_color.value);
+        params.append("light", light_color.value);
+        params.append("specular", t_number.value);
+        params.append("bands", n_bands.value);
+
+        window.history.replaceState({}, "", "?" + params.toString());
     }
 
     const base_text = document.querySelector('#base_text');
@@ -164,6 +175,41 @@
     const t_number = document.querySelector('#t_number');
     const t_reset = document.querySelector('#t_reset');
 
+    // read url params
+    const url = new URL(window.location);
+    console.log(url)
+    const params = new URLSearchParams(url.search);
+    console.log(params)
+
+    const bc = params.get("base"); // is the string "Jonathan"
+    if (bc !== null) {
+        base_text.value = decodeURIComponent(bc);
+        base_color.value = decodeURIComponent(bc);
+    }
+
+    const ac = params.get("ambient"); // is the string "Jonathan"
+    if (ac !== null) {
+        ambient_text.value = decodeURIComponent(ac);
+        ambient_color.value = decodeURIComponent(ac);
+    }
+
+    const light = params.get("light"); // is the string "Jonathan"
+    if (ac !== null) {
+        light_text.value = decodeURIComponent(light);
+        light_color.value = decodeURIComponent(light);
+    }
+
+    const specular = params.get("specular"); // is the string "Jonathan"
+    if (ac !== null) {
+        t_slider.value = Number(specular);
+        t_number.value = Number(specular);
+    }
+
+    const bands = params.get("bands"); // is the string "Jonathan"
+    if (ac !== null) {
+        n_bands.value = Number(bands);
+    }
+
     base_text.addEventListener('change', (e) => { base_color.value = e.target.value; updateOutput(); });
     base_color.addEventListener('change', (e) => { base_text.value = e.target.value; updateOutput(); });
     light_text.addEventListener('change', (e) => { light_color.value = e.target.value; updateOutput(); });
@@ -175,7 +221,6 @@
     t_slider.addEventListener('input', (e) => { t_number.value = e.target.value; updateOutput() });
     t_number.addEventListener('change', (e) => { t_slider.value = e.target.value; updateOutput() });
     t_reset.addEventListener('click', (e) => { t_slider.value = 0.0; t_number.value = 0.0; updateOutput() });
-
 
     updateOutput();
 </script>
