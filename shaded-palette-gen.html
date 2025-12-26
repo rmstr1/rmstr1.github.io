@@ -177,9 +177,7 @@
 
     // read url params
     const url = new URL(window.location);
-    console.log(url)
     const params = new URLSearchParams(url.search);
-    console.log(params)
 
     const bc = params.get("base"); // is the string "Jonathan"
     if (bc !== null) {
