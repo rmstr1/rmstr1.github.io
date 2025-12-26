@@ -134,9 +134,9 @@
 
             // Schlick's approximation
             let specular_exponent = 2;
-            let fresnel_factor = lerp_scalar(0.0, 1.0, Math.pow(1.0 - cos_theta, specular_exponent)) * specular
+            let specular_mix = lerp_scalar(0.0, 1.0, Math.pow(1.0 - cos_theta, specular_exponent)) * specular
 
-            let color_linear = lerp(diffuse_color_linear, light_linear, fresnel_factor)
+            let color_linear = lerp(diffuse_color_linear, light_linear, specular_mix)
 
             const hex_rgb = writeHex(linearToSrgb(color_linear))
 
