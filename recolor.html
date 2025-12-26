@@ -1,0 +1,500 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <style>
+        :root {
+            /*--foreground: #38ac8f;*/
+            --foreground: #b1b1b1;
+            --bg-border: #272727;
+            --bg: #141414;
+            --bg-ui: #313131;
+            --bg-ui-highlight: #505050;
+            --border-radius: 12px;
+            --neumorphic-backdrop-shadow:
+                4px 4px 8px 0px rgba(0, 0, 0, 0.4),
+                -4px -4px 8px 0px rgba(255, 255, 255, 0.08);
+            ;
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit
+        }
+
+        body {
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+
+            width: 100vw;
+            margin: 0;
+            padding: 20px;
+
+            background-color: #eeeeee;
+            color: #8b8b8b;
+
+            font-family: Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            /*1px*/
+        }
+
+        #navbar {
+            justify-content: right;
+        }
+
+        button {
+            white-space: nowrap;
+            text-align: center;
+            letter-spacing: 0.1500rem;
+
+            margin: 4px;
+            padding: 12px 32px;
+            cursor: pointer;
+
+            color: #fafafa;
+            background-color: #333333;
+            border: solid 2px #ffffff;
+            box-shadow: 4px 4px 0px #616161;
+            transition: box-shadow 0.15s ease-out, border 0.15s ease-out;
+        }
+
+        button:hover {
+            box-shadow: 6px 6px 0px #8b8b8b;
+            border: solid 2px transparent;
+
+            transition: box-shadow 0.15s ease-out, border 0.15s ease-out;
+        }
+
+        .save {
+            font-size: 1.25rem;
+            padding: 12px 32px;
+            border-radius: 12px;
+        }
+
+        .edit {
+            font-size: 1.0rem;
+            padding: 6px 14px;
+            border-radius: 8px;
+        }
+
+        .v-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 10px;
+            padding: 20px;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: left;
+            justify-content: center;
+        }
+
+        .h-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .color-changer {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #drop-zone {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            justify-content: center;
+
+            background-color: #fafafa;
+            margin: 10px;
+            padding: 20px;
+            border: dashed 2px #8b8b8b;
+        }
+
+        #image-container {
+            min-height: 300px;
+        }
+
+        #colors-border {
+            background-color: #d6d6d6;
+            border: solid 2px #8b8b8b;
+        }
+
+        #colors-container {
+            margin: 10px;
+            padding: 20px;
+        }
+
+        #recolor-border {
+            border: solid 4px #11c992;
+            box-shadow: 5px 5px 0px #cd60ff;
+        }
+
+        #recolor-container {
+            margin: 10px;
+            padding: 20px;
+        }
+
+        canvas {
+            height: 100px;
+            image-rendering: pixelated;
+        }
+
+        input[type=color] {
+            height: 32px;
+            width: 32px;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        input[type=checkbox] {
+            appearance: none;
+            height: 26px;
+            width: 26px;
+            margin: 1px;
+            padding: 0;
+            cursor: pointer;
+            border: dotted 2px #222222;
+            accent-color: #000000;
+            background-color: #000000;
+        }
+
+        input[type=checkbox]:hover {
+            border: solid 2px #ffffff;
+        }
+
+        input[type=checkbox]:checked {
+            appearance: auto;
+            border: solid 2px #ffffff;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="x43z">
+    <title>x43z</title>
+</head>
+
+<body>
+    <div id="navbar" class="h-container">
+        <button onclick="saveImages()" class="save">Save changes</button>
+    </div>
+    <div id="colors-border" class="v-container">
+        <div>
+            +++ Select the colors you want to edit +++
+        </div>
+        <div id="colors-container" class="h-container">
+            Image colors will appear here; Images should only contain up to 256 different colors.
+        </div>
+    </div>
+    <div id="recolor-border" class="v-container">
+        <div>
+            +++ Edit colors +++
+        </div>
+        <div id="recolor-container" class="h-container">
+            Colors selected for editing will appear here.
+        </div>
+        <div class="h-container">
+            <input id="gradient-a" type="color">
+            <input id="gradient-b" type="color">
+            <button onclick="generateGradient()" class="edit">Generate gradient</button>
+            <button onclick="" class="edit">Apply filter</button>
+            <button onclick="resetColors()" class="edit">Reset colors</button>
+        </div>
+    </div>
+    <div id="drop-zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+        <h2>+++ Drag and drop files and folders here +++</h2>
+        <div id="image-container" class="h-container">
+        </div>
+    </div>
+    <script src="hsluv-0.1.0.min.js"></script>
+    <script>
+        const hsluv = window.hsluv;
+        console.log(hsluv);
+
+        const file_mapping = new Map();
+        const color_set = new Set();
+        const color_mapping = new Map();
+
+        const dropHandler = async (ev) => {
+            console.log('File(s) dropped');
+
+            // Prevent default behavior (Prevent file from being opened)
+            ev.preventDefault();
+
+            // load and save files with File System Access API
+            await Promise.all([...ev.dataTransfer.items].map(async (item, i) => {
+                const handle = await item.getAsFileSystemHandle();
+                await recursivelyOpenFiles(handle, file_mapping);
+            }));
+
+            // update color picker view
+            const colors_container = document.getElementById("colors-container");
+            colors_container.textContent = '';
+            let colors_array = Array.from(color_set).slice(0, 256); // 256 max_n colors
+            colors_array.sort((a, b) => sortByHLuvS(a, b));
+            colors_array.forEach((color) => {
+                var color_checkbox = document.createElement("input");
+                color_checkbox.setAttribute("type", "checkbox");
+                color_checkbox.style.backgroundColor = color;
+                color_checkbox.style.accentColor = color;
+
+                color_checkbox.onchange = () => {
+                    if (color_checkbox.checked) {
+                        color_mapping.set(color, color);
+                        updateColorMappingView();
+                    } else {
+                        color_mapping.delete(color)
+                        reDrawAllImages();
+                        updateColorMappingView();
+                    }
+                }
+
+                colors_container.appendChild(color_checkbox);
+            });
+        }
+
+        const recursivelyOpenFiles = async (handle, file_mapping) => {
+            const image_container = document.getElementById("image-container");
+
+            return new Promise(async (resolve, reject) => {
+                if (handle.kind === 'file') {
+                    // TODO: if file has not been uploaded or started uploading already
+                    if (file_mapping.get(handle) === undefined) {
+                        file_mapping.set(handle, null);
+
+                        const file = await handle.getFile();
+
+                        const reader = new FileReader();
+                        reader.onload = async (ev) => {
+                            const image = new Image();
+                            image.title = file.name;
+                            image.src = reader.result;
+
+                            image.onload = () => {
+                                const onscreen_canvas = document.createElement('canvas');
+                                onscreen_canvas.width = image.width;
+                                onscreen_canvas.height = image.height;
+
+                                image_container.appendChild(onscreen_canvas);
+
+                                file_mapping.set(handle, [image, onscreen_canvas]);
+
+                                extractColors(image);
+                                drawImageWithColorChange(image, onscreen_canvas);
+
+                                resolve();
+                            }
+
+                            image.onerror = () => {
+                                resolve();
+                            }
+
+                            image.onabort = () => {
+                                resolve();
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                } else {
+                    // directory
+                    console.log(`Directory: ${handle.name}`);
+                    for await (const entry of handle.values()) {
+                        console.log(entry.kind, entry.name);
+                        await recursivelyOpenFiles(entry, file_mapping);
+                    }
+                    resolve();
+                }
+            });
+        }
+
+        const updateColorMappingView = () => {
+            const recolor_container = document.getElementById("recolor-container");
+            recolor_container.textContent = '';
+            let colors_array = Array.from(color_mapping)
+            colors_array.sort(([a, recolor_a], [b, recolor_b]) => sortByLuvHS(a, b));
+            colors_array.forEach(([from_color, to_color]) => {
+                var from_color_view = document.createElement("input");
+                from_color_view.setAttribute("type", "checkbox");
+                from_color_view.style.backgroundColor = from_color;
+                from_color_view.style.accentColor = from_color;
+
+                var to_color_view = document.createElement("input");
+                to_color_view.setAttribute("type", "color");
+                to_color_view.value = to_color;
+                //to_color_view.oninput = (event) => { applyColorChange(from_color, event.target.value); }; // TODO: checkbox to disable
+                to_color_view.onchange = (event) => { applyColorChange(from_color, event.target.value); };
+
+                const color_changer = document.createElement('div');
+                color_changer.className = 'color-changer';
+
+                color_changer.append(from_color_view, '⬇', to_color_view);
+
+                recolor_container.appendChild(color_changer);
+            });
+        }
+
+        const lerp = (a, b, t) => {
+            return (1.0 - t) * a + t * b;
+        }
+
+        const generateGradient = () => {
+            const gradient_a_hex = document.getElementById("gradient-a").value;
+            const gradient_b_hex = document.getElementById("gradient-b").value;
+
+            const [h_a, s_a, luv_a] = hsluv.hexToHsluv(gradient_a_hex);
+            const [h_b, s_b, luv_b] = hsluv.hexToHsluv(gradient_b_hex);
+
+            if (color_mapping.size >= 2) {
+                const max_t = color_mapping.size - 1;
+
+                let colors_array = Array.from(color_mapping)
+                colors_array.sort(([a, recolor_a], [b, recolor_b]) => sortByLuvHS(a, b));
+                for (const [index, [from_color, _to_color]] of colors_array.entries()) {
+                    const t = index / max_t;
+                    const h = lerp(h_a, h_b, t);
+                    const s = lerp(s_a, s_b, t);
+                    const luv = lerp(luv_a, luv_b, t);
+                    color_mapping.set(from_color, hsluv.hsluvToHex([h, s, luv]))
+                }
+            } else {
+                console.log("TODO");
+            }
+
+            updateColorMappingView();
+            reDrawAllImages();
+        }
+
+        const resetColors = () => {
+            for (key of color_mapping.keys()) {
+                color_mapping.set(key, key);
+            }
+            updateColorMappingView();
+            reDrawAllImages();
+        }
+
+        const applyColorChange = (from_color, to_color) => {
+            color_mapping.set(from_color, to_color);
+            reDrawAllImages();
+        }
+
+        const sortByHLuvS = (hex_a, hex_b) => {
+            [h_a, s_a, luv_a] = hsluv.hexToHsluv(hex_a);
+            [h_b, s_b, luv_b] = hsluv.hexToHsluv(hex_b);
+            const diff_h = h_a - h_b
+            if (diff_h != 0.0) {
+                return diff_h;
+            } else {
+                const diff_luv = luv_a - luv_b;
+                if (diff_luv != 0.0) {
+                    return diff_luv;
+                } else {
+                    return s_a - s_b;
+                }
+            }
+        }
+
+        const sortByLuvHS = (hex_a, hex_b) => {
+            [h_a, s_a, luv_a] = hsluv.hexToHsluv(hex_a);
+            [h_b, s_b, luv_b] = hsluv.hexToHsluv(hex_b);
+            const diff_luv = luv_a - luv_b
+            if (diff_luv != 0.0) {
+                return diff_luv;
+            } else {
+                const diff_h = h_a - h_b;
+                if (diff_h != 0.0) {
+                    return diff_h;
+                } else {
+                    return s_a - s_b;
+                }
+            }
+        }
+
+
+        const reDrawAllImages = () => {
+            file_mapping.forEach(([image, canvas], _handle) => {
+                drawImageWithColorChange(image, canvas)
+            });
+        }
+
+        const drawImageWithColorChange = (image, canvas) => {
+            const context = canvas.getContext("2d");
+            context.drawImage(image, 0, 0);
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const hex = rgbToHex(data[i], data[i + 1], data[i + 2]);
+                const mapped_color_hex = color_mapping.get(hex);
+                if (mapped_color_hex !== undefined && mapped_color_hex !== null) {
+                    [r, g, b] = hexToRgb(mapped_color_hex);
+                    data[i] = r;
+                    data[i + 1] = g; // green
+                    data[i + 2] = b; // blue
+                }
+            }
+            context.putImageData(imageData, 0, 0);
+        };
+
+        const extractColors = (image) => {
+            let tmp_canvas = new OffscreenCanvas(image.width, image.height);
+            const context = tmp_canvas.getContext("2d");
+            context.drawImage(image, 0, 0);
+            const imageData = context.getImageData(0, 0, tmp_canvas.width, tmp_canvas.height);
+            const data = imageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i + 3] > 0) {
+                    color_set.add(rgbToHex(data[i], data[i + 1], data[i + 2]));
+                }
+            }
+        }
+
+        const rgbToHex = (r, g, b) => {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+
+        const hexToRgb = (hex) =>
+            hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
+                , (m, r, g, b) => '#' + r + r + g + g + b + b)
+                .substring(1).match(/.{2}/g)
+                .map(x => parseInt(x, 16));
+
+        const saveImages = () => {
+            file_mapping.forEach(([image, _canvas], handle) => {
+                //drawImageWithColorChange(image, canvas);
+                //canvas.toBlob(async (blob) => { await saveFile(handle, blob) });
+                let offscreen_canvas = new OffscreenCanvas(image.width, image.height);
+                drawImageWithColorChange(image, offscreen_canvas);
+                offscreen_canvas.convertToBlob().then(async (blob) => { await saveFile(handle, blob) });
+            });
+        };
+
+        const saveFile = async (handle, blob) => {
+            const writableStream = await handle.createWritable();
+            await writableStream.write(blob);
+            await writableStream.close();
+        }
+
+        const dragOverHandler = (ev) => {
+            // Prevent default behavior (Prevent file from being opened)
+            ev.preventDefault();
+        }
+    </script>
+</body>
+
+</html>
