@@ -211,10 +211,6 @@
             Colors selected for editing will appear here.
         </div>
         <div class="h-container">
-            <input id="gradient-a" type="color">
-            <input id="gradient-b" type="color">
-            <button onclick="generateGradient()" class="edit">Generate gradient</button>
-            <button onclick="" class="edit">Apply filter</button>
             <button onclick="resetColors()" class="edit">Reset colors</button>
         </div>
     </div>
@@ -223,7 +219,6 @@
         <div id="image-container" class="h-container">
         </div>
     </div>
-    <script src="hsluv-0.1.0.min.js"></script>
     <script>
         const hsluv = window.hsluv;
         console.log(hsluv);
@@ -248,7 +243,7 @@
             const colors_container = document.getElementById("colors-container");
             colors_container.textContent = '';
             let colors_array = Array.from(color_set).slice(0, 256); // 256 max_n colors
-            colors_array.sort((a, b) => sortByHLuvS(a, b));
+            //colors_array.sort((a, b) => sortByHLuvS(a, b));
             colors_array.forEach((color) => {
                 var color_checkbox = document.createElement("input");
                 color_checkbox.setAttribute("type", "checkbox");
@@ -328,7 +323,7 @@
             const recolor_container = document.getElementById("recolor-container");
             recolor_container.textContent = '';
             let colors_array = Array.from(color_mapping)
-            colors_array.sort(([a, recolor_a], [b, recolor_b]) => sortByLuvHS(a, b));
+            //colors_array.sort(([a, recolor_a], [b, recolor_b]) => sortByLuvHS(a, b));
             colors_array.forEach(([from_color, to_color]) => {
                 var from_color_view = document.createElement("input");
                 from_color_view.setAttribute("type", "checkbox");
@@ -350,37 +345,6 @@
             });
         }
 
-        const lerp = (a, b, t) => {
-            return (1.0 - t) * a + t * b;
-        }
-
-        const generateGradient = () => {
-            const gradient_a_hex = document.getElementById("gradient-a").value;
-            const gradient_b_hex = document.getElementById("gradient-b").value;
-
-            const [h_a, s_a, luv_a] = hsluv.hexToHsluv(gradient_a_hex);
-            const [h_b, s_b, luv_b] = hsluv.hexToHsluv(gradient_b_hex);
-
-            if (color_mapping.size >= 2) {
-                const max_t = color_mapping.size - 1;
-
-                let colors_array = Array.from(color_mapping)
-                colors_array.sort(([a, recolor_a], [b, recolor_b]) => sortByLuvHS(a, b));
-                for (const [index, [from_color, _to_color]] of colors_array.entries()) {
-                    const t = index / max_t;
-                    const h = lerp(h_a, h_b, t);
-                    const s = lerp(s_a, s_b, t);
-                    const luv = lerp(luv_a, luv_b, t);
-                    color_mapping.set(from_color, hsluv.hsluvToHex([h, s, luv]))
-                }
-            } else {
-                console.log("TODO");
-            }
-
-            updateColorMappingView();
-            reDrawAllImages();
-        }
-
         const resetColors = () => {
             for (key of color_mapping.keys()) {
                 color_mapping.set(key, key);
@@ -393,39 +357,6 @@
             color_mapping.set(from_color, to_color);
             reDrawAllImages();
         }
-
-        const sortByHLuvS = (hex_a, hex_b) => {
-            [h_a, s_a, luv_a] = hsluv.hexToHsluv(hex_a);
-            [h_b, s_b, luv_b] = hsluv.hexToHsluv(hex_b);
-            const diff_h = h_a - h_b
-            if (diff_h != 0.0) {
-                return diff_h;
-            } else {
-                const diff_luv = luv_a - luv_b;
-                if (diff_luv != 0.0) {
-                    return diff_luv;
-                } else {
-                    return s_a - s_b;
-                }
-            }
-        }
-
-        const sortByLuvHS = (hex_a, hex_b) => {
-            [h_a, s_a, luv_a] = hsluv.hexToHsluv(hex_a);
-            [h_b, s_b, luv_b] = hsluv.hexToHsluv(hex_b);
-            const diff_luv = luv_a - luv_b
-            if (diff_luv != 0.0) {
-                return diff_luv;
-            } else {
-                const diff_h = h_a - h_b;
-                if (diff_h != 0.0) {
-                    return diff_h;
-                } else {
-                    return s_a - s_b;
-                }
-            }
-        }
-
 
         const reDrawAllImages = () => {
             file_mapping.forEach(([image, canvas], _handle) => {
