@@ -11,14 +11,10 @@
             --border-radius: 2rem;
         }
 
-        html {
-            box-sizing: border-box;
-        }
-
         *,
         *::before,
         *::after {
-            box-sizing: inherit
+            box-sizing: border-box;
         }
 
         body {
@@ -35,9 +31,9 @@
             background-color: var(--bg);
             color: var(--foreground);
 
-            font-family: Arial, sans-serif;
+            font-family: monospace;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 400;
             /*1px*/
         }
 
@@ -46,6 +42,9 @@
         }
 
         button {
+            all: unset;
+            box-sizing: border-box;
+
             white-space: nowrap;
             text-align: center;
             letter-spacing: 0.1500rem;
@@ -55,7 +54,7 @@
 
             color: #fafafa;
             background-color: #ec1e40;
-            box-shadow: 0.25rem 0.25rem 0.25rem #00000044;
+            box-shadow: 0.25rem 0.25rem 0.125rem #00000022;
             transition: all 0.15s ease-out;
         }
 
@@ -65,14 +64,14 @@
 
         .save {
             font-size: 1.25rem;
-            padding: 12px 2rem;
-            border-radius: 12px;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
         }
 
         .edit {
-            font-size: 1.0rem;
-            padding: 6px 14px;
-            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            background-color: #808080;
         }
 
         .v-container {
