@@ -27,7 +27,7 @@
             </div>
         </span>
         <label>Interpolation Colorspace:
-            <select id="interpolation" autocomplete="off">
+            <select id="colorspace" autocomplete="off">
                 <option value="oklab">okLab</option>
                 <option value="linear">linear sRGB</option>
                 <option value="srgb">sRGB</option>
@@ -76,7 +76,7 @@
         return (h * (1 - x * x)) / (1 + Math.sqrt(Math.max(0, radicand)));
     }
 
-    /// interpolated point with interpolation param t: [0.0, 1.0] along circular arc from [-1, 0] to [1, 0], with sagitta(bulge) h.
+    /// interpolated point with colorspace param t: [0.0, 1.0] along circular arc from [-1, 0] to [1, 0], with sagitta(bulge) h.
     function arcInterpolation(t, h) {
         const u = 2 * t - 1;
         const denom = 1 + h * h * u * u;
@@ -157,13 +157,11 @@
     }
 
     const updateOutput = () => {
-        const interpolation = document.querySelector('#interpolation').value;
-
         const [to_ispace, from_ispace] = {
             "linear": [srgbToLinear, linearToSrgb],
             "srgb": [(x) => x, (x) => x],
             "oklab": [srgbToOklab, oklabToSrgb],
-        }[interpolation];
+        }[colorspace.value];
 
         const a_ispace = to_ispace(parseHex(a_text.value));
         const b_ispace = to_ispace(parseHex(b_text.value));
@@ -197,6 +195,15 @@
                 </div>
                 `)
         }
+
+        const params = new URLSearchParams();
+        params.append("a", a_color.value);
+        params.append("b", b_color.value);
+        params.append("colorspace", colorspace.value);
+        params.append("curvature", t_number.value);
+        params.append("bands", n_bands.value);
+
+        window.history.replaceState({}, "", "?" + params.toString());
     }
 
     const a_text = document.querySelector('#a_text');
@@ -205,17 +212,50 @@
     const b_color = document.querySelector('#b_color');
     const output = document.querySelector('#output');
     const n_bands = document.querySelector('#n_bands');
-    const interpolation = document.querySelector('#interpolation');
+    const colorspace = document.querySelector('#colorspace');
     const t_slider = document.querySelector('#t_slider');
     const t_number = document.querySelector('#t_number');
     const t_reset = document.querySelector('#t_reset');
+
+    // read url params
+    const url = new URL(window.location);
+    const params = new URLSearchParams(url.search);
+
+    const a = params.get("a"); // is the string "Jonathan"
+    if (a !== null) {
+        a_text.value = decodeURIComponent(a);
+        a_color.value = decodeURIComponent(a);
+    }
+
+    const b = params.get("b"); // is the string "Jonathan"
+    if (b !== null) {
+        b_text.value = decodeURIComponent(b);
+        b_color.value = decodeURIComponent(b);
+    }
+
+    const curvature = params.get("curvature"); // is the string "Jonathan"
+    if (curvature !== null) {
+        t_slider.value = Number(curvature);
+        t_number.value = Number(curvature);
+    }
+
+    const cspace = params.get("colorspace"); // is the string "Jonathan"
+    if (cspace !== null) {
+        colorspace.value = decodeURIComponent(cspace);;
+    }
+
+    const bands = params.get("bands"); // is the string "Jonathan"
+    if (bands !== null) {
+        n_bands.value = Number(bands);
+    }
+
 
     a_text.addEventListener('change', (e) => { a_color.value = e.target.value; updateOutput(); });
     b_text.addEventListener('change', (e) => { b_color.value = e.target.value; updateOutput(); });
     a_color.addEventListener('change', (e) => { a_text.value = e.target.value; updateOutput(); });
     b_color.addEventListener('change', (e) => { b_text.value = e.target.value; updateOutput(); });
     n_bands.addEventListener('change', (e) => updateOutput());
-    interpolation.addEventListener('change', (e) => updateOutput());
+    colorspace.addEventListener('change', (e) => updateOutput());
     t_slider.addEventListener('input', (e) => { t_number.value = e.target.value; updateOutput() });
     t_number.addEventListener('change', (e) => { t_slider.value = e.target.value; updateOutput() });
     t_reset.addEventListener('click', (e) => { t_slider.value = 0.0; t_number.value = 0.0; updateOutput() });
