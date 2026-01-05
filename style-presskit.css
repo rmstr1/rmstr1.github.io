@@ -55,7 +55,7 @@ header {
     max-width: var(--article-width);
 
     nav {
-        font: 400 1.0rem/1.75 'Source Sans 3', sans-serif;
+        font: 400 1.0rem/1 'Montserrat', sans-serif;
         margin: 3.5rem auto;
         padding: 0 1.5rem;
         width: 100%;
