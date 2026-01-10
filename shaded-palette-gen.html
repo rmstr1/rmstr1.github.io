@@ -48,6 +48,11 @@
         <label>Palette Size:
             <input id="n_bands" type="number" min="2" max="256" value="5" size="3" autocomplete="off">
         </label>
+        <label>Posterize:
+            <input id="posterize" type="checkbox" autocomplete="off">
+            Posterize Bands: <input id="posterize_bands" type="number" min="2" max="256" value="11" size="3"
+                autocomplete="off">
+        </label>
         <hr>
         Palette (sRGB):
         <div id="output">
@@ -65,6 +70,15 @@
 
     function clamp(x, lower, upper) {
         return Math.min(Math.max(x, lower), upper);
+    }
+
+    const posterize = (a, n_colors) => {
+        return a.map((x, i) => {
+            let res = x * n_colors;
+            res = Math.floor(res)
+            res /= n_colors - 1;
+            return Math.min(Math.max(res, 0.0), 1.0);
+        });
     }
 
     function copyToClipboard(text) {
@@ -138,7 +152,15 @@
 
             let color_linear = lerp(diffuse_color_linear, light_linear, specular_mix)
 
-            const hex_rgb = writeHex(linearToSrgb(color_linear))
+
+            let color_srgb = linearToSrgb(color_linear)
+
+            if (posterize_ed.checked) {
+                console.log("asd")
+                color_srgb = posterize(color_srgb, Number(posterize_bands_ed.value));
+            }
+
+            const hex_rgb = writeHex(color_srgb)
 
             output.insertAdjacentHTML("beforeend",
                 `
@@ -156,6 +178,8 @@
         params.append("light", light_color.value);
         params.append("specular", t_number.value);
         params.append("bands", n_bands.value);
+        params.append("posterize", posterize_ed.value);
+        params.append("posterize_bands", posterize_bands_ed.value);
 
         window.history.replaceState({}, "", "?" + params.toString());
     }
@@ -172,6 +196,8 @@
     const t_slider = document.querySelector('#t_slider');
     const t_number = document.querySelector('#t_number');
     const t_reset = document.querySelector('#t_reset');
+    const posterize_bands_ed = document.querySelector('#posterize_bands');
+    const posterize_ed = document.querySelector('#posterize');
 
     // read url params
     const url = new URL(window.location);
@@ -190,20 +216,30 @@
     }
 
     const light = params.get("light"); // is the string "Jonathan"
-    if (ac !== null) {
+    if (light !== null) {
         light_text.value = decodeURIComponent(light);
         light_color.value = decodeURIComponent(light);
     }
 
     const specular = params.get("specular"); // is the string "Jonathan"
-    if (ac !== null) {
+    if (specular !== null) {
         t_slider.value = Number(specular);
         t_number.value = Number(specular);
     }
 
     const bands = params.get("bands"); // is the string "Jonathan"
-    if (ac !== null) {
+    if (bands !== null) {
         n_bands.value = Number(bands);
+    }
+
+    const posterize_bands = params.get("posterize_bands"); // is the string "Jonathan"
+    if (posterize_bands !== null) {
+        posterize_bands_ed.value = Number(posterize_bands);
+    }
+
+    const posterize_param = params.get("posterize"); // is the string "Jonathan"
+    if (posterize_param !== null) {
+        posterize_ed.value = bands;
     }
 
     base_text.addEventListener('change', (e) => { base_color.value = e.target.value; updateOutput(); });
@@ -217,6 +253,8 @@
     t_slider.addEventListener('input', (e) => { t_number.value = e.target.value; updateOutput() });
     t_number.addEventListener('change', (e) => { t_slider.value = e.target.value; updateOutput() });
     t_reset.addEventListener('click', (e) => { t_slider.value = 0.0; t_number.value = 0.0; updateOutput() });
+    posterize_ed.addEventListener('change', (e) => { updateOutput(); });
+    posterize_bands_ed.addEventListener('change', (e) => { updateOutput(); });
 
     updateOutput();
 </script>
