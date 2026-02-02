@@ -336,7 +336,8 @@
 
                     artist.textContent = track.artists.map((artist) => artist.name).join(', ');
                     title.textContent = track.name;
-                    releaseDate.textContent = track.album.releaseDate.split("-")[0];
+                    console.log(track)
+                    releaseDate.textContent = track.album.release_date.split("-")[0];
 
                     card.setAttribute("flipped", true)
                     if (position < offsets.length - 1) {
