@@ -81,12 +81,6 @@ hr {
     background-color: #22222255;
 }
 
-.rev {
-    &::before {
-        content: "←\00a0";
-    }
-}
-
 section {
     scroll-margin: 6rem;
     margin: 4rem auto;
@@ -132,6 +126,12 @@ section {
     a {
         &::before {
             content: none;
+        }
+    }
+
+    .rev {
+        &::before {
+            content: "←\00a0";
         }
     }
 
