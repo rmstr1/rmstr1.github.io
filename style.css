@@ -136,6 +136,7 @@ section {
     .header-container {
         margin: 0 auto;
         width: 100%;
+        max-width: 110rem;
 
         display: flex;
         justify-content: space-between;
