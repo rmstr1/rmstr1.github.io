@@ -45,10 +45,6 @@ h2 {
     font: 300 1.75rem/1.5 'Mozilla Headline', serif;
     letter-spacing: 0.025em;
     border-bottom: var(--border);
-
-    &::before {
-        content: "// ";
-    }
 }
 
 h3 {
