@@ -97,22 +97,20 @@ section {
     }
 }
 
-.socials {
-    width: fit-content;
+#hero {
+    margin: 6rem auto 4rem;
+}
 
+.socials {
     a {
         padding: 0.25rem;
-        font-size: 1.375rem;
+        font-size: 1.5rem;
         text-decoration: none;
 
         &::before {
             content: none;
         }
     }
-}
-
-#hero {
-    margin: 6rem auto 4rem;
 }
 
 .navbar {
