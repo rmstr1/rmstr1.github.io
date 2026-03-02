@@ -169,16 +169,18 @@ section {
             gap: 0;
 
             @media (max-width: 48rem) {
-                width: 100%;
+                padding: 0 1rem;
+                padding: 0 1.5rem 0.5rem;
             }
 
             a {
                 padding: 2.5rem 1rem 1rem;
 
-                font: 400 1.0rem/1 'Montserrat', sans-serif;
-                letter-spacing: 0;
+                font: 600 0.75rem/1 'Montserrat', sans-serif;
+                letter-spacing: 0.05em;
                 text-decoration: none;
                 text-align: center;
+                text-transform: uppercase;
 
                 @media (max-width: 48rem) {
                     flex: 1;
