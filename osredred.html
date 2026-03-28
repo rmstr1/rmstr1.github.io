@@ -214,7 +214,8 @@
             afterParam = "&after=" + decodeURIComponent(after);
         }
 
-        loadContent(`https://api.reddit.com/r/${sub}/.json?count=25${afterParam}`);
+        //loadContent(`https://api.reddit.com/r/${sub}/.json?count=25${afterParam}`);
+        loadContent(`https://api.reddit.com/r/${sub}.json`);
     </script>
 </body>
 
