@@ -93,6 +93,17 @@
 
         summary {
             list-style-position: outside;
+            cursor: pointer;
+        }
+
+        summary::marker {
+            color: #f82766aa;
+            content: "▷ ";
+        }
+
+        /* Ändert den Marker, wenn das Element geöffnet ist */
+        details[open] summary::marker {
+            content: "▽ ";
         }
     </style>
 </head>
