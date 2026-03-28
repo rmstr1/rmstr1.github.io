@@ -27,13 +27,13 @@
         }
 
         body {
+            padding: 3rem 0 0;
             width: 100%;
             font: 400 1rem/1.75 'Source Sans 3', sans-serif;
             letter-spacing: 0.035em;
             color: var(--text-color);
             background: #fafafa;
         }
-
 
         h1 {
             font: 400 4rem/1.2 'Source Sans 3', sans-serif;
@@ -51,6 +51,7 @@
         a {
             color: inherit;
             text-decoration: none;
+            cursor: pointer;
 
             &:hover {
                 text-decoration: underline;
@@ -59,7 +60,7 @@
 
 
         .card {
-            margin: 1.25rem 0;
+            margin: 1rem 0;
             width: 100%;
 
             p {
@@ -85,10 +86,10 @@
         section {
             width: 100%;
             max-width: 48rem;
-            padding: 1rem 2rem;
+            padding: 0 2rem;
 
             background: none;
-            margin: 3rem auto;
+            margin: 0 auto 3rem;
         }
     </style>
 </head>
@@ -96,6 +97,25 @@
 <body>
     <!--TODO: aufklappbar um selftext etc zu lesen; link und image previes, subreddit selection, pinned posts css..., sort by new, top; comments, top comment(s) ... -->
     <!--TODO: content-based classes, with before icon: image, video, link, textpost -->
+    <!--TODO: base subreddits, sorting at top -->
+    <section id="nav">
+        <div class="card">
+            <p>
+                oldschool reddit reader | made by <a href="apesofthescreen.com">apesofthescreen</a>
+            </p>
+            <p>
+                suggested subreddits: <u>r/all</u> | <a>r/austria</a> | <a>r/de</a> | <a>r/worldnews</a> |
+                <a>r/programmingcirclejerk</a>
+            </p>
+            <p>
+                sort by: <u>hot</u> | <a>new</a> | <a>top-day</a> | <a>top-week</a> | <a>top-month</a>
+            </p>
+            <br>
+            <p>
+                showing results from: <u>r/all</u>
+            </p>
+        </div>
+    </section>
     <section id="content">
         <!--<div class="card">
             <a href="#">

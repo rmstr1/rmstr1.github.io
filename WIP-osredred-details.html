@@ -59,7 +59,7 @@
 
 
         .card {
-            margin: 1.25rem 0;
+            margin: 1rem 0;
             width: 100%;
 
             p {
@@ -227,6 +227,12 @@
         let after = params.get("after");
         if (after !== null) {
             afterParam = "&after=" + decodeURIComponent(after);
+        }
+
+        sortParam = "";
+        let sort = params.get("sort");
+        if (sort !== null) {
+            afterParam = "/new" + decodeURIComponent(sort);
         }
 
         loadContent(`https://api.reddit.com/r/${sub}.json?count=25${afterParam}`);
