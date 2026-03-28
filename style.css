@@ -23,11 +23,12 @@ body {
     font: 400 1.0rem/1.6125 'Montserrat', sans-serif;
     letter-spacing: 0;
     color: var(--text-color);
-    background:
+    /*background:
         radial-gradient(circle at 114% 40% in oklab, #eeeeee 0, transparent 40%),
         radial-gradient(circle at 60% 110% in oklab, #ffee0005 0, transparent 33%),
         radial-gradient(circle at 40% 10% in oklab, #ff7b0005 0, transparent 75%),
-        linear-gradient(-22deg in oklab, #ff009515 0, #ff7b0015);
+        linear-gradient(-22deg in oklab, #ff009515 0, #ff7b0015);*/
+    background: #fafafa;
 }
 
 h1 {
@@ -212,7 +213,7 @@ footer {
     margin: 0 auto;
     padding: 6rem var(--page-padding);
 
-    background-color: #dce2e1;
+    background-color: #c2f1e7;
     color: #3f3f3f;
 
     text-align: center;
