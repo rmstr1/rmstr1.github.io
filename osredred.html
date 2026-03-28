@@ -97,8 +97,7 @@
 </head>
 
 <body>
-    <!--TODO: aufklappbar um selftext etc zu lesen; link und image previes, subreddit selection, pinned posts css..., next,
-    after, ... -->
+    <!--TODO: aufklappbar um selftext etc zu lesen; link und image previes, subreddit selection, pinned posts css..., sort by new, top; comments, top comment(s) ... -->
     <section id="content">
         <!--<div class="card">
             <a href="#">
@@ -166,7 +165,7 @@
                     userLink.href = "https://old.reddit.com/u/" + post.data.author;
 
                     subLink.textContent = post.data.subreddit_name_prefixed;
-                    subLink.href = "https://old.reddit.com" + post.data.subreddit_name_prefixed;
+                    subLink.href = `?sub=${post.data.subreddit}`;
 
                     commentsLink.textContent = post.data.num_comments + " comments";
                     commentsLink.href = "https://old.reddit.com" + post.data.permalink;
