@@ -175,7 +175,7 @@
                     //const postHint = post.data.post_hint;
 
                     h2.append(postLink);
-                    p.append(timeString, " | by ", userLink, " | in ", subLink, " | ", commentsLink);
+                    p.append(timeString, " | ", post.data.domain, " | by ", userLink, " | in ", subLink, " | ", commentsLink);
 
                     div.append(h2, p);
                     return div;
