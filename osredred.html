@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./css/fonts.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="old school reddit reader">
+    <title>old school reddit reader</title>
+    <style>
+        :root {
+            --accent-color: #97d9cb;
+            --bg-color: #e2e0db;
+            --bg-color-highlight: var(--accent-color);
+            --text-color: #222222;
+            --line-color: #00000022;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scrollbar-gutter: stable;
+        }
+
+        body {
+            width: 100%;
+            font: 400 1rem/1.75 'Source Sans 3', sans-serif;
+            letter-spacing: 0.035em;
+            color: var(--text-color);
+            background: var(--bg-color);
+        }
+
+
+        h1 {
+            font: 400 4rem/1.2 'Source Sans 3', sans-serif;
+        }
+
+        h2 {
+            margin-bottom: 0.125rem;
+            font: 400 1.25rem/1.35 'Source Serif 4', serif;
+        }
+
+        h3 {
+            font: 400 1.375rem/1.75 'Source Sans 3', sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+
+        .card {
+            margin: 1.25rem 0;
+            width: 100%;
+
+            p {
+                font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
+                color: #222222aa;
+            }
+        }
+
+        .next {
+            box-sizing: border-box;
+            display: block;
+
+            padding: 1.25rem;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #dfdfdfaa;
+            }
+        }
+
+        section {
+            width: 100%;
+            max-width: 52rem;
+            padding: 1rem 2rem;
+            outline: 3rem solid #fafafa;
+
+            background-color: #fafafa;
+            margin: 3rem auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!--TODO: aufklappbar um selftext etc zu lesen; link und image previes, subreddit selection, pinned posts css..., next,
+    after, ... -->
+    <section id="content">
+        <!--<div class="card">
+            <a href="#">
+                <h2>[OTHER] Fired from Warhorse Studios and replaced with AI</h2>
+            </a>
+            <p>
+                3 hours ago | by <a href="#">ThousandDemons</a> | to <a href="#">r/kingdomcome</a> | <a href="#">800
+                    comments</a>
+            </p>
+        </div>-->
+        <div class="card">
+            <p>
+                Loading Posts ...
+            </p>
+        </div>
+    </section>
+    <script>
+        const rtf = new Intl.RelativeTimeFormat();
+
+        const relativeTimeString = (diff) => {
+            const diffInDays = Math.round(diff / 86400000);
+
+            if (Math.abs(diffInDays) >= 1) {
+                return rtf.format(diffInDays, 'day');
+            }
+
+            const diffInHours = Math.round(diff / 3600000);
+            if (Math.abs(diffInHours) >= 1) {
+                return rtf.format(diffInHours, 'hour');
+            }
+
+            const diffInMins = Math.round(diff / 60000);
+            return rtf.format(diffInMins, 'minute');
+        }
+
+        const loadContent = async (url) => {
+            try {
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+                }
+
+                const content = await response.text();
+                const contentObj = JSON.parse(content);
+                console.log(contentObj);
+
+                const now = Date.now();
+
+                const posts = contentObj.data.children.map((post) => {
+                    const div = document.createElement("div");
+                    const h2 = document.createElement("h2");
+                    const p = document.createElement("p");
+                    const postLink = document.createElement("a");
+                    const userLink = document.createElement("a");
+                    const subLink = document.createElement("a");
+                    const commentsLink = document.createElement("a");
+
+                    div.classList.add('card');
+
+                    postLink.textContent = post.data.title;
+                    postLink.href = post.data.url;
+
+                    userLink.textContent = post.data.author;
+                    userLink.href = "https://old.reddit.com/u/" + post.data.author;
+
+                    subLink.textContent = post.data.subreddit_name_prefixed;
+                    subLink.href = "https://old.reddit.com" + post.data.subreddit_name_prefixed;
+
+                    commentsLink.textContent = post.data.num_comments + " comments";
+                    commentsLink.href = "https://old.reddit.com" + post.data.permalink;
+
+                    const timeString = relativeTimeString(new Date(post.data.created_utc * 1000) - now);
+                    //const postHint = post.data.post_hint;
+
+                    h2.append(postLink);
+                    p.append(timeString, " | by ", userLink, " | in ", subLink, " | ", commentsLink);
+
+                    div.append(h2, p);
+                    return div;
+                });
+
+                const contentDisplay = document.querySelector("#content");
+                contentDisplay.replaceChildren(...posts)
+
+                const after_id = "t3_" + contentObj.data.children.at(-1).data.id;
+
+                const next = document.createElement("a");
+                next.classList.add('next');
+                next.textContent = "Next 🡒";
+                next.href = `?sub=${sub}&after=${after_id}`;
+
+                contentDisplay.appendChild(next)
+
+            } catch (error) {
+                console.error("Fehler beim Abrufen der Website:", error);
+            }
+        }
+
+        const url = new URL(window.location);
+        const params = new URLSearchParams(url.search);
+
+        let sub = params.get("sub");
+        if (sub !== null) {
+            sub = decodeURIComponent(sub);
+        } else {
+            sub = "all"
+        }
+
+        afterParam = "";
+        let after = params.get("after");
+        if (after !== null) {
+            afterParam = "&after=" + decodeURIComponent(after);
+        }
+
+        loadContent(`https://www.reddit.com/r/${sub}/.json?count=25${afterParam}&jsonp`);
+    </script>
+</body>
+
+</html>
