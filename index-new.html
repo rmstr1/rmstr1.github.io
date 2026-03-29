@@ -11,7 +11,7 @@
         :root {
             --accent-color: #ec0047;
             --text-color: #222222;
-            --line-color: #00000022;
+            --text-color-light: #222222aa;
         }
 
         *,
@@ -37,8 +37,8 @@
 
         h1 {
             margin-bottom: 1.5rem;
-            font: 400 2rem/1.25 'Source Sans 3', serif;
-            letter-spacing: 0.025em;
+            font: 300 3rem/1.25 'Source Sans 3', serif;
+            letter-spacing: 0.035em;
             text-transform: uppercase;
 
             &:before {
@@ -49,6 +49,7 @@
         h2 {
             font: 400 1.125rem/1.6 'Source Sans 3', serif;
             text-transform: uppercase;
+            letter-spacing: 0.035em;
 
             &:before {
                 content: "_";
@@ -58,12 +59,12 @@
         h3 {
             margin-bottom: 0.125rem;
             font: 400 1.125rem/1.35 'Source Serif 4', serif;
+            letter-spacing: 0.035em;
         }
 
         a {
             color: inherit;
             text-decoration: none;
-            cursor: pointer;
 
             &:hover {
                 color: var(--accent-color);
@@ -78,27 +79,13 @@
 
             p {
                 font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
-                color: #222222aa;
+                color: var(--text-color-light);
 
                 a {
                     &::before {
                         content: "→\00a0";
                     }
                 }
-            }
-        }
-
-        .next {
-            box-sizing: border-box;
-            display: block;
-
-            padding: 1.25rem;
-            width: 100%;
-            text-align: center;
-            cursor: pointer;
-
-            &:hover {
-                background-color: #dfdfdf88;
             }
         }
 
@@ -134,9 +121,10 @@
                 padding: 0.25rem;
                 font-size: 1.25rem;
                 text-decoration: none;
+                color: #222222dd;
 
-                &::before {
-                    content: none;
+                &:hover {
+                    color: var(--accent-color);
                 }
             }
         }
@@ -240,7 +228,7 @@
                 <a href="./color-interpolation.html">Color Interpolation</a>
             </h3>
             <p>
-                COLORS | Interpolate between two colors in linear, sRGB and okLab color spaces
+                COLORS | Interpolate between two colors in linear, sRGB or okLab color space
             </p>
         </div>
         <div class="card">
@@ -248,7 +236,7 @@
                 <a href="./palette-gen.html">Gradient Palette Generator</a>
             </h3>
             <p>
-                COLORS | Generate a gradient color palette from two colors
+                COLORS | Generate a gradient color palette from two colors, in linear, sRGB or okLab color space
             </p>
         </div>
         <div class="card">
