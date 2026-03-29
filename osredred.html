@@ -79,7 +79,7 @@
             cursor: pointer;
 
             &:hover {
-                background-color: #dfdfdfaa;
+                background-color: #dfdfdf88;
             }
         }
 
@@ -219,8 +219,10 @@
         const params = new URLSearchParams(url.search);
 
         let sub = params.get("sub");
+        console.log(sub);
         if (sub !== null) {
             sub = decodeURIComponent(sub);
+            console.log(sub);
         } else {
             sub = "all"
         }
@@ -231,7 +233,7 @@
             afterParam = "&after=" + decodeURIComponent(after);
         }
 
-        loadContent(`https://api.reddit.com/r/${sub}.json?count=25${afterParam}`);
+        loadContent(`https://api.reddit.com/r/${sub.replaceAll(' ', '+')}.json?count=25${afterParam}`);
     </script>
 </body>
 
