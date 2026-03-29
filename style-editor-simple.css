@@ -152,7 +152,7 @@ textarea {
 }
 
 .container {
-    margin: 4rem;
+    margin: 4rem auto;
     padding: 3rem;
     width: calc(100% - 4rem);
     border-radius: 2rem;
