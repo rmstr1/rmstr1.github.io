@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="./css/fonts.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="old school reddit reader">
-    <title>old school reddit reader</title>
+    <meta name="description" content="Old-School Reddit Reader">
+    <title>Old-School Reddit Reader</title>
     <style>
         :root {
             --accent-color: #97d9cb;
@@ -97,27 +97,43 @@
 <body>
     <!--TODO: aufklappbar um selftext etc zu lesen; link und image previes, subreddit selection, pinned posts css..., sort by new, top; comments, top comment(s) ... -->
     <!--TODO: content-based classes, with before icon: image, video, link, textpost -->
-    <!--TODO: base subreddits, sorting at top -->
+    <!--TODO: sort by -->
     <section id="nav">
         <div class="card">
             <p>
-                oldschool reddit reader | made by <a href="apesofthescreen.com">apesofthescreen</a>
+                old-school reddit reader | made by <b><a href="apesofthescreen.com">apesofthescreen</a></b>
             </p>
             <p>
-                suggested subreddits: <u>r/all</u> | <a>r/austria</a> | <a>r/de</a> | <a>r/worldnews</a> |
-                <a>r/programmingcirclejerk</a>
+                download this
+                page and run it locally to circumvent CORS errors
             </p>
             <p>
-                sort by: <u>hot</u> | <a>new</a> | <a>top-day</a> | <a>top-week</a> | <a>top-month</a>
+                suggested subreddits: <a href="?sub=all">r/all</a>
+                | <a href="?sub=worldnews">r/worldnews</a>
+                | <a href="?sub=europe">r/europe</a>
+                | <a href="?sub=politics">r/politics</a>
+                | <a href="?sub=law">r/law</a>
+                | <a href="?sub=de">r/de</a>
+                | <a href="?sub=austria">r/austria</a>
+                | <a href="?sub=graz">r/graz</a>
             </p>
-            <br>
+            <!--<p>
+                sort by: <u>hot</u>
+                | <a>new</a>
+                | <a>top-day</a>
+                | <a>top-week</a>
+                | <a>top-month</a>
+                | <a>top-year</a>
+                | <a>top-all</a>
+            </p>-->
             <p>
-                showing results from: <u>r/all</u>
+                showing results for <b id="showing-results-for"></b>
             </p>
         </div>
     </section>
     <section id="content">
-        <!--<div class="card">
+        <!-- example card
+        <div class="card">
             <a href="#">
                 <h2>[OTHER] Fired from Warhorse Studios and replaced with AI</h2>
             </a>
@@ -125,7 +141,8 @@
                 3 hours ago | by <a href="#">ThousandDemons</a> | to <a href="#">r/kingdomcome</a> | <a href="#">800
                     comments</a>
             </p>
-        </div>-->
+        </div>
+        -->
         <div class="card">
             <p>
                 Loading Posts ...
@@ -222,6 +239,7 @@
         console.log(sub);
         if (sub !== null) {
             sub = decodeURIComponent(sub);
+            sub = sub.replaceAll(' ', '+');
             console.log(sub);
         } else {
             sub = "all"
@@ -233,7 +251,8 @@
             afterParam = "&after=" + decodeURIComponent(after);
         }
 
-        loadContent(`https://api.reddit.com/r/${sub.replaceAll(' ', '+')}.json?count=25${afterParam}`);
+        loadContent(`https://api.reddit.com/r/${sub}.json?${afterParam}`);
+        document.querySelector("#showing-results-for").textContent = "r/" + sub;
     </script>
 </body>
 
