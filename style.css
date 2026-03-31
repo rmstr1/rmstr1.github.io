@@ -1,5 +1,6 @@
 :root {
     --accent-color: #ec0047;
+    --accent-color-light: #d0f1eb;
     --text-color: #222222;
     --text-color-light: #222222aa;
 }
@@ -19,16 +20,16 @@ html {
 body {
     padding: 3rem 0 0;
     width: 100%;
-    font: 400 1rem/1.75 'Source Sans 3', sans-serif;
-    letter-spacing: 0.035em;
+    font: 400 1rem/1.75 'Montserrat', sans-serif;
+    letter-spacing: 0;
     color: var(--text-color);
     background: #fafafa;
 }
 
 h1 {
     margin-bottom: 1.5rem;
-    font: 300 3rem/1.25 'Source Sans 3', serif;
-    letter-spacing: 0.035em;
+    font: 200 3rem/1.25 'Mozilla Headline', serif;
+    letter-spacing: 0;
     text-transform: uppercase;
 
     &:before {
@@ -37,9 +38,11 @@ h1 {
 }
 
 h2 {
-    font: 400 1.125rem/1.6 'Source Sans 3', serif;
+    width: fit-content;
+    font: 400 1.25rem/1.6 'Montserrat', serif;
     text-transform: uppercase;
-    letter-spacing: 0.035em;
+    letter-spacing: 0;
+    box-shadow: inset 0 -1.0rem 0 0 var(--accent-color-light);
 
     &:before {
         content: "_";
@@ -48,8 +51,8 @@ h2 {
 
 h3 {
     margin-bottom: 0.125rem;
-    font: 400 1.25rem/1.35 'Source Serif 4', serif;
-    letter-spacing: 0.035em;
+    font: 400 1.25rem/1.35 'Montserrat', serif;
+    letter-spacing: 0;
 }
 
 a {
@@ -68,7 +71,7 @@ a {
     width: 100%;
 
     p {
-        font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
+        font: 400 0.875rem/1.35 'Montserrat', sans-serif;
         color: var(--text-color-light);
 
         a {
