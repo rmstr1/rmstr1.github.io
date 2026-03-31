@@ -1,6 +1,4 @@
 #fact-sheet {
-    box-shadow: inset 0.5rem 0 0 rgb(228, 228, 228);
-
     a {
         word-break: break-word;
     }
@@ -14,8 +12,35 @@ img {
     width: 100%;
 }
 
+h2 {
+    margin-bottom: 0.5rem;
+}
+
+h3 {
+    margin-bottom: 0.125rem;
+    font: 600 1.0rem/1.35 'Montserrat', serif;
+}
+
+.gallery {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    /*grid-template-columns: 1fr 1fr 1fr;*/
+    grid-auto-rows: auto;
+    grid-gap: 0;
+
+    img {
+        margin: 0;
+        padding: 0;
+
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
 #assets {
     img {
+        width: fit-content;
         max-width: 100%;
     }
 }
