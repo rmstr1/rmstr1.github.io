@@ -118,6 +118,11 @@ header {
     nav {
         font: 400 0.875rem/1.6 'Source Sans 3', sans-serif;
         color: #222222aa;
+
+        a {
+            padding: 0.05rem 0.25rem;
+            margin: -0.05rem -0.25rem;
+        }
     }
 }
 
