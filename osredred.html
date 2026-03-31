@@ -95,8 +95,7 @@
 </head>
 
 <body>
-    <!--TODO: aufklappbar um selftext etc zu lesen; link und image previes, subreddit selection, pinned posts css..., sort by new, top; comments, top comment(s) ... -->
-    <!--TODO: content-based classes, with before icon: image, video, link, textpost -->
+    <!-- custom subreddit/multireddit selection, pinned posts css..., -->
     <!--TODO: sort by -->
     <section id="nav">
         <div class="card">
@@ -206,7 +205,7 @@
                     commentsLink.href = "https://old.reddit.com" + post.data.permalink;
 
                     const timeString = relativeTimeString(new Date(post.data.created_utc * 1000) - now);
-                    //const postHint = post.data.post_hint;
+                    //const postHint = post.data.post_hint; // TODO: Add symbols in front of title depending o n post hint, e.g. by adding classes
 
                     h2.append(postLink);
                     p.append(timeString, " | ", post.data.domain, " | by ", userLink, " | in ", subLink, " | ", commentsLink);
