@@ -94,6 +94,7 @@ section {
 
     counter-reset: paragraph-counter;
 
+    /* paragraph number
     p {
         margin-bottom: 1em;
     }
@@ -118,7 +119,7 @@ section {
 
         font: 400 0.875rem/1.25 'Source Sans 3', sans-serif;
         color: #22222240;
-    }
+    }*/
 }
 
 footer {
