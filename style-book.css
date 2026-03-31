@@ -22,7 +22,6 @@ html {
 body {
     padding: 3rem 0 0;
     width: 100%;
-    /* TODO: smaller font sizes on mobile*/
     font: 400 1.25rem/1.6 'Source Serif 4', serif;
     color: var(--text-color);
     background-color: var(--bg-color);
@@ -91,17 +90,11 @@ p {
     margin-bottom: 1em;
 }
 
-i {
-    font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
-    color: #222222aa;
-}
-
 .next {
     display: block;
-    margin: 1rem 0;
-
     padding: 1.25rem;
     width: 100%;
+
     text-align: center;
     font: 400 1.0rem/1.75 'Source Sans 3', sans-serif;
     color: #222222aa;
@@ -111,26 +104,24 @@ i {
     }
 }
 
-header {
+header,
+section,
+footer {
     width: 100%;
     max-width: calc(60ch + var(--base-padding) * 2);
     padding: 0 var(--base-padding);
+}
 
-    background: none;
+header {
     margin: 3rem auto 3rem;
 
     nav {
-        font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
+        font: 400 0.875rem/1.6 'Source Sans 3', sans-serif;
         color: #222222aa;
     }
 }
 
 section {
-    width: 100%;
-    max-width: calc(60ch + var(--base-padding) * 2);
-    padding: 0 var(--base-padding);
-
-    background: none;
     margin: 0 auto 3rem;
 
     counter-reset: paragraph-counter;
@@ -164,15 +155,10 @@ section {
 }
 
 footer {
-    width: 100%;
-    max-width: calc(60ch + 2rem * 2);
-    padding: 0 2rem;
-
-    background: none;
     margin: 4rem auto 6rem;
 
     p {
-        font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
+        font: 400 0.875rem/1.6 'Source Sans 3', sans-serif;
         color: #222222aa;
     }
 }
