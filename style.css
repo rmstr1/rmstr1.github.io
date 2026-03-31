@@ -1,6 +1,7 @@
 :root {
     --accent-color: #ec0047;
     --accent-color-light: #d0f1eb;
+    --bg-color: #fafafa;
     --text-color: #222222;
     --text-color-light: #222222aa;
 }
@@ -22,7 +23,6 @@ body {
     width: 100%;
     font: 400 1rem/1.75 'Montserrat', sans-serif;
     color: var(--text-color);
-    background: #fafafa;
 }
 
 h1 {
