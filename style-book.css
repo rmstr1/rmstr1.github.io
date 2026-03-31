@@ -4,6 +4,7 @@
     --bg-color: #fafafa;
     --text-color: #222222;
     --text-color-light: #222222aa;
+    --base-padding: 2rem;
 }
 
 *,
@@ -42,6 +43,10 @@ h2 {
 }
 
 @media (max-width: 38rem) {
+    :root {
+        --base-padding: 1.5rem;
+    }
+
     body {
         font: 400 1.125rem/1.6 'Source Serif 4', serif;
     }
@@ -56,6 +61,10 @@ h2 {
 }
 
 @media (max-width: 30rem) {
+    :root {
+        --base-padding: 1.25rem;
+    }
+
     body {
         font: 400 1.0rem/1.6 'Source Serif 4', serif;
     }
@@ -105,8 +114,8 @@ i {
 
 header {
     width: 100%;
-    max-width: calc(60ch + 2rem * 2);
-    padding: 0 2rem;
+    max-width: calc(60ch + var(--base-padding) * 2);
+    padding: 0 var(--base-padding);
 
     background: none;
     margin: 3rem auto 3rem;
@@ -114,8 +123,8 @@ header {
 
 section {
     width: 100%;
-    max-width: calc(60ch + 2rem * 2);
-    padding: 0 2rem;
+    max-width: calc(60ch + var(--base-padding) * 2);
+    padding: 0 var(--base-padding);
 
     background: none;
     margin: 0 auto 3rem;
