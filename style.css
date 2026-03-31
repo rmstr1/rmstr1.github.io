@@ -23,6 +23,7 @@ body {
     width: 100%;
     font: 400 1rem/1.75 'Montserrat', sans-serif;
     color: var(--text-color);
+    background-color: var(--bg-color);
 }
 
 h1 {
@@ -110,7 +111,6 @@ footer {
         padding: 0.25rem;
         font-size: 1.25rem;
         text-decoration: none;
-        color: #222222dd;
 
         &:hover {
             color: var(--accent-color);
