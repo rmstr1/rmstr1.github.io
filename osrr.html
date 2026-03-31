@@ -231,13 +231,7 @@
             const next = document.createElement("a");
             next.classList.add('next');
             next.textContent = "Next →";
-
-            const nextUrl = new URL("", window.location.href);
-            nextUrl.searchParams.append("sub", sub);
-            nextUrl.searchParams.append("page", page + 1);
-            nextUrl.searchParams.append("after", after_id);
-
-            next.href = nextUrl;
+            next.href = `?sub=${sub}&page=${page + 1}&after=${after_id}`;
 
             contentDisplay.appendChild(next)
         }
