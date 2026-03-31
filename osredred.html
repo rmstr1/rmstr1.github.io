@@ -193,7 +193,7 @@
 
                     div.classList.add('card');
 
-                    postLink.textContent = post.data.title;
+                    postLink.textContent = post.data.title.replaceAll(/\p{RGI_Emoji}/gv, '□');
                     postLink.href = post.data.url;
 
                     userLink.textContent = post.data.author;
@@ -222,7 +222,7 @@
 
                 const next = document.createElement("a");
                 next.classList.add('next');
-                next.textContent = "Next 🡒";
+                next.textContent = "Next →";
                 next.href = `?sub=${sub}&after=${after_id}`;
 
                 contentDisplay.appendChild(next)
