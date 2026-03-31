@@ -83,6 +83,7 @@
             }
         }
 
+        header,
         section {
             width: 100%;
             max-width: 48rem;
@@ -91,13 +92,21 @@
             background: none;
             margin: 0 auto 3rem;
         }
+
+        @media (max-width: 30rem) {
+
+            header,
+            section {
+                padding: 0 1rem;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- custom subreddit/multireddit selection, pinned posts css..., -->
     <!--TODO: sort by -->
-    <section id="nav">
+    <header>
         <div class="card">
             <p>
                 old-school reddit reader | made by <b><a href="https://apesofthescreen.com">apesofthescreen</a></b>
@@ -125,7 +134,7 @@
                 showing page <b id="page"></b> of <b id="showing-results-for"></b>
             </p>
         </div>
-    </section>
+    </header>
     <section id="content">
         <!-- example card
         <div class="card">
