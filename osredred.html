@@ -122,7 +122,7 @@
                 | <a>top-all</a>
             </p>-->
             <p>
-                showing results for <b id="showing-results-for"></b>
+                showing page <b id="page"></b> of <b id="showing-results-for"></b>
             </p>
         </div>
     </section>
@@ -180,7 +180,8 @@
 
         const loadContentJsonp = (url) => {
             const script = document.createElement('script');
-            script.src = url + "&jsonp=displayContent";
+            url.searchParams.append("jsonp", "displayContent");
+            script.src = url;
             document.head.appendChild(script);
         }
 
@@ -230,34 +231,33 @@
             const next = document.createElement("a");
             next.classList.add('next');
             next.textContent = "Next →";
-            next.href = `?sub=${sub}&after=${after_id}`;
+
+            const nextUrl = new URL("", window.location.href);
+            nextUrl.searchParams.append("sub", sub);
+            nextUrl.searchParams.append("page", page + 1);
+            nextUrl.searchParams.append("after", after_id);
+
+            next.href = nextUrl;
 
             contentDisplay.appendChild(next)
         }
 
-        const url = new URL(window.location);
-        const params = new URLSearchParams(url.search);
+        const params = new URLSearchParams(window.location.search);
 
-        let sub = params.get("sub");
-        if (sub !== null) {
-            sub = decodeURIComponent(sub);
-            sub = sub.replaceAll(' ', '+');
-        } else {
-            sub = "all"
-        }
-
-        afterParam = "";
+        const sub = params.get("sub")?.replaceAll(' ', '+') || "all";
+        const page = Number(params.get("page")) || 1;
         const after = params.get("after");
-        if (after !== null) {
-            afterParam = "&after=" + decodeURIComponent(after);
-        }
 
-        const dataUrl = `https://api.reddit.com/r/${sub}.json?${afterParam}`
+        const dataUrl = new URL(`https://api.reddit.com/r/${sub}.json`);
+        if (after !== null) {
+            dataUrl.searchParams.append("after", after);
+        }
 
         //loadContent(dataUrl);
         loadContentJsonp(dataUrl);
 
         document.querySelector("#showing-results-for").textContent = "r/" + sub;
+        document.querySelector("#page").textContent = page;
     </script>
 </body>
 
