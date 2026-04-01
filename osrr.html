@@ -67,6 +67,12 @@
                 font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
                 color: #222222aa;
             }
+
+            h2 a::before,
+            h2 a::after {
+                font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
+                color: #222222aa;
+            }
         }
 
         .next {
@@ -81,6 +87,18 @@
             &:hover {
                 background-color: #dfdfdf88;
             }
+        }
+
+        .hint-link::after {
+            content: "\a0[→]";
+        }
+
+        .hint-image::before {
+            content: "[image]\a0";
+        }
+
+        .hint-video::before {
+            content: "[video]\a0";
         }
 
         header,
@@ -208,9 +226,9 @@
                 const subLink = document.createElement("a");
                 const commentsLink = document.createElement("a");
 
-                div.classList.add('card');
+                div.classList.add("card");
 
-                postLink.textContent = post.data.title.replaceAll(/\p{RGI_Emoji}/gv, '□');
+                postLink.textContent = post.data.title.replaceAll(/\p{RGI_Emoji}/gv, '.');
                 postLink.href = post.data.url;
 
                 userLink.textContent = post.data.author;
@@ -223,10 +241,19 @@
                 commentsLink.href = "https://old.reddit.com" + post.data.permalink;
 
                 const timeString = relativeTimeString(new Date(post.data.created_utc * 1000) - now);
-                //const postHint = post.data.post_hint; // TODO: Add symbols in front of title depending o n post hint, e.g. by adding classes
+                const postHint = String(post.data.post_hint) ?? ""; // TODO: Add symbols in front of title depending o n post hint, e.g. by adding classes
+                const domain = String(post.data.domain) ?? ""; // TODO: Add symbols in front of title depending o n post hint, e.g. by adding classes
+
+                if (postHint.includes("image") || domain === "i.redd.it") {
+                    postLink.classList.add("hint-image");
+                } else if (postHint.includes("video") || domain === "v.redd.it") {
+                    postLink.classList.add("hint-video");
+                } /*else if (postHint === "link") {
+                    postLink.classList.add("hint-link");
+                }*/
 
                 h2.append(postLink);
-                p.append(timeString, " | ", post.data.domain, " | by ", userLink, " | in ", subLink, " | ", commentsLink);
+                p.append(timeString, " | ", domain, " | by ", userLink, " | in ", subLink, " | ", commentsLink);
 
                 div.append(h2, p);
                 return div;
