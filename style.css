@@ -19,7 +19,6 @@ html {
 }
 
 body {
-    padding: 3rem 0 0;
     width: 100%;
     font: 400 1rem/1.75 'Montserrat', sans-serif;
     color: var(--text-color);
@@ -85,7 +84,7 @@ header {
     padding: 0 2rem;
 
     background: none;
-    margin: 3rem auto 3rem;
+    margin: 6rem auto 3rem;
 }
 
 section {

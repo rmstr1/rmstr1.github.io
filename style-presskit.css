@@ -21,6 +21,10 @@ h3 {
     font: 600 1.0rem/1.35 'Montserrat', serif;
 }
 
+body {
+    padding-top: 3rem;
+}
+
 .gallery {
     width: 100%;
     display: grid;

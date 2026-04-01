@@ -20,7 +20,6 @@ html {
 }
 
 body {
-    padding: 3rem 0 0;
     width: 100%;
     font: 400 1.25rem/1.6 'Source Serif 4', serif;
     color: var(--text-color);
@@ -113,7 +112,7 @@ footer {
 }
 
 header {
-    margin: 1rem auto 3rem;
+    margin: 3rem auto;
 
     nav {
         font: 400 0.875rem/1.6 'Source Sans 3', sans-serif;
@@ -127,7 +126,7 @@ header {
 }
 
 section {
-    margin: 0 auto 3rem;
+    margin: 3rem auto;
 
     counter-reset: paragraph-counter;
 
