@@ -10,8 +10,9 @@
     <style>
         :root {
             --accent-color: #97d9cb;
+            --bg-color: #fafafa;
             --text-color: #222222;
-            --line-color: #00000022;
+            --text-color-light: #222222aa;
         }
 
         *,
@@ -31,7 +32,7 @@
             font: 400 1rem/1.75 'Source Sans 3', sans-serif;
             letter-spacing: 0.035em;
             color: var(--text-color);
-            background: #fafafa;
+            background: var(--bg-color);
         }
 
         h1 {
@@ -64,13 +65,13 @@
 
             p {
                 font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
-                color: #222222aa;
+                color: var(--text-color-light);
             }
 
             h2 a::before,
             h2 a::after {
                 font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
-                color: #222222aa;
+                color: var(--text-color-light);
             }
         }
 
@@ -103,10 +104,10 @@
         input[type=text] {
             padding: 0 0.25rem;
             margin: 0;
-            background-color: #fafafa;
-            border: 1px solid #222222aa;
+            background-color: var(--bg-color);
+            border: 1px solid var(--text-color-light);
             font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
-            color: #222222aa;
+            color: var(--text-color-light);
         }
 
         header,
@@ -164,8 +165,12 @@
                 <p>
                     Choose a sub:
                     <input type="text" id="sub-select" size="20"></input>
-                    <a id="go" href=""
-                        onclick="console.log(this.href); let u = new window.URL(this.href); u.searchParams.set('sub', document.querySelector('#sub-select').value); this.href = u.toString();">go&nbsp→</a>
+                    <!-- 
+                        <a id="go" href="?"
+                        onclick="let u = new window.URL(this.href); u.searchParams.set('sub', document.querySelector('#sub-select').value); this.href = u.toString();">go&nbsp→</a>
+                    -->
+                    <a id="go" href="?"
+                        onclick="this.href += 'sub=' + document.querySelector('#sub-select').value;">go&nbsp→</a>
                 </p>
             </form>
             <br>
@@ -187,7 +192,7 @@
         </div>
         -->
         <div class="card">
-            <p>
+            <p id="status-text">
                 Loading Posts ...
             </p>
         </div>
@@ -237,10 +242,10 @@
             console.log(content);
 
             const now = Date.now();
-            const contentDisplay = document.querySelector("#content");
 
             if (content.data.children.length == 0) {
-                contentDisplay.textContent = "ERROR: could not find subreddit " + params.sub;
+                document.querySelector("#status-text").textContent = "No Content Found.";
+                return;
             }
 
             const posts = content.data.children.map((post) => {
@@ -285,6 +290,7 @@
                 return div;
             });
 
+            const contentDisplay = document.querySelector("#content");
             contentDisplay.replaceChildren(...posts)
 
             const after_id = "t3_" + content.data.children.at(-1).data.id;
