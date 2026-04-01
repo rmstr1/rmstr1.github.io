@@ -13,8 +13,8 @@
 <body>
     <header>
         <nav>
-            <a href="../">Books</a>
-            / <a href="./">{{author}} - {{book}}</a>
+            <a href="../index.html">Books</a>
+            / <a href="#">{{author}} - {{book}}</a>
         </nav>
         <nav>
             Chapter:
@@ -41,7 +41,7 @@
         <h1>{{author}} - {{book}}</h1>
     </header>
     <section>
-        <h2>Das nte Kapitel</h2>
+        <h2>{{chapter-title}}</h2>
         {{text}}
         <a class="next" href="{{next-chapter-number}}.html">Next Chapter →</a>
     </section>
