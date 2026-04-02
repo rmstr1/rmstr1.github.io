@@ -87,6 +87,7 @@ a {
 
 p {
     margin-bottom: 1em;
+    text-wrap: pretty;
 }
 
 .next {
