@@ -30,23 +30,19 @@
 
         body {
             width: 100%;
-            font: 400 1rem/1.75 'Source Sans 3', sans-serif;
+            font: 400 1.25rem/1.35 'Source Serif 4', serif;
             letter-spacing: 0.035em;
             color: var(--text-color);
             background: var(--bg-color);
         }
 
         h1 {
-            font: 400 4rem/1.2 'Source Sans 3', sans-serif;
+            font: 300 2.0rem/1.2 'Source Sans 3', sans-serif;
         }
 
         h2 {
             margin-bottom: 0.125rem;
-            font: 400 1.25rem/1.35 'Source Serif 4', serif;
-        }
-
-        h3 {
-            font: 400 1.375rem/1.75 'Source Sans 3', sans-serif;
+            font: inherit;
         }
 
         a {
@@ -61,13 +57,9 @@
         header,
         section {
             margin: 3rem auto 3rem;
-            padding: 0 2rem;
+            padding: 0 1rem;
             width: 100%;
-            max-width: 48rem;
-
-            @media (max-width: 30rem) {
-                padding: 0 1rem;
-            }
+            max-width: calc(60ch + 1rem * 2);
         }
 
         input[type=text] {
@@ -86,11 +78,8 @@
             margin: 1rem 0;
             width: 100%;
 
-            p {
-                font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
-                color: var(--text-color-light);
-            }
-
+            p,
+            span,
             h2 a::before {
                 font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
                 color: var(--text-color-light);
@@ -100,6 +89,7 @@
         .next {
             display: block;
             padding: 1.25rem;
+            font: 400 1rem/1.75 'Source Sans 3', sans-serif;
             width: 100%;
             text-align: center;
 
@@ -119,20 +109,19 @@
 </head>
 
 <body>
-    <!-- TODO: css for pinned posts -->
     <!-- TODO: sort by -->
-    <!-- TODO: card template -->
     <header>
         <div class="card">
             <p>
                 Old-school reddit reader | Made by <b><a href="https://apesofthescreen.com">apesofthescreen</a></b>
             </p>
             <p>
-                Suggested subreddits: <a href="?sub=all">r/all</a>
+                <a href="?sub=all">r/all</a>
                 | <a href="?sub=worldnews">r/worldnews</a>
-                | <a href="?sub=europe">r/europe</a>
+                | <a href="?sub=worldnews">r/news</a>
                 | <a href="?sub=politics">r/politics</a>
                 | <a href="?sub=law">r/law</a>
+                | <a href="?sub=europe">r/europe</a>
                 | <a href="?sub=de">r/de</a>
                 | <a href="?sub=austria">r/austria</a>
                 | <a href="?sub=graz">r/graz</a>
@@ -160,29 +149,30 @@
             </form>
             <br>
             <p>
-                Showing page <b id="page"></b> of <b id="showing-results-for"></b>
+                <b id="showing-results-for"></b> | Page <span id="page"></span>
             </p>
         </div>
     </header>
     <section id="content">
-        <!-- example card
-        <div class="card">
-            <h2>
-                <a href="#">
-                    [OTHER] Fired from Warhorse Studios and replaced with AI
-                </a>
-            </h2>
-            <p>
-                3 hours ago | asdf.com | by <a href="#">ThousandDemons</a> | in <a href="#">r/kingdomcome</a> | <a href="#">800 comments</a>
-            </p>
-        </div>
-        -->
+        <!-- Posts are put here -->
         <div class="card">
             <p id="status-text">
                 Loading Posts ...
             </p>
         </div>
     </section>
+    <template id="template-post">
+        <div class="card">
+            <h2>
+                <a data-slot="title">
+                </a>
+            </h2>
+            <p>
+                <span data-slot="age"></span> | <span data-slot="domain"></span> | by <a data-slot="user"></a> | in
+                <a data-slot="sub"></a> | <a data-slot="comments"></a>
+            </p>
+        </div>
+    </template>
     <script>
         const rtf = new Intl.RelativeTimeFormat();
 
@@ -235,43 +225,40 @@
             }
 
             const posts = content.data.children.map((post) => {
-                const div = document.createElement("div");
-                const h2 = document.createElement("h2");
-                const p = document.createElement("p");
-                const postLink = document.createElement("a");
-                const userLink = document.createElement("a");
-                const subLink = document.createElement("a");
-                const commentsLink = document.createElement("a");
+                const card = document.querySelector("#template-post").content.cloneNode(true);
 
-                div.classList.add("card");
+                const title = card.querySelector("[data-slot='title']");
+                const age = card.querySelector("[data-slot='age']");
+                const domain = card.querySelector("[data-slot='domain']");
+                const user = card.querySelector("[data-slot='user']");
+                const sub = card.querySelector("[data-slot='sub']");
+                const comments = card.querySelector("[data-slot='comments']");
 
-                postLink.textContent = post.data.title.replaceAll(/\p{RGI_Emoji}/gv, '.');
-                postLink.href = post.data.url;
+                title.textContent = post.data.title.replaceAll(/\p{RGI_Emoji}/gv, '.');
+                title.href = post.data.url;
 
-                userLink.textContent = post.data.author;
-                userLink.href = "https://old.reddit.com/u/" + post.data.author;
+                age.textContent = relativeTimeString(new Date(post.data.created_utc * 1000) - now);
 
-                subLink.textContent = post.data.subreddit_name_prefixed;
-                subLink.href = `?sub=${post.data.subreddit}`;
+                const domainString = String(post.data.domain) ?? "";
+                domain.textContent = domainString;
 
-                commentsLink.textContent = post.data.num_comments + " comments";
-                commentsLink.href = "https://old.reddit.com" + post.data.permalink;
+                user.textContent = post.data.author;
+                user.href = "https://old.reddit.com/u/" + post.data.author;
 
-                const timeString = relativeTimeString(new Date(post.data.created_utc * 1000) - now);
+                sub.textContent = post.data.subreddit_name_prefixed;
+                sub.href = `?sub=${post.data.subreddit}`;
+
+                comments.textContent = post.data.num_comments + " comments";
+                comments.href = "https://old.reddit.com" + post.data.permalink;
+
                 const postHint = String(post.data.post_hint) ?? "";
-                const domain = String(post.data.domain) ?? "";
-
-                if (postHint.includes("image") || domain === "i.redd.it") {
-                    postLink.classList.add("hint-image");
-                } else if (postHint.includes("video") || domain === "v.redd.it") {
-                    postLink.classList.add("hint-video");
+                if (postHint.includes("image") || domainString === "i.redd.it") {
+                    title.classList.add("hint-image");
+                } else if (postHint.includes("video") || domainString === "v.redd.it") {
+                    title.classList.add("hint-video");
                 }
 
-                h2.append(postLink);
-                p.append(timeString, " | ", domain, " | by ", userLink, " | in ", subLink, " | ", commentsLink);
-
-                div.append(h2, p);
-                return div;
+                return card;
             });
 
             const contentDisplay = document.querySelector("#content");
