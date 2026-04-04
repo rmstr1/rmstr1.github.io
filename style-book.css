@@ -97,6 +97,7 @@ p {
 
     text-align: center;
     font: 400 1.0rem/1.75 'Source Sans 3', sans-serif;
+    letter-spacing: 0.025em;
     color: #222222aa;
 
     &:hover {
@@ -117,6 +118,7 @@ header {
 
     nav {
         font: 400 0.875rem/1.6 'Source Sans 3', sans-serif;
+        letter-spacing: 0.025em;
         color: #222222aa;
 
         a {
