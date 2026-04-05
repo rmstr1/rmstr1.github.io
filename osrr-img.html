@@ -129,12 +129,9 @@
                 Reddit Image Viewer | Made by <b><a hsref="https://apesofthescreen.com">apesofthescreen</a></b>
             </p>
             <p>
-                <a
-                    href="?sub=earthporn+blackandwhite+portraitphotos+LandscapePhotography+analog_bw+telephotolandscapes+abandoned+filmphotography">multireddit</a>
-                | <a href="?sub=earthporn">r/earthporn</a>
+                <a href="?sub=earthporn">r/earthporn</a>
                 | <a href="?sub=LandscapePhotography">r/LandscapePhotography</a>
                 | <a href="?sub=telephotolandscapes">r/telephotolandscapes</a>
-                | <a href="?sub=portraitphotos">r/portraitphotos</a>
                 | <a href="?sub=blackandwhite">r/blackandwhite</a>
                 | <a href="?sub=analog_bw">r/analog_bw</a>
                 | <a href="?sub=abandoned">r/abandoned</a>
@@ -256,7 +253,7 @@
 
         const params = new URLSearchParams(window.location.search);
 
-        const sub = params.get("sub")?.replaceAll(' ', '+') || "earthporn+blackandwhite+portraitphotos+LandscapePhotography+analog_bw+telephotolandscapes+abandoned+filmphotography";
+        const sub = params.get("sub")?.replaceAll(' ', '+') || "earthporn";
         const page = Number(params.get("page")) || 1;
         const after = params.get("after");
 
