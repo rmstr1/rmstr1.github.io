@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="./css/fonts.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Old-School Reddit Reader">
-    <title>Old-School Reddit Reader</title>
+    <meta name="description" content="Reddit Image Viewer">
+    <title>Reddit Image Viewer</title>
     <style>
         :root {
             --accent-color: #97d9cb;
@@ -86,6 +86,14 @@
             }
         }
 
+        img {
+            display: block;
+            padding: 0;
+            margin: 1rem 0;
+            width: 100%;
+            object-fit: cover;
+        }
+
         .next {
             display: block;
             padding: 1.25rem;
@@ -106,26 +114,31 @@
         .hint-video::before {
             content: "[video]\a0";
         }
+
+        #showing-results-for {
+            overflow-wrap: anywhere;
+        }
     </style>
 </head>
 
 <body>
-    <!-- TODO: sort by top, new -->
     <header>
+        <!-- TODO: sort by top, new -->
         <div class="card">
             <p>
-                Old-school reddit reader | Made by <b><a href="https://apesofthescreen.com">apesofthescreen</a></b>
+                Reddit Image Viewer | Made by <b><a hsref="https://apesofthescreen.com">apesofthescreen</a></b>
             </p>
             <p>
-                <a href="?sub=all">r/all</a>
-                | <a href="?sub=worldnews">r/worldnews</a>
-                | <a href="?sub=worldnews">r/news</a>
-                | <a href="?sub=politics">r/politics</a>
-                | <a href="?sub=law">r/law</a>
-                | <a href="?sub=europe">r/europe</a>
-                | <a href="?sub=de">r/de</a>
-                | <a href="?sub=austria">r/austria</a>
-                | <a href="?sub=graz">r/graz</a>
+                <a
+                    href="?sub=earthporn+blackandwhite+portraitphotos+LandscapePhotography+analog_bw+telephotolandscapes+abandoned+filmphotography">multireddit</a>
+                | <a href="?sub=portraitphotos">r/earthporn</a>
+                | <a href="?sub=LandscapePhotography">r/LandscapePhotography</a>
+                | <a href="?sub=portraitphotos">r/portraitphotos</a>
+                | <a href="?sub=analog_bw">r/blackandwhite</a>
+                | <a href="?sub=analog_bw">r/analog_bw</a>
+                | <a href="?sub=telephotolandscapes">r/telephotolandscapes</a>
+                | <a href="?sub=abandoned">r/abandoned</a>
+                | <a href="?sub=filmphotography">r/filmphotography</a>
             </p>
             <!--<p>
                 sort by: <u>hot</u>
@@ -162,17 +175,12 @@
             </p>
         </div>
     </section>
-    <template id="template-post">
-        <div class="card">
-            <h2>
-                <a data-slot="title">
-                </a>
-            </h2>
-            <p>
-                <span data-slot="age"></span> | <span data-slot="domain"></span> | by <a data-slot="user"></a> | in
-                <a data-slot="sub"></a> | <a data-slot="comments"></a>
-            </p>
-        </div>
+    </template>
+    <template id="template-image">
+        <img></img>
+    </template>
+    <template id="template-next">
+        <a class="next">Next →</a>
     </template>
     <script>
         const rtf = new Intl.RelativeTimeFormat();
@@ -225,59 +233,30 @@
                 return;
             }
 
-            const posts = content.data.children.map((post) => {
-                const card = document.querySelector("#template-post").content.cloneNode(true);
-
-                const title = card.querySelector("[data-slot='title']");
-                const age = card.querySelector("[data-slot='age']");
-                const domain = card.querySelector("[data-slot='domain']");
-                const user = card.querySelector("[data-slot='user']");
-                const sub = card.querySelector("[data-slot='sub']");
-                const comments = card.querySelector("[data-slot='comments']");
-
-                title.textContent = post.data.title.replaceAll(/\p{RGI_Emoji}/gv, '.');
-                title.href = post.data.url;
-
-                age.textContent = relativeTimeString(new Date(post.data.created_utc * 1000) - now);
-
-                const domainString = String(post.data.domain) ?? "";
-                domain.textContent = domainString;
-
-                user.textContent = post.data.author;
-                user.href = "https://old.reddit.com/u/" + post.data.author;
-
-                sub.textContent = post.data.subreddit_name_prefixed;
-                sub.href = `?sub=${post.data.subreddit}`;
-
-                comments.textContent = post.data.num_comments + " comments";
-                comments.href = "https://old.reddit.com" + post.data.permalink;
-
-                const postHint = String(post.data.post_hint) ?? "";
-                if (postHint.includes("image") || domainString === "i.redd.it") {
-                    title.classList.add("hint-image");
-                } else if (postHint.includes("video") || domainString === "v.redd.it") {
-                    title.classList.add("hint-video");
-                }
-
-                return card;
-            });
+            const posts = content.data.children
+                .filter((post) => !(post.data.url === undefined || post.data.url === null))
+                .map((post) => {
+                    const card = document.querySelector("#template-image").content.cloneNode(true);
+                    const img = card.querySelector("img");
+                    img.src = post.data.url;
+                    img.onerror = function () { this.style.display = 'none'; };
+                    return card;
+                });
 
             const contentDisplay = document.querySelector("#content");
             contentDisplay.replaceChildren(...posts)
 
             const after_id = "t3_" + content.data.children.at(-1).data.id;
 
-            const next = document.createElement("a");
-            next.classList.add('next');
-            next.textContent = "Next →";
-            next.href = `?sub=${sub}&page=${page + 1}&after=${after_id}`;
+            const next = document.querySelector("#template-next").content.cloneNode(true);
+            next.querySelector("a").href = `?sub=${sub}&page=${page + 1}&after=${after_id}`;
 
             contentDisplay.appendChild(next)
         }
 
         const params = new URLSearchParams(window.location.search);
 
-        const sub = params.get("sub")?.replaceAll(' ', '+') || "all";
+        const sub = params.get("sub")?.replaceAll(' ', '+') || "earthporn+blackandwhite+portraitphotos+LandscapePhotography+analog_bw+telephotolandscapes+abandoned+filmphotography";
         const page = Number(params.get("page")) || 1;
         const after = params.get("after");
 
@@ -289,7 +268,7 @@
         //loadContent(dataUrl);
         loadContentJsonp(dataUrl);
 
-        document.querySelector("#showing-results-for").textContent = "r/" + sub;
+        document.querySelector("#showing-results-for").textContent = sub;
         document.querySelector("#page").textContent = page;
     </script>
 </body>
