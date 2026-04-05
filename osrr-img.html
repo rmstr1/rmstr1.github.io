@@ -260,7 +260,7 @@
         const page = Number(params.get("page")) || 1;
         const after = params.get("after");
 
-        const dataUrl = new URL(`https://api.reddit.com/r/${sub}.json`);
+        const dataUrl = new URL(`https://www.reddit.com/r/${sub}.json`);
         if (after !== null) {
             dataUrl.searchParams.append("after", after);
         }
