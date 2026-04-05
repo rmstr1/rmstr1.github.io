@@ -131,12 +131,12 @@
             <p>
                 <a
                     href="?sub=earthporn+blackandwhite+portraitphotos+LandscapePhotography+analog_bw+telephotolandscapes+abandoned+filmphotography">multireddit</a>
-                | <a href="?sub=portraitphotos">r/earthporn</a>
+                | <a href="?sub=earthporn">r/earthporn</a>
                 | <a href="?sub=LandscapePhotography">r/LandscapePhotography</a>
-                | <a href="?sub=portraitphotos">r/portraitphotos</a>
-                | <a href="?sub=analog_bw">r/blackandwhite</a>
-                | <a href="?sub=analog_bw">r/analog_bw</a>
                 | <a href="?sub=telephotolandscapes">r/telephotolandscapes</a>
+                | <a href="?sub=portraitphotos">r/portraitphotos</a>
+                | <a href="?sub=blackandwhite">r/blackandwhite</a>
+                | <a href="?sub=analog_bw">r/analog_bw</a>
                 | <a href="?sub=abandoned">r/abandoned</a>
                 | <a href="?sub=filmphotography">r/filmphotography</a>
             </p>
@@ -175,6 +175,10 @@
             </p>
         </div>
     </section>
+    <section id="content">
+        <div id="log">
+        </div>
+    </section>
     </template>
     <template id="template-image">
         <img></img>
@@ -182,6 +186,31 @@
     <template id="template-next">
         <a class="next">Next →</a>
     </template>
+    <script>
+        var baseLogFunction = console.log;
+        console.log = function () {
+            baseLogFunction.apply(console, arguments);
+
+            var args = Array.prototype.slice.call(arguments);
+            for (var i = 0; i < args.length; i++) {
+                var node = createLogNode(args[i]);
+                document.querySelector("#log").appendChild(node);
+            }
+
+        }
+
+        function createLogNode(message) {
+            var node = document.createElement("div");
+            var textNode = document.createTextNode(message);
+            node.appendChild(textNode);
+            return node;
+        }
+
+        window.onerror = function (message, url, linenumber) {
+            console.log("JavaScript error: " + message + " on line " +
+                linenumber + " for " + url);
+        }
+    </script>
     <script>
         const rtf = new Intl.RelativeTimeFormat();
 
