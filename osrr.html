@@ -260,7 +260,7 @@
                 return;
             }
 
-            const posts = content.data.children.map((post) => {
+            const posts = content.data.children.filter((post) => post.data.stickied !== true).map((post) => {
                 const card = document.querySelector("#template-post").content.cloneNode(true);
 
                 const title = card.querySelector("[data-slot='title']");
