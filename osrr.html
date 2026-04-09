@@ -9,7 +9,7 @@
     <title>Old-School Reddit Reader</title>
     <style>
         :root {
-            --accent-color: #97d9cb;
+            --accent-color: #00b991;
             --bg-color: #fafafa;
             --bg-color-dark: #dfdfdf88;
             --text-color: #222222;
@@ -53,24 +53,39 @@
             }
         }
 
-        header,
         section {
-            margin: 3rem auto 3rem;
+            margin: 1rem auto 3rem;
             padding: 0 1rem;
+            width: 100%;
+            max-width: calc(60ch + 1rem * 2);
+        }
+
+        header {
+            margin: 0 auto 0;
+            padding: 2rem 1rem 1rem;
             width: 100%;
             max-width: calc(60ch + 1rem * 2);
         }
 
         input[type=text] {
             background-color: var(--bg-color);
+            color: var(--text-color-light);
             border: none;
             font: inherit;
-            color: var(--text-color-light);
-            box-shadow: 0 0.125rem 0 var(--text-color-light);
+            padding: 0 1rem;
+            width: 100%;
+            flex-grow: 2;
 
             &::placeholder {
                 opacity: 0.75;
             }
+        }
+
+        #go {
+            font: 600 1.0625rem/2.25 'Source Sans 3', sans-serif;
+            padding: 0 1rem;
+            background-color: var(--accent-color);
+            color: #ffffff;
         }
 
         .card {
@@ -106,17 +121,50 @@
         .hint-video::before {
             content: "[video]\a0";
         }
+
+        .header-bg {
+
+            /*background:
+                radial-gradient(circle 40rem at calc(50% - 18rem) -100% in oklab, oklch(93% 0.12 90) 0, #00000000),
+                radial-gradient(circle 40rem at calc(50% + 24rem) 200% in oklab, oklch(93% 0.12 170) 0, #00000000),
+                #f5f5f5*/
+            background: #222222;
+            color: #ffffff;
+        }
+
+        .enter-sub {
+            width: 100%;
+            font: 400 1.0625rem/2.25 'Source Sans 3', sans-serif;
+            display: flex;
+            overflow: hidden;
+            border-radius: 2.5rem;
+        }
+
+        .suggestions {
+            margin-top: 1rem;
+            font: 600 0.875rem/1.35 'Source Sans 3', sans-serif;
+            letter-spacing: 0.025em;
+            color: #ffffff;
+        }
     </style>
 </head>
 
 <body>
-    <!-- TODO: sort by top, new -->
-    <header>
-        <div class="card">
-            <p>
-                Old-school reddit reader | Made by <b><a href="https://apesofthescreen.com">apesofthescreen</a></b>
-            </p>
-            <p>
+    <!-- TODO: sort by defaul | new |top-daily | top-weekly, ... -->
+    <div class="header-bg">
+        <header>
+            <form onsubmit="document.querySelector('#go').click()">
+                <div class="enter-sub">
+                    <input type="text" id="sub-select" placeholder="Enter a subreddit" autocomplete="off"></input>
+                    <a id="go" href="?sub="
+                        onclick="this.href += document.querySelector('#sub-select').value;">Go&nbsp→</a>
+                    <!-- 
+                        <a id="go" href="?"
+                        onclick="let u = new window.URL(this.href); u.searchParams.set('sub', document.querySelector('#sub-select').value); this.href = u.toString();">go&nbsp→</a>
+                        -->
+                </div>
+            </form>
+            <div class="suggestions">
                 <a href="?sub=all">r/all</a>
                 | <a href="?sub=worldnews">r/worldnews</a>
                 | <a href="?sub=politics">r/politics</a>
@@ -125,34 +173,16 @@
                 | <a href="?sub=de">r/de</a>
                 | <a href="?sub=austria">r/austria</a>
                 | <a href="?sub=graz">r/graz</a>
-            </p>
-            <!--<p>
-                sort by: <u>hot</u>
-                | <a>new</a>
-                | <a>top-day</a>
-                | <a>top-week</a>
-                | <a>top-month</a>
-                | <a>top-year</a>
-                | <a>top-all</a>
-            </p>-->
-            <form onsubmit="document.querySelector('#go').click()">
-                <p>
-                    <input type="text" id="sub-select" placeholder="Enter a subreddit" size="26"
-                        autocomplete="off"></input>
-                    <!-- 
-                        <a id="go" href="?"
-                        onclick="let u = new window.URL(this.href); u.searchParams.set('sub', document.querySelector('#sub-select').value); this.href = u.toString();">go&nbsp→</a>
-                    -->
-                    <a id="go" href="?sub="
-                        onclick="this.href += document.querySelector('#sub-select').value;">Go&nbsp→</a>
-                </p>
-            </form>
-            <br>
+            </div>
+        </header>
+    </div>
+    <section>
+        <div class="card">
             <p>
                 <b id="showing-results-for"></b> | Page <span id="page"></span>
             </p>
         </div>
-    </header>
+    </section>
     <section id="content">
         <!-- Posts are put here -->
         <div class="card">
