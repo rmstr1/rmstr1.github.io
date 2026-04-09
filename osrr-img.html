@@ -9,9 +9,9 @@
     <title>Reddit Image Viewer</title>
     <style>
         :root {
-            --accent-color: #00b991;
+            --accent-color: #00c086;
             --bg-color: #fafafa;
-            --bg-color-dark: #dfdfdf88;
+            --bg-color-dark: oklab(93% 0 0);
             --text-color: #222222;
             --text-color-light: #222222aa;
         }
@@ -143,6 +143,8 @@
                 #f5f5f5*/
             background: var(--text-color);
             color: #ffffff;
+
+            box-shadow: 0 3.25rem 0 0 var(--bg-color-dark);
         }
 
         .enter-sub {
