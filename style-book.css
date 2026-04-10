@@ -76,12 +76,16 @@ h2 {
     }
 }
 
+b {
+    white-space: nowrap;
+}
+
 a {
     color: inherit;
+    white-space: nowrap;
 
     &:hover {
         color: var(--accent-color);
-        text-decoration: underline;
     }
 }
 
