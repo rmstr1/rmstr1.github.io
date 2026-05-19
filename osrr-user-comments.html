@@ -40,7 +40,6 @@
         }
 
         h2 {
-            margin-top: 0.5rem;
             font: inherit;
         }
 
@@ -185,13 +184,16 @@
     <template id="template-post">
         <div class="card">
             <p>
-                <a data-slot="link-title" style="color: var(--accent-color);"></a><br> <span data-slot="age"></span> |
+                <a data-slot="link-title" style="color: var(--accent-color);"></a>
+            </p>
+            <h2 data-slot="body">
+            </h2>
+            <p>
+                <span data-slot="age"></span> |
                 by
                 <a data-slot="user"></a> | in <a data-slot="sub"></a>
                 <a data-slot="user"></a> | <a data-slot="comments"></a>
             </p>
-            <h2 data-slot="body">
-            </h2>
         </div>
     </template>
     <script>
