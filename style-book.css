@@ -28,7 +28,7 @@ body {
 
 h1 {
     margin: 1.5rem auto;
-    font: 400 2.25rem/1.25 'Source Serif 4', serif;
+    font: 400 3.5rem/1.25 'Source Serif 4', serif;
 
     &:before {
         content: "";
@@ -46,15 +46,15 @@ h2 {
     }
 
     body {
-        font: 400 1.125rem/1.6 'Source Serif 4', serif;
+        font-size: 1.125rem;
     }
 
     h1 {
-        font: 400 2.0rem/1.25 'Source Serif 4', serif;
+        font-size: 3rem;
     }
 
     h2 {
-        font: 400 1.5rem/1.6 'Source Serif 4', serif;
+        font-size: 1.5rem;
     }
 }
 
@@ -64,15 +64,15 @@ h2 {
     }
 
     body {
-        font: 400 1.0rem/1.6 'Source Serif 4', serif;
+        font-size: 1.0rem;
     }
 
     h1 {
-        font: 400 1.75rem/1.25 'Source Serif 4', serif;
+        font-size: 2.25rem;
     }
 
     h2 {
-        font: 400 1.25rem/1.6 'Source Serif 4', serif;
+        font-size: 1.25rem;
     }
 }
 
