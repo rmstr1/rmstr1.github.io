@@ -1,5 +1,6 @@
 :root {
     --accent-color: #ec0047;
+    --accent-color-b: #8fffdd;
     --bg-color: #fafafa;
     --text-color: #222222;
     --text-color-light: #2222228a;
@@ -87,9 +88,10 @@ section {
     margin: 1rem auto;
 
     &::after {
+        font-weight: 600;
         display: block;
         margin-top: 1rem;
-        color: var(--text-color-light);
+        color: var(--accent-color-b);
         content: "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     }
 }
