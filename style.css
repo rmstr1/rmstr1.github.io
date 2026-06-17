@@ -1,9 +1,8 @@
 :root {
     --accent-color: #ec0047;
-    --accent-color-light: #d0f1eb;
     --bg-color: #fafafa;
     --text-color: #222222;
-    --text-color-light: #222222aa;
+    --text-color-light: #2222228a;
 }
 
 *,
@@ -77,16 +76,37 @@ header {
     padding: 0 2rem;
 
     background: none;
-    margin: 6rem auto 3rem;
+    margin: 6rem auto 1rem;
 }
 
 section {
     width: 100%;
     max-width: 48rem;
-    padding: 0 2rem;
+    padding: 2rem;
+
+    border-bottom: 0.125rem solid var(--text-color-light);
 
     background: none;
-    margin: 0 auto 3rem;
+    margin: 0 auto;
+}
+
+@media (max-width: 48rem) {
+    header {
+        padding-left: 0;
+        padding-right: 0;
+        margin-top: 3.5rem;
+    }
+
+    section {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    body {
+        padding-left: 1.4rem;
+        padding-right: 1.4rem;
+    }
+
 }
 
 footer {
@@ -95,10 +115,10 @@ footer {
 
     width: 100%;
     max-width: 48rem;
-    padding: 0 2rem;
+    padding: 2rem;
 
     background: none;
-    margin: 4rem auto 6rem;
+    margin: 0 auto 6rem;
 
     p {
         margin: 1rem 0;
