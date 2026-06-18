@@ -26,7 +26,7 @@ html {
 
 body {
     width: 100%;
-    font: 400 1rem/1.6 'IBM Plex Mono', sans-serif;
+    font: 400 1rem/1.5 'IBM Plex Mono', sans-serif;
     color: var(--text-color);
     background-color: var(--bg-color);
 }
@@ -129,24 +129,36 @@ footer {
     section,
     header,
     footer {
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
     header {
         margin-top: 3.5rem;
     }
-
-    body {
-        padding-left: 1.4rem;
-        padding-right: 1.4rem;
-    }
 }
 
 @media (max-width: 30rem) {
 
-    * {
-        font-size: 87.5%;
+    body {
+        font-size: 0.875rem;
     }
 
+    footer {
+        font-size: 0.75rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .socials {
+        a {
+            font-size: 1.25rem;
+        }
+    }
 }
