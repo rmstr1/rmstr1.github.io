@@ -162,6 +162,22 @@
             padding: 4px;
             border-radius: 3px;
         }
+
+        .btn-reset {
+            background: #2a475e;
+            color: #fff;
+            border: none;
+            padding: 4px 8px;
+            margin-left: 8px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 12px;
+            transition: background 0.1s;
+        }
+
+        .btn-reset:hover {
+            background: var(--accent);
+        }
     </style>
 </head>
 
@@ -195,6 +211,12 @@
         // Images state
         let imgBg = null;
         let imgLogo = null;
+
+        // Standard operational defaults
+        const DEFAULTS = {
+            bgS: 1.0, bgX: 0, bgY: 0,
+            logoS: 1.0, logoX: 0, logoY: 0
+        };
 
         // Configurations for the required Steam assets
         const configs = [
@@ -262,13 +284,10 @@
             }
         ];
 
-        // Default state for each config
+        // Initialize unique state mapping from deep copies of DEFAULTS
         const state = {};
         configs.forEach(c => {
-            state[c.id] = {
-                bgS: 1.0, bgX: 0, bgY: 0,
-                logoS: 1.0, logoX: 0, logoY: 0
-            };
+            state[c.id] = { ...DEFAULTS };
         });
 
         // Initialize UI
@@ -317,6 +336,7 @@
                 <label>${label}</label>
                 <input type="range" id="${id}-${param}" min="${min}" max="${max}" step="${step}">
                 <input type="number" id="${id}-${param}-num" min="${min}" max="${max}" step="${step}">
+                <button type="button" class="btn-reset" id="${id}-${param}-reset" title="Reset to default">⟲</button>
             </div>`;
         }
 
@@ -327,6 +347,7 @@
 
                 const range = document.getElementById(`${conf.id}-${param}`);
                 const num = document.getElementById(`${conf.id}-${param}-num`);
+                const resetBtn = document.getElementById(`${conf.id}-${param}-reset`);
 
                 const updateParam = (val) => {
                     let v = parseFloat(val);
@@ -345,6 +366,9 @@
                 num.addEventListener('input', e => {
                     range.value = e.target.value;
                     updateParam(e.target.value);
+                });
+                resetBtn.addEventListener('click', () => {
+                    updateParam(DEFAULTS[param]);
                 });
             });
         });
@@ -375,8 +399,8 @@
             configs.forEach(conf => {
                 ['bgS', 'bgX', 'bgY', 'logoS', 'logoX', 'logoY'].forEach(param => {
                     const val = state[conf.id][param];
-                    // Only save if not default to keep URL clean
-                    if ((param.endsWith('S') && val !== 1.0) || (!param.endsWith('S') && val !== 0)) {
+                    // Only save if not default to keep URL manageable
+                    if (val !== DEFAULTS[param]) {
                         params.set(`${conf.id}_${param}`, val);
                     }
                 });
@@ -385,13 +409,10 @@
             window.history.replaceState({}, '', newUrl);
         }
 
-        // Render function (Handles core matrix transforms so Shared offsets work accurately)
+        // Render functions
         function drawCompositedImage(ctx, config, targetW, targetH) {
             ctx.clearRect(0, 0, targetW, targetH);
             const st = state[config.id];
-
-            // Primary dimensions dictate the base scale for offsets. 
-            // So if drawing Library Capsule (600x900) using Vertical config (748x896), the base ratio remains consistent.
 
             if (config.hasBg && imgBg) {
                 // Base scale: "Cover" strategy based on primary dimensions
@@ -399,7 +420,6 @@
                 const finalW = imgBg.width * baseBgScale * st.bgS;
                 const finalH = imgBg.height * baseBgScale * st.bgS;
 
-                // Centers to target dimensions (handles shared sizes differing gracefully)
                 const cx = targetW / 2 + st.bgX;
                 const cy = targetH / 2 + st.bgY;
 
@@ -490,7 +510,7 @@
                     offscreenCanvas.width = output.w;
                     offscreenCanvas.height = output.h;
 
-                    // Draw using the shared configuration
+                    // Draw using the shared configuration offsets
                     drawCompositedImage(offCtx, conf, output.w, output.h);
 
                     // Convert to blob and add to zip
