@@ -204,15 +204,13 @@
         let imgBg = null;
         let imgLogo = null;
 
-        // Standard operational defaults
         const DEFAULTS = {
             bgS: 1.0, bgX: 0, bgY: 0,
             logoS: 1.0, logoX: 0, logoY: 0,
-            vigStr: 0.25, // Strength: 0.0 to 1.0
-            vigWid: 0.6  // Width: 0.0 to 1.0 (how far from center darkness starts)
+            vigStr: 0.33, // Strength: 0.0 to 1.0
+            vigWid: 0.5  // Width: 0.0 to 1.0 (how far from center darkness starts)
         };
 
-        // Configurations for the required Steam assets
         const configs = [
             {
                 id: 'header',
@@ -287,19 +285,16 @@
             }
         ];
 
-        // Initialize unique state mapping from deep copies of DEFAULTS
         const state = {};
         configs.forEach(c => {
             state[c.id] = { ...DEFAULTS };
         });
 
-        // Initialize UI
         const container = document.getElementById('capsules-container');
         configs.forEach(conf => {
             const card = document.createElement('div');
             card.className = 'capsule-card';
 
-            // Build Controls HTML
             let controlsHTML = `<div class="controls">
                 <h3>${conf.name}</h3>
                 <p style="font-size: 13px; color: #888; margin-top:-10px;">${conf.desc}</p>`;
@@ -362,13 +357,11 @@
             </div>`;
         }
 
-        // Attach event listeners for controls
         configs.forEach(conf => {
             const paramsToBind = ['bgS', 'bgX', 'bgY', 'logoS', 'logoX', 'logoY'];
             if (conf.hasVignette) paramsToBind.push('vigStr', 'vigWid');
 
             paramsToBind.forEach(param => {
-                // Pre-flight checks based on config capability
                 if ((param.startsWith('bg') && !conf.hasBg)) return;
                 if ((param.startsWith('logo') && !conf.hasLogo)) return;
                 if ((param.startsWith('vig') && !conf.hasVignette)) return;
@@ -404,7 +397,6 @@
             });
         });
 
-        // URL Parameters Logic
         function getRelevantParamsForConfig(conf) {
             const params = ['bgS', 'bgX', 'bgY', 'logoS', 'logoX', 'logoY'];
             if (conf.hasVignette) params.push('vigStr', 'vigWid');
@@ -421,6 +413,7 @@
                     }
                 });
             });
+
             // Update UI
             configs.forEach(conf => {
                 getRelevantParamsForConfig(conf).forEach(param => {
