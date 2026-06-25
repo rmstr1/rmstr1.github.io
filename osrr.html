@@ -152,6 +152,20 @@
                 white-space: nowrap;
             }
         }
+
+        .delayed {
+            opacity: 0;
+            visibility: hidden;
+            animation: fadeIn 0.25s ease-in 1.75s forwards;
+
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
     </style>
 </head>
 
@@ -193,7 +207,10 @@
         <!-- Posts are put here -->
         <div class="card">
             <p id="status-text">
-                Loading Posts ...
+                Loading Posts ... <br><br>
+                <span class="delayed">[ NOTE: Your browser might be blocking the requests. A working configuration
+                    is: Firefox, with Enhanced Tracking
+                    Protection disabled. ]</span>
             </p>
         </div>
     </section>
