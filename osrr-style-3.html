@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./css/fonts.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="Old-School Reddit Reader">
+    <title>Old-School Reddit Reader</title>
+    <style>
+        :root {
+            --accent-color: #00c086;
+            --bg-color: #fafafa;
+            --bg-color-dark: oklab(95% 0 0);
+            --text-color: #222222;
+            --text-color-light: #222222aa;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scrollbar-gutter: stable;
+        }
+
+        body {
+            width: 100%;
+            font: 400 1.25rem/1.35 'Source Serif 4', serif;
+            color: var(--text-color);
+            background: var(--bg-color);
+        }
+
+        h1 {
+            font: 300 2.0rem/1.2 'Source Sans 3', sans-serif;
+        }
+
+        h2 {
+            margin-bottom: 0.125rem;
+            font: inherit;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        section {
+            margin: 1rem auto 3rem;
+            padding: 0 1rem;
+            width: 100%;
+            max-width: calc(60ch + 1rem * 2);
+        }
+
+        header {
+            margin: 0 auto 0;
+            padding: 1.5rem 1rem;
+            width: 100%;
+            max-width: calc(60ch + 1rem * 2);
+        }
+
+        input[type=text] {
+            background: none;
+            color: var(--text-color);
+            border: none;
+            font: inherit;
+            padding: 0 1rem;
+            width: 100%;
+            flex-grow: 2;
+
+            &::placeholder {
+                opacity: 0.75;
+            }
+        }
+
+        #go {
+            font: 600 1.0625rem/2.25 'Source Sans 3', sans-serif;
+            padding: 0 1rem;
+            background-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        .card {
+            margin: 1rem 0;
+            width: 100%;
+
+            padding: 2.5rem;
+            border: 1px solid #00000044;
+            box-shadow: 0.375rem 0.375rem 0 #00000022;
+
+            p,
+            span,
+            h2 a::before {
+                font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
+                letter-spacing: 0.025em;
+                color: var(--text-color-light);
+            }
+        }
+
+        .next {
+            display: block;
+            padding: 1.25rem;
+            font: 400 1rem/1.75 'Source Sans 3', sans-serif;
+            letter-spacing: 0.025em;
+            width: 100%;
+            text-align: center;
+
+            background-color: var(--bg-color-dark);
+            transition: all ease-out 0.15s;
+
+            &:hover {
+                background-color: #00000022;
+            }
+        }
+
+        .hint-image::before {
+            content: "[image]\a0";
+        }
+
+        .hint-video::before {
+            content: "[video]\a0";
+        }
+
+        .header-bg {
+            background: var(--bg-color-dark);
+        }
+
+        .enter-sub {
+            width: 100%;
+            font: 400 1.0625rem/2.25 'Source Sans 3', sans-serif;
+            display: flex;
+            background: var(--bg-color);
+            border: 1px solid #00000044;
+            box-shadow: 0.25rem 0.25rem 0 #00000022;
+        }
+
+        .suggestions {
+            margin-top: 1rem;
+            font: 600 0.875rem/1.35 'Source Sans 3', sans-serif;
+            letter-spacing: 0.025em;
+
+            a {
+                white-space: nowrap;
+            }
+        }
+
+        .delayed {
+            opacity: 0;
+            visibility: hidden;
+            animation: fadeIn 0.25s ease-in 1.75s forwards;
+        }
+
+        #showing p {
+            font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
+            letter-spacing: 0.025em;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- TODO: sort by defaul | new |top-daily | top-weekly, ... -->
+    <div class="header-bg">
+        <header>
+            <form onsubmit="document.querySelector('#go').click()">
+                <div class="enter-sub">
+                    <input type="text" id="sub-select" placeholder="Enter a subreddit" autocomplete="off"></input>
+                    <a id="go" href="?sub="
+                        onclick="this.href += document.querySelector('#sub-select').value;">Go&nbsp→</a>
+                    <!-- 
+                        <a id="go" href="?"
+                        onclick="let u = new window.URL(this.href); u.searchParams.set('sub', document.querySelector('#sub-select').value); this.href = u.toString();">go&nbsp→</a>
+                        -->
+                </div>
+            </form>
+            <div class="suggestions">
+                <a href="?sub=all">r/all</a>
+                | <a href="?sub=worldnews">r/worldnews</a>
+                | <a href="?sub=politics">r/politics</a>
+                | <a href="?sub=law">r/law</a>
+                | <a href="?sub=europe">r/europe</a>
+                | <a href="?sub=de">r/de</a>
+                | <a href="?sub=austria">r/austria</a>
+                | <a href="?sub=graz">r/graz</a>
+            </div>
+        </header>
+    </div>
+    <section id="showing">
+        <p>
+            <b id="showing-results-for"></b> | Page <span id="page"></span>
+        </p>
+    </section>
+    <section id="content">
+        <!-- Posts are put here -->
+        <div class="card">
+            <p id="status-text">
+                Loading Posts ... <br><br>
+                <span class="delayed">[ NOTE: Your browser might be blocking the requests. A working configuration
+                    is: Firefox, with Enhanced Tracking
+                    Protection disabled. ]</span>
+            </p>
+        </div>
+    </section>
+    <template id="template-post">
+        <div class="card">
+            <h2>
+                <a data-slot="title">
+                </a>
+            </h2>
+            <p>
+                <span data-slot="age"></span> | <span data-slot="domain"></span> | by <a data-slot="user"></a> | in
+                <a data-slot="sub"></a> | <a data-slot="comments"></a>
+            </p>
+        </div>
+    </template>
+    <script>
+        const rtf = new Intl.RelativeTimeFormat();
+
+        const relativeTimeString = (diff) => {
+            const diffInDays = Math.round(diff / 86400000);
+
+            if (Math.abs(diffInDays) >= 1) {
+                return rtf.format(diffInDays, 'day');
+            }
+
+            const diffInHours = Math.round(diff / 3600000);
+            if (Math.abs(diffInHours) >= 1) {
+                return rtf.format(diffInHours, 'hour');
+            }
+
+            const diffInMins = Math.round(diff / 60000);
+            return rtf.format(diffInMins, 'minute');
+        }
+
+        const loadContent = async (url) => {
+            try {
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const content = await response.json();
+                displayContent(content)
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        const loadContentJsonp = (url) => {
+            const script = document.createElement('script');
+            url.searchParams.append("jsonp", "displayContent");
+            script.src = url;
+            document.head.appendChild(script);
+        }
+
+        const displayContent = (content) => {
+            console.log(content);
+
+            const now = Date.now();
+
+            if (content.data.children.length == 0) {
+                document.querySelector("#status-text").textContent = "No Content Found.";
+                return;
+            }
+
+            const posts = content.data.children.filter((post) => post.data.stickied !== true).map((post) => {
+                const card = document.querySelector("#template-post").content.cloneNode(true);
+
+                const title = card.querySelector("[data-slot='title']");
+                const age = card.querySelector("[data-slot='age']");
+                const domain = card.querySelector("[data-slot='domain']");
+                const user = card.querySelector("[data-slot='user']");
+                const sub = card.querySelector("[data-slot='sub']");
+                const comments = card.querySelector("[data-slot='comments']");
+
+                title.textContent = post.data.title.replaceAll(/\p{RGI_Emoji}/gv, '.');
+                title.href = post.data.url;
+
+                age.textContent = relativeTimeString(new Date(post.data.created_utc * 1000) - now);
+
+                const domainString = String(post.data.domain) ?? "";
+                domain.textContent = domainString;
+
+                user.textContent = post.data.author;
+                user.href = "https://old.reddit.com/u/" + post.data.author;
+
+                sub.textContent = post.data.subreddit_name_prefixed;
+                sub.href = `?sub=${post.data.subreddit}`;
+
+                comments.textContent = post.data.num_comments + " comments";
+                comments.href = "https://old.reddit.com" + post.data.permalink;
+
+                const postHint = String(post.data.post_hint) ?? "";
+                if (postHint.includes("image") || domainString === "i.redd.it") {
+                    title.classList.add("hint-image");
+                } else if (postHint.includes("video") || domainString === "v.redd.it") {
+                    title.classList.add("hint-video");
+                }
+
+                return card;
+            });
+
+            const contentDisplay = document.querySelector("#content");
+            contentDisplay.replaceChildren(...posts)
+
+            const after_id = "t3_" + content.data.children.at(-1).data.id;
+
+            const next = document.createElement("a");
+            next.classList.add('next');
+            next.textContent = "Next →";
+            next.href = `?sub=${sub}&page=${page + 1}&after=${after_id}`;
+
+            contentDisplay.appendChild(next)
+        }
+
+        const params = new URLSearchParams(window.location.search);
+
+        const sub = params.get("sub")?.replaceAll(' ', '+') || "all";
+        const page = Number(params.get("page")) || 1;
+        const after = params.get("after");
+
+        const dataUrl = new URL(`https://api.reddit.com/r/${sub}.json`);
+        if (after !== null) {
+            dataUrl.searchParams.append("after", after);
+        }
+
+        //loadContent(dataUrl);
+        loadContentJsonp(dataUrl);
+
+        document.querySelector("#showing-results-for").textContent = "r/" + sub;
+        document.querySelector("#page").textContent = page;
+    </script>
+</body>
+
+</html>
