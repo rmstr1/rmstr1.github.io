@@ -64,12 +64,6 @@ a {
     }
 }
 
-
-.card {
-    margin: 1rem 0;
-    width: 100%;
-}
-
 header {
     width: 100%;
     max-width: 48rem;
@@ -85,7 +79,7 @@ section {
     padding: 0 2rem;
 
     background: none;
-    margin: 1rem auto;
+    margin: 1rem auto 2rem;
 
     &::after {
         font-weight: 600;
