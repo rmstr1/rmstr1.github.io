@@ -1,9 +1,17 @@
-:root {
+/*:root {
     --accent-color: #ec0047;
     --accent-color-b: #9fffe2;
     --bg-color: #fafafa;
     --text-color: #222222;
     --text-color-light: #2222228a;
+}*/
+
+:root {
+    --accent-color: #ff447c;
+    --accent-color-b: #20ffbc;
+    --bg-color: #222222;
+    --text-color: #fafafa;
+    --text-color-light: #fafafaaa;
 }
 
 *,
@@ -34,12 +42,12 @@ h1 {
 
 h2 {
     width: fit-content;
-    font: 400 1.25rem/1.35 'IBM Plex Mono', serif;
+    font: 400 1.25rem/1.5 'IBM Plex Mono', serif;
     text-transform: uppercase;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 
     &:before {
-        content: "_";
+        content: "// ";
     }
 }
 
@@ -94,18 +102,6 @@ footer {
 
     p {
         margin: 1rem 0;
-    }
-}
-
-.socials {
-    a {
-        padding: 0.5rem 0;
-        font-size: 1.5rem;
-        text-decoration: none;
-
-        &:hover {
-            color: var(--accent-color);
-        }
     }
 }
 
