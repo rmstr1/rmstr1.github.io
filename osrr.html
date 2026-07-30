@@ -56,6 +56,7 @@
         section,
         header {
             /*section with full width bg without extra div for bg*/
+            /*NOTE: no margin collapse between children*/
             --side-padding: 1rem;
             --max-width: 60ch;
 
@@ -110,7 +111,7 @@
         }
 
         .card {
-            margin: 1rem 0;
+            margin-bottom: 1rem;
             width: 100%;
 
             p,
