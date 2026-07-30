@@ -89,9 +89,13 @@
         }
 
         .card {
-            margin: 1rem 0;
+            margin-bottom: 0.75rem;
             width: 100%;
-            padding-bottom: 1rem;
+            padding-bottom: 0.75rem;
+
+            &:not(:last-of-type) {
+                border-bottom: 1px solid #00000044;
+            }
 
             p,
             span,
@@ -99,10 +103,6 @@
                 font: 400 0.875rem/1.35 'Source Sans 3', sans-serif;
                 letter-spacing: 0.025em;
                 color: var(--text-color-light);
-            }
-
-            &:not(:last-of-type) {
-                border-bottom: 1px solid #00000044;
             }
         }
 
