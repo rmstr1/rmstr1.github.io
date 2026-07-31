@@ -4,7 +4,7 @@
     --bg-color: #fafafa;
     --text-color: #222222;
     --text-color-light: #222222aa;
-    --base-padding: 2rem;
+    --base-padding: 1rem;
 }
 
 *,
@@ -41,10 +41,6 @@ h2 {
 }
 
 @media (max-width: 38rem) {
-    :root {
-        --base-padding: 1.5rem;
-    }
-
     body {
         font-size: 1.125rem;
     }
@@ -59,10 +55,6 @@ h2 {
 }
 
 @media (max-width: 30rem) {
-    :root {
-        --base-padding: 1.25rem;
-    }
-
     body {
         font-size: 1.0rem;
     }
@@ -72,7 +64,7 @@ h2 {
     }
 
     h2 {
-        font-size: 1.25rem;
+        font-size: 1.375rem;
     }
 }
 
