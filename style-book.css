@@ -90,7 +90,7 @@ a {
 }
 
 p {
-    margin-bottom: 1em;
+    margin-bottom: 1lh;
     text-wrap: pretty;
 }
 
@@ -137,16 +137,12 @@ section {
 
     counter-reset: paragraph-counter;
 
-    p {
-        margin-bottom: 1em;
-    }
-
-    p {
+    /*p {
         counter-increment: paragraph-counter;
         position: relative;
     }
 
-    /*p::before {
+    p::before {
         content: counter(paragraph-counter);
 
         position: absolute;
