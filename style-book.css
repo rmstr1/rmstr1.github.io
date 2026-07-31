@@ -21,14 +21,14 @@ html {
 
 body {
     width: 100%;
-    font: 400 1.25rem/1.5 'Source Serif 4', serif;
+    font: 400 1.25rem/1.55 'Source Serif 4', serif;
     color: var(--text-color);
     background-color: var(--bg-color);
 }
 
 h1 {
     margin: 2rlh auto;
-    font: 400 3.5rem/1.125 'Source Serif 4', serif;
+    font: 400 3.5rem/1.2 'Source Serif 4', serif;
 
     &:before {
         content: "";
@@ -37,7 +37,7 @@ h1 {
 
 h2 {
     margin: 2rlh auto;
-    font: 400 1.75rem/1.5 'Source Serif 4', serif;
+    font: 400 1.75rem/1.55 'Source Serif 4', serif;
 }
 
 @media (max-width: 38rem) {
@@ -114,7 +114,7 @@ header {
     margin-top: 3rem;
 
     nav {
-        font: 400 0.875rem/1.5 'Source Sans 3', sans-serif;
+        font: 400 0.875rem/1.55 'Source Sans 3', sans-serif;
         letter-spacing: 0.025em;
         color: #222222aa;
 
@@ -157,7 +157,7 @@ footer {
     margin: 4rem auto 6rem;
 
     p {
-        font: 400 0.875rem/1.5 'Source Sans 3', sans-serif;
+        font: 400 0.875rem/1.55 'Source Sans 3', sans-serif;
         color: #222222aa;
     }
 }
