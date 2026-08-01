@@ -36,8 +36,8 @@ h1 {
 }
 
 h2 {
-    margin: 2rlh auto;
-    font: 400 1.75rem/1.55 'Source Serif 4', serif;
+    margin: 2rlh auto 1.125rlh;
+    font: 400 1.75rem/1.35 'Source Serif 4', serif;
 }
 
 @media (max-width: 38rem) {
