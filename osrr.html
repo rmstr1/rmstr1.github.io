@@ -301,13 +301,13 @@
                 domain.textContent = domainString;
 
                 user.textContent = post.data.author;
-                user.href = "https://old.reddit.com/u/" + post.data.author;
+                user.href = "https://www.reddit.com/u/" + post.data.author;
 
                 sub.textContent = post.data.subreddit_name_prefixed;
                 sub.href = `?sub=${post.data.subreddit}`;
 
                 comments.textContent = post.data.num_comments + " comments";
-                comments.href = "https://old.reddit.com" + post.data.permalink;
+                comments.href = "https://www.reddit.com" + post.data.permalink;
 
                 const postHint = String(post.data.post_hint) ?? "";
                 if (postHint.includes("image") || domainString === "i.redd.it") {
