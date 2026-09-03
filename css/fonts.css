@@ -418,3 +418,90 @@
     font-weight: 900;
     src: url('../fonts/Montserrat-BlackItalic.woff2') format('woff2');
 }
+
+/* --- Mozilla Text */
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: normal;
+    font-weight: 200;
+    src: url('../fonts/MozillaText-ExtraLight.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: italic;
+    font-weight: 200;
+    src: url('../fonts/MozillaText-ExtraLightItalic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/MozillaText-Light.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: italic;
+    font-weight: 300;
+    src: url('../fonts/MozillaText-LightItalic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/MozillaText-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../fonts/MozillaText-Italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/MozillaText-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: italic;
+    font-weight: 500;
+    src: url('../fonts/MozillaText-MediumItalic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../fonts/MozillaText-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: italic;
+    font-weight: 600;
+    src: url('../fonts/MozillaText-SemiBoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/MozillaText-Bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Mozilla Text';
+    font-style: italic;
+    font-weight: 700;
+    src: url('../fonts/MozillaText-BoldItalic.woff2') format('woff2');
+}
+
+/* --- */

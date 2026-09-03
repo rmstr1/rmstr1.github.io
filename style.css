@@ -1,17 +1,9 @@
-/*:root {
+:root {
     --accent-color: #ec0047;
     --accent-color-b: #9fffe2;
     --bg-color: #fafafa;
     --text-color: #222222;
     --text-color-light: #2222228a;
-}*/
-
-:root {
-    --accent-color: #ff447c;
-    --accent-color-b: #20ffbc;
-    --bg-color: #222222;
-    --text-color: #fafafa;
-    --text-color-light: #fafafaaa;
 }
 
 *,
@@ -28,81 +20,74 @@ html {
 
 body {
     width: 100%;
-    font: 400 1rem/1.5 'IBM Plex Mono', sans-serif;
+    font: 400 1.25rem/1.5 'Mozilla Text', sans-serif;
     color: var(--text-color);
     background-color: var(--bg-color);
+    letter-spacing: 0.033em;
 }
 
 h1 {
     margin-bottom: 1.5rem;
-    font: 400 4rem/1.125 'IBM Plex Mono', serif;
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
+    font: inherit;
+    font-weight: 200;
+    font-size: 280%;
+    line-height: 1.125;
+    letter-spacing: -0.025em;
 }
 
 h2 {
     width: fit-content;
-    font: 400 1.25rem/1.5 'IBM Plex Mono', serif;
-    text-transform: uppercase;
+    font: inherit;
+    font-weight: 700;
+    font-size: 140%;
     margin-bottom: 0.5rem;
 
-    &:before {
-        content: "// ";
-    }
+    border-top: 0.125rem solid var(--text-color);
 }
 
 h3 {
-    font: 600 1rem/1.5 'IBM Plex Mono', serif;
+    font: inherit;
+    font-weight: 700;
+}
+
+i {
+    text-transform: uppercase;
 }
 
 a {
     color: inherit;
     text-decoration: underline;
-    font-weight: 600;
+    text-decoration-thickness: 1px;
+    font-weight: 700;
 
     &:hover {
         color: var(--accent-color);
     }
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-li {
-    text-indent: 2ch hanging;
-}
-
 header,
 section,
 footer {
     width: 100%;
-    max-width: 46rem;
+    max-width: 44rem;
     padding: 0 1rem;
 }
 
 header {
-    margin: 6rem auto 3rem;
+    margin: 4lh auto 1.5lh;
 }
 
 section {
-    margin: 1lh auto;
-
-    &::after {
-        font-weight: 600;
-        display: block;
-        margin-top: 1lh;
-        color: var(--accent-color-b);
-        content: "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    }
+    margin: 1.5lh auto;
 }
 
 footer {
-    font: 400 0.875rem/1.35 'IBM Plex Mono', sans-serif;
+    font: inherit;
+    font-size: 80%;
+    line-height: 1.33;
+
     color: var(--text-color-light);
-    margin: 5rem auto 9rem;
+    margin: 3lh auto 6lh;
 
     p {
         margin: 1lh 0;
@@ -111,30 +96,12 @@ footer {
 
 @media (max-width: 48rem) {
     header {
-        margin-top: 3.5rem;
+        margin-top: 3lh;
     }
 }
 
 @media (max-width: 30rem) {
     body {
-        font-size: 0.875rem;
-    }
-
-    footer {
-        font-size: 0.75rem;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-    }
-
-    h2 {
         font-size: 1rem;
-    }
-
-    .socials {
-        a {
-            font-size: 1.25rem;
-        }
     }
 }
