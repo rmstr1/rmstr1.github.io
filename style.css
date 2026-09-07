@@ -26,7 +26,8 @@ body {
     letter-spacing: 0.033em;
 }
 
-h1 {
+h1,
+hgroup>p {
     margin-bottom: 1.5rem;
     font: inherit;
     font-weight: 200;
@@ -35,12 +36,14 @@ h1 {
     letter-spacing: -0.025em;
 }
 
-h2 {
+h2,
+hgroup>h1 {
     width: fit-content;
     font: inherit;
     font-weight: 700;
     font-size: 140%;
     margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
 
     border-top: 0.125rem solid var(--text-color);
 }
