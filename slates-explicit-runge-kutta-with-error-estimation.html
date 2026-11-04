@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./css/fonts.css">
+    <link rel="stylesheet" href="./style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="Apes of the Screen">
+    <title>Apes of the Screen</title>
+</head>
+
+<body>
+    <section>
+        <h1>Implementation of explicit N stage Runge Kutta methods</h1>
+        <p>Rust v >= 1.99</p>
+        <pre><code>
+use std::ops::{Add, Mul};
+
+pub struct TableauWithErrorCoefs&lt;const N: usize&gt; {
+    c: [f64; N],
+    a: [[f64; N]; N],
+    e: [f64; N],
+}
+
+#[inline(always)]
+fn add_scaled_sum&lt;T&gt;(mut v: T, h: f64, coefs: &[f64], ks: &[T]) -&gt; T
+where
+    T: Copy + Add&lt;Output = T&gt; + Mul&lt;f64, Output = T&gt;,
+{
+    for (&coef, &k) in coefs.iter().zip(ks.iter()) {
+        if coef != 0.0 {
+            v = v + k * (coef * h);
+        }
+    }
+    v
+}
+
+pub struct RkStepOutput&lt;T&gt; {
+    pub next_value: T,
+    pub next_k: T,
+    pub estimated_local_error: T,
+}
+
+#[inline(always)]
+pub fn explicit_runge_kutta_fsal&lt;T, const N: usize&gt;(
+    t: f64,
+    v: T,
+    k0: T,
+    h: f64,
+    evaluate_derivative: impl Fn(f64, T) -&gt; T,
+    tableau: &TableauWithErrorCoefs&lt;N&gt;,
+) -&gt; RkStepOutput&lt;T&gt;
+where
+    T: Copy + Add&lt;Output = T&gt; + Mul&lt;f64, Output = T&gt;,
+{
+    let mut ks = [k0; N];
+    for i in 1..(N - 1) {
+        ks[i] = evaluate_derivative(
+            t + tableau.c[i] * h,
+            add_scaled_sum(v, h, &tableau.a[i][..i], &ks[..i]),
+        );
+    }
+
+    let next_value = add_scaled_sum(v, h, &tableau.a[N - 1][..N - 1], &ks[..N - 1]);
+    ks[N - 1] = evaluate_derivative(t + tableau.c[N - 1] * h, next_value);
+
+    RkStepOutput {
+        next_value,
+        next_k: ks[N - 1],
+        estimated_local_error: add_scaled_sum(v * 0.0, h, &tableau.e, &ks),
+    }
+}
+
+#[inline(always)]
+pub fn rk_bogacki_shampine_32&lt;T&gt;(
+    t: f64,
+    v: T,
+    k0: T,
+    h: f64,
+    evaluate_derivative: impl Fn(f64, T) -&gt; T,
+) -&gt; RkStepOutput&lt;T&gt;
+where
+    T: Copy + Add&lt;Output = T&gt; + Mul&lt;f64, Output = T&gt;,
+{
+    const TABLEAU: TableauWithErrorCoefs&lt;4&gt; = TableauWithErrorCoefs {
+        c: [0.0, 1.0 / 2.0, 3.0 / 4.0, 1.0],
+        a: [
+            [0.0, 0.0, 0.0, 0.0],
+            [1.0 / 2.0, 0.0, 0.0, 0.0],
+            [0.0, 3.0 / 4.0, 0.0, 0.0],
+            [2.0 / 9.0, 1.0 / 3.0, 4.0 / 9.0, 0.0],
+        ],
+        e: [
+            2.0 / 9.0 - 7.0 / 24.0,
+            1.0 / 3.0 - 1.0 / 4.0,
+            4.0 / 9.0 - 1.0 / 3.0,
+            0.0 - 1.0 / 8.0,
+        ],
+    };
+
+    explicit_runge_kutta_fsal(t, v, k0, h, evaluate_derivative, &TABLEAU)
+}
+
+#[inline(always)]
+pub fn rk_tsitouras_54&lt;T&gt;(
+    t: f64,
+    v: T,
+    k0: T,
+    h: f64,
+    evaluate_derivative: impl Fn(f64, T) -&gt; T,
+) -&gt; RkStepOutput&lt;T&gt;
+where
+    T: Copy + Add&lt;Output = T&gt; + Mul&lt;f64, Output = T&gt;,
+{
+    const A21: f64 = 0.161;
+    const A31: f64 = -0.008480655492356989;
+    const A32: f64 = 0.335480655492357;
+    const A41: f64 = 2.8971530571054935;
+    const A42: f64 = -6.359448489975075;
+    const A43: f64 = 4.3622954328695815;
+    const A51: f64 = 5.325864828439257;
+    const A52: f64 = -11.748883564062828;
+    const A53: f64 = 7.4955393428898365;
+    const A54: f64 = -0.09249506636175525;
+    const A61: f64 = 5.86145544294642;
+    const A62: f64 = -12.92096931784711;
+    const A63: f64 = 8.159367898576159;
+    const A64: f64 = -0.071584973281401;
+    const A65: f64 = -0.028269050394068383;
+    const A71: f64 = 0.09646076681806523;
+    const A72: f64 = 0.01;
+    const A73: f64 = 0.4798896504144996;
+    const A74: f64 = 1.379008574103742;
+    const A75: f64 = -3.290069515436081;
+    const A76: f64 = 2.324710524099774;
+
+    const TABLEAU: TableauWithErrorCoefs&lt;7&gt; = TableauWithErrorCoefs {
+        c: [0.0, 0.161, 0.327, 0.9, 0.9800255409045097, 1.0, 1.0],
+        a: [
+            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [A21, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [A31, A32, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [A41, A42, A43, 0.0, 0.0, 0.0, 0.0],
+            [A51, A52, A53, A54, 0.0, 0.0, 0.0],
+            [A61, A62, A63, A64, A65, 0.0, 0.0],
+            [A71, A72, A73, A74, A75, A76, 0.0],
+        ],
+        e: [
+            -0.00178001105222577714,
+            -0.0008164344596567469,
+            0.007880878010261995,
+            -0.1447110071732629,
+            0.5823571654525552,
+            -0.45808210592918697,
+            0.015151515151515152,
+        ],
+    };
+
+    explicit_runge_kutta_fsal(t, v, k0, h, evaluate_derivative, &TABLEAU)
+}
+        </code></pre>
+    </section>
+    <footer>
+        <p>
+            Contact:<br>
+            markus@apesofthescreen.com
+        </p>
+        <p>
+            Legal:<br>
+            <a href="./datenschutz.html">Datenschutzerklärung</a><br>
+            <a href="./impressum.html">Impressum</a>
+        </p>
+    </footer>
+</body>
+
+</html>

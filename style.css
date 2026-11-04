@@ -26,6 +26,19 @@ body {
     letter-spacing: 0.033em;
 }
 
+pre {
+    line-height: 1;
+    max-width: 80ch;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+code {
+    width: 100%;
+    font: 500 1.0rem/1 'IBM Plex Mono', monospace;
+    color: var(--text-color);
+}
+
 h1,
 hgroup>p {
     margin-bottom: 1.5rem;
