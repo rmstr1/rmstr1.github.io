@@ -27,6 +27,8 @@ body {
 }
 
 pre {
+    padding: 1.5rem;
+    background-color: #272822;
     line-height: 1;
     max-width: 80ch;
     white-space: pre-wrap;
