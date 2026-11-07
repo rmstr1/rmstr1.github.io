@@ -29,15 +29,14 @@ body {
 pre {
     padding: 1.5rem;
     background-color: #272822;
-    line-height: 1;
     max-width: 80ch;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+    font: 400 0.875rem/1.125 'IBM Plex Mono', monospace;
 }
 
 code {
     width: 100%;
-    font: 500 1.0rem/1 'IBM Plex Mono', monospace;
     color: var(--text-color);
 }
 
