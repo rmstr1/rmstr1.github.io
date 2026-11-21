@@ -86,7 +86,7 @@ textarea,
 input,
 select {
     padding: 0.25rem 0.5rem;
-    font: 400 1rem/1.35 'Source Code Pro', monospace;
+    font: 400 0.9375rem/1.35 'IBM Plex Mono', monospace;
     border: none;
     border-radius: 0.5rem;
     background-color: var(--input-bg-color);
