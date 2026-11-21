@@ -5,14 +5,22 @@
     margin: 0;
 }
 
+:root {
+    --accent-color: #ec0047;
+    --bg-color: #222222;
+    --input-bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --text-color-light: #ffffff44;
+}
+
 body {
     min-height: 100vh;
     height: fit-content;
 
     background-color: #383838;
-    color: #ffffff;
+    color: var(--text-color);
 
-    font: 600 1rem/1.75 'Source Sans 3', sans-serif;
+    font: 600 1rem/1.75 'Mozilla Text', sans-serif;
     width: 100%;
 
     display: flex;
@@ -23,9 +31,9 @@ body {
 h1 {
     margin: 0 auto 1rem;
     padding: 0 0 0.5rem;
-    font: 400 2rem/1.4 'Mozilla Headline', sans-serif;
+    font: 400 2rem/1.4 'Mozilla Text', sans-serif;
     letter-spacing: 0;
-    border-bottom: solid 0.125rem #fafafa;
+    border-bottom: solid 0.125rem var(--text-color);
 }
 
 hr {
@@ -36,8 +44,8 @@ hr {
     padding: 0;
     width: 100%;
     height: 1px;
-    color: #44484b;
-    background-color: #44484b;
+    color: var(--text-color-light);
+    background-color: var(--text-color-light);
 }
 
 label {
@@ -81,8 +89,8 @@ select {
     font: 400 1rem/1.35 'Source Code Pro', monospace;
     border: none;
     border-radius: 0.5rem;
-    background-color: #1a1b1c;
-    color: #ffffff;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
     box-shadow: inset 0.1875rem 0.1875rem rgba(0, 0, 0, 0.231);
 }
 
@@ -94,7 +102,7 @@ input[type=color] {
     height: 2rem;
     margin: 0;
     padding: 0;
-    border: 0.25rem solid #1a1b1c;
+    border: 0.25rem solid var(--input-bg-color);
     border-radius: 1rem;
 
     cursor: pointer;
@@ -155,9 +163,8 @@ textarea {
     margin: 4rem auto;
     padding: 3rem;
     width: calc(100% - 4rem);
-    border-radius: 2rem;
     max-width: 30rem;
     height: fit-content;
-    background: #222222;
+    background: var(--bg-color);
     box-shadow: 0px 3rem 6rem -1rem rgba(0, 0, 0, 0.123), 0px 2rem 4rem -2rem rgba(0, 0, 0, 0.3);
 }
