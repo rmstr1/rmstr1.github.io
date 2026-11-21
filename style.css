@@ -54,13 +54,13 @@ h2,
 hgroup>h1 {
     width: fit-content;
     font: inherit;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 140%;
     margin-bottom: 0.5rem;
     letter-spacing: 0.02em;
     text-transform: uppercase;
 
-    border-top: 0.125rem solid var(--text-color);
+    border-top: 0.25rem solid var(--text-color);
 }
 
 h3 {
