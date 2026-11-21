@@ -27,12 +27,35 @@ body {
 }
 
 pre {
-    padding: 1.5rem;
+    padding: 3rem;
+    padding-left: calc(4rem + 1ch);
     background-color: #272822;
     max-width: 80ch;
     white-space: pre-wrap;
     overflow-wrap: break-word;
     font: 400 0.875rem/1.125 'IBM Plex Mono', monospace;
+
+    /* line number*/
+    &>div {
+        counter-reset: line;
+
+        &>div {
+            position: relative;
+
+            &:before {
+                counter-increment: line;
+                position: absolute;
+                right: 100%;
+                padding-right: 1rem;
+                white-space: nowrap;
+                content: counter(line);
+                user-select: none;
+                color: #ffffff30;
+            }
+        }
+
+    }
+
 }
 
 code {
