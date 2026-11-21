@@ -41,17 +41,21 @@ pre {
 
         &>div {
             position: relative;
+            counter-increment: line;
 
             &:before {
-                counter-increment: line;
                 position: absolute;
                 right: 100%;
                 padding-right: 1rem;
                 white-space: nowrap;
                 content: counter(line);
                 user-select: none;
-                color: #ffffff30;
+                color: #ffffff40;
             }
+        }
+
+        &>br {
+            counter-increment: line;
         }
 
     }
